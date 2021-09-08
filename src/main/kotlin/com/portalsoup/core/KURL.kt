@@ -1,8 +1,17 @@
 package com.portalsoup.core
 
 import org.json.JSONObject
+import java.net.HttpURLConnection
 import java.net.URL
 
+/**
+ * DSL entrypoint to building urls
+ */
+fun kurl(lambda: KURLBuilder.() -> Unit) = KURLBuilder().apply(lambda).build()
+
+/**
+ * kotlin url for performing queries
+ */
 data class KURL(
     val host: String,
     val queryArgs: QueryParameters,
@@ -11,6 +20,45 @@ data class KURL(
 ) {
     fun url(): URL = URL("$host$queryArgs")
 
+    fun doGet(): JSONObject {
+        return url().openConnection().run {
+            this as HttpURLConnection
+
+            requestMethod = "GET"
+            setRequestHeaders(requestHeaders)
+
+
+            JSONObject(inputStream.bufferedReader().readText())
+        }
+    }
+
+    fun doPost(): JSONObject {
+        url().openConnection().run {
+            this as HttpURLConnection
+
+            requestMethod = "POST"
+            setRequestProperty("Accept", "application/json")
+            doOutput = true
+
+            outputStream.use {
+                val input = body.toString().toByteArray(Charsets.UTF_8)
+                it.write(input, 0, input.size)
+            }
+
+            return JSONObject(inputStream.bufferedReader().readText())
+        }
+    }
+
+    fun doDelete(): JSONObject {
+        url().openConnection().run {
+            this as HttpURLConnection
+
+            requestMethod = "DELETE"
+            doOutput = true
+
+            return JSONObject(inputStream.bufferedReader().readText())
+        }
+    }
 }
 
 class KURLBuilder {
@@ -35,5 +83,3 @@ class KURLBuilder {
 
     fun build() = KURL(host, queryArgs, requestHeaders, body)
 }
-
-fun kurl(lambda: KURLBuilder.() -> Unit) = KURLBuilder().apply(lambda).build()

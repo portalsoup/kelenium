@@ -5,7 +5,10 @@ import java.lang.StringBuilder
 import java.net.URL
 import java.util.*
 
-class WebDriver(private val host: String = "http://localhost", private val port: Int = 4444) : AutoCloseable {
+/**
+ * To reduce clutter, all requests at the wire protocol level are in WireProtocol.kt
+ */
+class WebDriver(host: String = "http://localhost", port: Int = 4444) : AutoCloseable {
 
     private val process: Process = Runtime.getRuntime().exec(System.getProperty("webdriver.gecko.driver"))
 
@@ -22,7 +25,7 @@ class WebDriver(private val host: String = "http://localhost", private val port:
 
     class Timeouts(val script: Int = 30000, val pageLoad: Int = 300000, val implicit: Int = 0) {
         override fun toString(): String {
-            return """
+            return """ // TODO serialize from data class
                 {
                     "script": $script,
                     "pageLoad": $pageLoad,

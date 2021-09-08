@@ -42,6 +42,7 @@ fun WebDriver.setTimeouts(timeouts: WebDriver.Timeouts): JSONObject = kurl {
     body = JSONObject(timeouts.toString())
 }.doPost()
 
+// https://www.w3.org/TR/webdriver/#navigate-to
 fun WebDriver.navigateTo(url: String) = kurl {
     host = "$serverUrl/session/$sessionId/url"
     body = JSONObject("""
@@ -50,23 +51,3 @@ fun WebDriver.navigateTo(url: String) = kurl {
         }
     """.trimIndent())
 }.doPost()
-
-
-fun test() {
-    kurl {
-        body { JSONObject("{\"sup\":\"supper\"}") }
-        requestHeaders {
-            mapOf(
-                "one" to "one",
-                "two" to "two"
-            )
-        }
-        queryArgs {
-            QueryParameters.fromPairs(
-                "one" to "one"
-            )
-        }
-    }.doPost()
-        .getJSONObject("value")
-        .getJSONObject("nestedValue")
-}
