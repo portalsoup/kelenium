@@ -20,9 +20,8 @@ class RemoteDriver(
 
     val serverUrl = "http://$host:$port"
 
-    fun createSession(endpoint: String, body: String): Session {
-        val joinedUrl = endpoint.takeIf { it.startsWith("/") }?.let { "$serverUrl$endpoint" } ?: "$serverUrl/$endpoint"
-        val url = URL(joinedUrl)
+    fun post(endpoint: String, body: String): Session {
+        val url = URL("http://$host:$port$endpoint")
         val conn = url.openConnection() as HttpURLConnection
 
         conn.requestMethod = "POST"
@@ -46,10 +45,11 @@ class RemoteDriver(
             Json.decodeFromString<SessionWrapper>(response.toString()).value
         }
     }
+
 }
 
 fun main() {
     System.setProperty("webdriver.gecko.driver", "${System.getProperty("user.home")}/.webdriver/geckodriver")
-    val session: Session = RemoteDriver().createSession("/session", "{}")
+    val session = RemoteDriver().post("/session", "{}")
     println(session)
 }
