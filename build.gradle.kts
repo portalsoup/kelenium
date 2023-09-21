@@ -10,6 +10,7 @@ object Versions {
     val ktor = "2.3.1"
     val exposed = "0.41.1"
     val kotlinx = "1.7.3"
+    val selenium = "4.12.1"
 }
 
 val dependenciesList = listOf(
@@ -17,8 +18,10 @@ val dependenciesList = listOf(
     DepConstraint("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json", PREFER, "1.6.0"),
     DepConstraint("implementation", "io.ktor:ktor-client-core", PREFER, Versions.ktor),
     DepConstraint("implementation", "io.ktor:ktor-client-cio", PREFER, Versions.ktor),
+    DepConstraint("implementation", "io.ktor:ktor-client-logging", PREFER, Versions.ktor),
     DepConstraint("implementation", "io.ktor:ktor-client-content-negotiation", PREFER, Versions.ktor),
     DepConstraint("implementation", "io.ktor:ktor-serialization-kotlinx-json", PREFER, Versions.ktor),
+    DepConstraint("implementation", "org.seleniumhq.selenium:selenium-java", PREFER, Versions.selenium),
 
     DepConstraint("testImplementation", "org.junit.jupiter:junit-jupiter", PREFER, "5.10.0-M1")
 )
@@ -33,6 +36,12 @@ allprojects {
             }
             maven {
                 url = uri("https://josm.openstreetmap.de/nexus/content/groups/public")
+            }
+        }
+
+        tasks {
+            getByName("test", Test::class) {
+                useJUnitPlatform()
             }
         }
 

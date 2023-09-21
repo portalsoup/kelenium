@@ -1,27 +1,44 @@
 package com.portalsoup.core
 
-import com.portalsoup.core.wireprotocol.Session
-import com.portalsoup.core.wireprotocol.createSession
-import com.portalsoup.core.wireprotocol.deleteSession
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.net.Socket
 
 /**
  * To reduce clutter, all requests at the wire protocol level are in WireProtocol.kt
  */
-class WebDriver(host: String = "http://localhost", port: Int = 4444) : AutoCloseable {
+class WebDriver(
+    path: String = System.getProperty("webdriver.gecko.driver"),
+    host: String = "localhost",
+    port: Int = 4444,
+    capabilitiesJson: String = "{}"
+) : AutoCloseable {
 
-    private val webdriverPath = System.getProperty("webdriver.gecko.driver")
-    private val process: Process = ProcessBuilder(webdriverPath).start()
+    private val process: Process = ProcessBuilder(path).start()
 
-    private val p2: Process = Runtime.getRuntime().exec(System.getProperty("webdriver.gecko.driver"))
+    val serverUrl = "http://$host:$port"
 
-    val serverUrl = "$host:$port"
+//    val session: Session by lazy {
+////        waitForServer()
+////        createSession()
+//    }
 
-    val session: Session = createSession()
+    private val socket by lazy { Socket(host, port) }
 
-    override fun close() {
-        if (!deleteSession()) {
-            println("Session failed to close!")
+    fun waitForServer() {
+        socket.soTimeout = 2000
+        runBlocking {
+            launch {
+                runCatching { socket.connect(null) }
+                    .getOrNull()
+            }
         }
+    }
+    override fun close() {
+//        if (!deleteSession()) {
+//            println("Session failed to close!")
+//        }
+        socket.close()
         process.destroy()
         process.waitFor()
     }

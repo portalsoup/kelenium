@@ -1,12 +1,7 @@
-package com.portalsoup.core
+package com.portalsoup.core.wireprotocol
 
-import com.portalsoup.core.ktor.ktorClient
-import io.ktor.client.call.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonObject//
+import com.portalsoup.core.WebDriver
+
 
 // TODO this file represents unfinished commands in the wire protocol that have yet to be categorized formally into it's package
 
