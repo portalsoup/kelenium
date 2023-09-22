@@ -5,23 +5,14 @@ import com.portalsoup.core.wireprotocol.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
-/**
- * @param path
- * @param host
- * @param port
- * @param capabilities
- *
- * @param C The nested
- */
 class RemoteDriver(
-    path: String = System.getProperty("webdriver.gecko.driver"),
+    path: String = System.getProperty("webdriver.path"),
     host: String = "127.0.0.1",
     port: Int = 4444,
     capabilities: String? = null
@@ -112,39 +103,3 @@ class RemoteDriverClosedException(cause: Throwable): RuntimeException("This Remo
 
 @Serializable
 data class SuccessResponse<T>(val value: T)
-
-fun main() {
-    System.setProperty("webdriver.gecko.driver", "/home/portalsoup/IdeaProjects/kelenium/geckodriver")
-    RemoteDriver().use { driver ->
-        val status = driver.status()
-        println(status)
-        val timeouts = driver.getTimeouts()
-        println(timeouts)
-
-        val originalWindowHandle = driver.getWindowHandle().value
-        val newWindowHandle = driver.newWindow(Type.WINDOW).value.handle
-        println(driver.getWindowHandles().value.joinToString(","))
-
-        driver.navigateTo("https://google.com")
-        println(driver.currentUrl())
-
-        driver.switchToWindow(newWindowHandle)
-        driver.navigateTo("https://duckduckgo.com")
-        println(driver.currentUrl())
-        println(driver.getWindowRect())
-        driver.setWindowRect(WindowRect(200, 200, 200, 200))
-        println(driver.getWindowRect())
-
-        driver.switchToWindow(originalWindowHandle)
-        println(driver.currentUrl())
-        println(driver.getTitle())
-
-        driver.switchToWindow(newWindowHandle)
-        driver.closeWindow()
-
-        driver.switchToWindow(originalWindowHandle)
-        driver.maximizeWindow()
-
-        Thread.sleep(5000)
-    }
-}

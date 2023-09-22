@@ -4,27 +4,6 @@ import com.portalsoup.core.socket.RemoteDriver
 import com.portalsoup.core.socket.SuccessResponse
 import kotlinx.serialization.Serializable
 
-class Elements {
-    fun main() {
-        System.setProperty("webdriver.gecko.driver", "/home/portalsoup/IdeaProjects/kelenium/geckodriver")
-        RemoteDriver().use { driver ->
-            driver.navigateTo("https://duckduckgo.com")
-            val elemMap = driver.findElement("css selector", "a:nth-child(2)")
-
-            println(elemMap)
-
-            val foundElements = elemMap.value.map {
-                Element(it.key, it.value)
-            }
-
-            println("found elements: ${foundElements.size}")
-            driver.elementClick(foundElements.first().reference)
-            println(foundElements)
-            Thread.sleep(5000)
-        }
-    }
-}
-
 // simple idea for an element
 data class Element(val locationStrategy: String, val reference: String)
 
