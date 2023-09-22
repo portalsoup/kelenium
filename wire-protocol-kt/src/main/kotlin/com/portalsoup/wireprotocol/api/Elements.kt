@@ -15,10 +15,15 @@ fun RemoteDriver.findElement(using: LocationStrategy, value: String): SuccessRes
         .map { Element(it.key, it.value) }
         .let { SuccessResponse(it) }
 }
-fun RemoteDriver.findElements(using: LocationStrategy, value: String): SuccessResponse<Map<String, String>> = requestBuilder.post(
+fun RemoteDriver.findElements(using: LocationStrategy, value: String): SuccessResponse<List<Element>> = requestBuilder.post<SuccessResponse<List<Map<String, String>>>, FindElementStrategy>(
     "/session/${session.id}/elements",
     FindElementStrategy(using.id, value)
-)
+).let { rawResponse ->
+    rawResponse.value
+        .also { println(it) }
+        .flatMap { it.map { Element(it.key, it.value) } }
+        .let { SuccessResponse(it) }
+}
 fun RemoteDriver.findElementFromElement() = Unit
 fun RemoteDriver.findElementsFromElements() = Unit
 fun RemoteDriver.findElementFromShadowRoot() = Unit

@@ -4,6 +4,6 @@ enum class LocationStrategy(val id: String) {
     CSS("css selector"),
     LINK_TEXT("link text"),
     PARTIAL_TEXT("partial link text"),
-    NAME("tag name"),
+    TAG("tag name"),
     XPATH("xpath")
 }

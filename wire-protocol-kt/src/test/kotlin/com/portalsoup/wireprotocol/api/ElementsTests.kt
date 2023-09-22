@@ -1,8 +1,7 @@
 package com.portalsoup.wireprotocol.api
 
 import com.portalsoup.wireprotocol.BaseTest
-import com.portalsoup.wireprotocol.core.LocationStrategy.CSS
-import com.portalsoup.wireprotocol.core.LocationStrategy.XPATH
+import com.portalsoup.wireprotocol.core.LocationStrategy.*
 import com.portalsoup.wireprotocol.dto.Element
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
@@ -18,6 +17,22 @@ class ElementsTests: BaseTest() {
             it.navigateTo(example1Url)
             val element = it.findElement(XPATH, duckduckgoLearnMoreButtonXpath).value
             assertThat(element.size, equalTo(1))
+        }
+    }
+
+    @Test
+    fun findElementsTest() {
+        val testPage = resourceAsUrl("ElementList.html")
+
+        initializeWebdriver().use {
+            it.navigateTo(testPage)
+
+            val listItems = it.findElements(TAG, "li").value
+
+            assertThat(listItems.size, equalTo(3))
+            assertThat(it.getElementText(listItems[0]).value, equalTo("One"))
+            assertThat(it.getElementText(listItems[1]).value, equalTo("Two"))
+            assertThat(it.getElementText(listItems[2]).value, equalTo("Three"))
         }
     }
 
