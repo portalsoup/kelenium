@@ -1,7 +1,5 @@
 package com.portalsoup.core.socket
 
-import com.portalsoup.core.wireprotocol.SessionWrapper
-import com.portalsoup.core.wireprotocol.StatusWrapper
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -12,16 +10,16 @@ import java.net.URL
 
 class RemoteDriver(
     path: String = System.getProperty("webdriver.gecko.driver"),
-    val host: String = "127.0.0.1",
-    val port: Int = 4444,
+    host: String = "127.0.0.1",
+    port: Int = 4444,
 ): AutoCloseable {
 
     private val process: Process = ProcessBuilder(path).start()
 
     val serverUrl = "http://$host:$port"
 
-    internal inline fun <reified T> get(endpoint: String): T {
-        val url = URL("http://$host:$port$endpoint")
+    internal inline infix fun <reified T> get(endpoint: String): T {
+        val url = URL(mergeUrl(serverUrl, endpoint))
         val conn = url.openConnection() as HttpURLConnection
 
         conn.requestMethod = "GET"
@@ -32,8 +30,20 @@ class RemoteDriver(
 
     }
 
+    internal inline infix fun <reified T> delete(endpoint: String): T {
+        val url = URL(mergeUrl(serverUrl, endpoint))
+        val conn = url.openConnection() as HttpURLConnection
+
+        conn.requestMethod = "DELETE"
+        conn.setRequestProperty("Content-Type", "application/json")
+        conn.setRequestProperty("Accept", "application/json")
+
+        return decodeResponseBody(conn)
+
+    }
+
     internal inline fun <reified T, reified B> post(endpoint: String, body: B): T {
-        val url = URL("http://$host:$port$endpoint")
+        val url = URL(mergeUrl(serverUrl, endpoint))
         val conn = url.openConnection() as HttpURLConnection
 
         conn.requestMethod = "POST"
@@ -54,7 +64,8 @@ class RemoteDriver(
 
         return decodeResponseBody(conn)
     }
-    private inline fun <reified T> decodeResponseBody(connection: HttpURLConnection): T {
+
+    private inline infix fun <reified T> decodeResponseBody(connection: HttpURLConnection): T {
         val responseStr = BufferedReader(
             InputStreamReader(connection.inputStream, "utf-8")
         ).use { br ->
@@ -70,24 +81,21 @@ class RemoteDriver(
         return Json.decodeFromString(responseStr)
     }
 
+    private fun mergeUrl(url: String, endpoint: String): String {
+        return endpoint
+            .takeIf { it.startsWith("/") }
+            ?.let { "$url$endpoint" }
+            ?: "$url/$endpoint"
+    }
+
     override fun close() {
         process.destroy()
         runCatching { process.waitFor() }
             .onFailure { process.destroyForcibly() }
     }
-}
 
-@Serializable
-class TestPostBody
-
-
-fun main() {
-    System.setProperty("webdriver.gecko.driver", "${System.getProperty("user.home")}/.webdriver/geckodriver")
-    RemoteDriver().use { driver ->
-        val session: SessionWrapper = driver.post("/session", TestPostBody())
-        println(session)
-
-        val status: StatusWrapper = driver.get("/status")
-        println(status)
+    companion object {
+        @Serializable
+        class EmptyJson
     }
 }
