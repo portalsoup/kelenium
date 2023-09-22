@@ -1,22 +1,23 @@
 package com.portalsoup.wireprotocol.api
 
 import com.portalsoup.wireprotocol.RemoteDriver
+import com.portalsoup.wireprotocol.core.LocationStrategy
 import com.portalsoup.wireprotocol.dto.Element
-import com.portalsoup.wireprotocol.dto.LocationStrategy
+import com.portalsoup.wireprotocol.dto.FindElementStrategy
 import com.portalsoup.wireprotocol.dto.SuccessResponse
 
 // Locators
-fun RemoteDriver.findElement(using: String, value: String): SuccessResponse<List<Element>> = requestBuilder.post<SuccessResponse<Map<String, String>>, LocationStrategy>(
+fun RemoteDriver.findElement(using: LocationStrategy, value: String): SuccessResponse<List<Element>> = requestBuilder.post<SuccessResponse<Map<String, String>>, FindElementStrategy>(
     "/session/${session.id}/element",
-    LocationStrategy(using, value)
+    FindElementStrategy(using.id, value)
 ).let { rawResponse ->
     rawResponse.value
         .map { Element(it.key, it.value) }
         .let { SuccessResponse(it) }
 }
-fun RemoteDriver.findElements(using: String, value: String): SuccessResponse<Map<String, String>> = requestBuilder.post(
+fun RemoteDriver.findElements(using: LocationStrategy, value: String): SuccessResponse<Map<String, String>> = requestBuilder.post(
     "/session/${session.id}/elements",
-    LocationStrategy(using, value)
+    FindElementStrategy(using.id, value)
 )
 fun RemoteDriver.findElementFromElement() = Unit
 fun RemoteDriver.findElementsFromElements() = Unit

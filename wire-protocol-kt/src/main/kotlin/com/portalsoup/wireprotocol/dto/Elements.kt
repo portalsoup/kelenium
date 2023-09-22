@@ -8,4 +8,4 @@ import kotlinx.serialization.Serializable
 data class Element(val locationStrategy: String, val reference: String)
 
 @Serializable
-data class LocationStrategy(val using: String, val value: String)
+data class FindElementStrategy(val using: String, val value: String)
