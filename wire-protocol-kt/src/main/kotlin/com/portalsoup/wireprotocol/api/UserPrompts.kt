@@ -1,6 +1,6 @@
-package com.portalsoup.core.wireprotocol
+package com.portalsoup.wireprotocol.api
 
-import com.portalsoup.core.socket.RemoteDriver
+import com.portalsoup.wireprotocol.RemoteDriver
 
 fun RemoteDriver.dismissAlert() = Unit
 fun RemoteDriver.acceptAlert() = Unit

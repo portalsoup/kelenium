@@ -1,6 +1,8 @@
-package com.portalsoup.core.wireprotocol
+package com.portalsoup.wireprotocol.api
 
-import com.portalsoup.core.BaseTest
+import com.portalsoup.wireprotocol.BaseTest
+import com.portalsoup.wireprotocol.dto.Type
+import com.portalsoup.wireprotocol.dto.WindowRect
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue

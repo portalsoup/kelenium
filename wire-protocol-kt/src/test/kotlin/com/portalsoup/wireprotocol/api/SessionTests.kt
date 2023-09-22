@@ -1,9 +1,7 @@
-package com.portalsoup.core.wireprotocol
+package com.portalsoup.wireprotocol.api
 
-import com.portalsoup.core.BaseTest
-import com.portalsoup.core.socket.RemoteDriver
-import com.portalsoup.core.socket.RemoteDriverClosedException
-import com.portalsoup.core.util.ILogging
+import com.portalsoup.wireprotocol.BaseTest
+import com.portalsoup.wireprotocol.RemoteDriverClosedException
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test

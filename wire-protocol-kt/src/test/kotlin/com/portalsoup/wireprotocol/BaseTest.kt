@@ -1,6 +1,4 @@
-package com.portalsoup.core
-
-import com.portalsoup.core.socket.RemoteDriver
+package com.portalsoup.wireprotocol
 
 open class BaseTest {
 

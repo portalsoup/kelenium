@@ -33,20 +33,8 @@ allprojects {
             }
             maven {
                 url = uri("https://josm.openstreetmap.de/nexus/content/groups/public")
-   * @param path
- * @param host
- * @param port
- * @param capabilities
- *
- * @param C The nested
- */          }
-    * @param path
- * @param host
- * @param port
- * @param capabilities
- *
- * @param C The nested
- */     }
+            }
+        }
 
         tasks {
             getByName("test", Test::class) {
