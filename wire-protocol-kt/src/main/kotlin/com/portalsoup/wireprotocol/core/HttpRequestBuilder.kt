@@ -1,6 +1,5 @@
 package com.portalsoup.wireprotocol.core
 
-import com.portalsoup.wireprotocol.RemoteDriver
 import com.portalsoup.wireprotocol.dto.RemoteDriverClosedException
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -13,12 +12,13 @@ import java.net.URL
 class HttpRequestBuilder(val baseUrl: String) {
 
     fun buildRequest(method: String, url: URL): HttpURLConnection {
-        val conn = url.openConnection() as HttpURLConnection
+        val contentType = "application/json"
+        val connection = url.openConnection() as HttpURLConnection
 
-        conn.requestMethod = method
-        conn.setRequestProperty("Content-Type", RemoteDriver.APPJSON)
-        conn.setRequestProperty("Accept", RemoteDriver.APPJSON)
-        return conn
+        connection.requestMethod = method
+        connection.setRequestProperty("Content-Type", contentType)
+        connection.setRequestProperty("Accept", contentType)
+        return connection
     }
 
 

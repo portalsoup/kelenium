@@ -26,9 +26,5 @@ class RemoteDriver(
             process.waitFor()
         }.onFailure { process.destroyForcibly() }
     }
-
-    companion object {
-        val APPJSON = "application/json"
-    }
 }
 
