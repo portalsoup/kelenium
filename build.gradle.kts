@@ -9,25 +9,21 @@ data class DepConstraint(val scope: String, val notation: String, val type: Cons
 object Versions {
     val ktor = "2.3.1"
     val exposed = "0.41.1"
-    val kotlinx = "1.7.3"
-    val selenium = "4.12.1"
+    val log4j = "2.20.0"
 }
 
 val dependenciesList = listOf(
-    DepConstraint("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-core", PREFER, Versions.kotlinx),
+    DepConstraint("implementation", "org.jetbrains.kotlinx:kotlinx-coroutines-core", PREFER, "1.7.3"),
     DepConstraint("implementation", "org.jetbrains.kotlinx:kotlinx-serialization-json", PREFER, "1.6.0"),
-    DepConstraint("implementation", "io.ktor:ktor-client-core", PREFER, Versions.ktor),
-    DepConstraint("implementation", "io.ktor:ktor-client-cio", PREFER, Versions.ktor),
-    DepConstraint("implementation", "io.ktor:ktor-client-logging", PREFER, Versions.ktor),
-    DepConstraint("implementation", "io.ktor:ktor-client-content-negotiation", PREFER, Versions.ktor),
-    DepConstraint("implementation", "io.ktor:ktor-serialization-kotlinx-json", PREFER, Versions.ktor),
-    DepConstraint("implementation", "org.seleniumhq.selenium:selenium-java", PREFER, Versions.selenium),
+    DepConstraint("implementation", "org.seleniumhq.selenium:selenium-java", PREFER, "4.12.1"),
+    DepConstraint("implementation", "org.apache.logging.log4j:log4j-api", PREFER, Versions.log4j),
+    DepConstraint("implementation", "org.apache.logging.log4j:log4j-core", PREFER, Versions.log4j),
+    DepConstraint("implementation", "org.apache.logging.log4j:log4j-slf4j-impl", PREFER, Versions.log4j),
 
     DepConstraint("testImplementation", "org.junit.jupiter:junit-jupiter", PREFER, "5.10.0-M1"),
     DepConstraint("testImplementation", "org.hamcrest:hamcrest", PREFER, "2.2")
 )
 
-// Apply versioning constraints to all java subprojects
 allprojects {
     plugins.withType(JavaPlugin::class.java).whenPluginAdded {
         repositories {
@@ -46,6 +42,7 @@ allprojects {
             }
         }
 
+        // Apply versioning constraints to all java subprojects
         dependencies {
             constraints {
                 dependenciesList.onEach {
