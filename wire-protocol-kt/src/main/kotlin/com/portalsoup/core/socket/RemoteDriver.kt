@@ -1,5 +1,8 @@
 package com.portalsoup.core.socket
 
+import com.portalsoup.core.wireprotocol.createSession
+import com.portalsoup.core.wireprotocol.deleteSession
+import com.portalsoup.core.wireprotocol.status
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -44,7 +47,7 @@ class RemoteDriver(
         return decodeResponseBody(conn)
     }
 
-    internal inline fun <reified B> writeToOutputStream(outputStream: OutputStream, body: B) {
+    private inline fun <reified B> writeToOutputStream(outputStream: OutputStream, body: B) {
         val input = when (body) {
             is String -> body
             else -> Json.encodeToString(body)
@@ -88,5 +91,17 @@ class RemoteDriver(
         class EmptyJson
 
         val APPJSON = "application/json"
+    }
+}
+
+fun main() {
+    System.setProperty("webdriver.gecko.driver", "/home/portalsoup/IdeaProjects/kelenium/geckodriver")
+    RemoteDriver().use { driver ->
+        val session = driver.createSession()
+        println(session)
+        val status = driver.status()
+        println(status)
+        val delete = driver.deleteSession(session.value)
+        println(delete)
     }
 }
