@@ -1,7 +1,7 @@
 package com.portalsoup.wireprotocol.core
 
 import com.portalsoup.wireprotocol.RemoteDriver
-import com.portalsoup.wireprotocol.RemoteDriverClosedException
+import com.portalsoup.wireprotocol.dto.RemoteDriverClosedException
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.BufferedReader
