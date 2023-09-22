@@ -5,6 +5,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -18,67 +19,55 @@ class RemoteDriver(
 
     val serverUrl = "http://$host:$port"
 
-    internal inline infix fun <reified T> get(endpoint: String): T {
+    private fun buildRequest(method: String, endpoint: String): HttpURLConnection {
         val url = URL(mergeUrl(serverUrl, endpoint))
         val conn = url.openConnection() as HttpURLConnection
 
-        conn.requestMethod = "GET"
-        conn.setRequestProperty("Content-Type", "application/json")
-        conn.setRequestProperty("Accept", "application/json")
-
-        return decodeResponseBody(conn)
-
+        conn.requestMethod = method
+        conn.setRequestProperty("Content-Type", APPJSON)
+        conn.setRequestProperty("Accept", APPJSON)
+        return conn
+    }
+    internal inline infix fun <reified T> get(endpoint: String): T {
+        return decodeResponseBody(buildRequest("GET", endpoint))
     }
 
     internal inline infix fun <reified T> delete(endpoint: String): T {
-        val url = URL(mergeUrl(serverUrl, endpoint))
-        val conn = url.openConnection() as HttpURLConnection
-
-        conn.requestMethod = "DELETE"
-        conn.setRequestProperty("Content-Type", "application/json")
-        conn.setRequestProperty("Accept", "application/json")
-
-        return decodeResponseBody(conn)
-
+        return decodeResponseBody(buildRequest("DELETE", endpoint))
     }
 
     internal inline fun <reified T, reified B> post(endpoint: String, body: B): T {
-        val url = URL(mergeUrl(serverUrl, endpoint))
-        val conn = url.openConnection() as HttpURLConnection
-
-        conn.requestMethod = "POST"
-        conn.setRequestProperty("Content-Type", "application/json")
-        conn.setRequestProperty("Accept", "application/json")
+        val conn = buildRequest("POST", endpoint)
         conn.doOutput = true
 
-        conn.outputStream.use { os ->
-            val input = when (body) {
-                is String -> body
-                else -> Json.encodeToString(body)
-            }
+        conn.outputStream.use { os -> writeToOutputStream(os, body) }
+        return decodeResponseBody(conn)
+    }
 
-            println(input)
-            val inputBytes = input.toByteArray()
-            os.write(inputBytes, 0, inputBytes.size)
+    internal inline fun <reified B> writeToOutputStream(outputStream: OutputStream, body: B) {
+        val input = when (body) {
+            is String -> body
+            else -> Json.encodeToString(body)
         }
 
-        return decodeResponseBody(conn)
+        val inputBytes = input.toByteArray()
+        outputStream.write(inputBytes, 0, inputBytes.size)
     }
 
     private inline infix fun <reified T> decodeResponseBody(connection: HttpURLConnection): T {
         val responseStr = BufferedReader(
             InputStreamReader(connection.inputStream, "utf-8")
-        ).use { br ->
-            val response = StringBuilder()
-            var responseLine: String?
-            while (br.readLine().also { responseLine = it } != null) {
-                response.append(responseLine!!.trim { it <= ' ' })
-            }
-            response.toString()
-
-        }
-
+        ).use { parseReader(it) }
         return Json.decodeFromString(responseStr)
+    }
+
+    private fun parseReader(bufferedReader: BufferedReader): String {
+        val response = StringBuilder()
+        var responseLine: String?
+        while (bufferedReader.readLine().also { responseLine = it } != null) {
+            response.append(responseLine!!.trim { it <= ' ' })
+        }
+        return response.toString()
     }
 
     private fun mergeUrl(url: String, endpoint: String): String {
@@ -97,5 +86,7 @@ class RemoteDriver(
     companion object {
         @Serializable
         class EmptyJson
+
+        val APPJSON = "application/json"
     }
 }

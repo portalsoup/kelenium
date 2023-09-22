@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
 
 @Serializable
-// TODO This can actually be polymorphic as per https://www.w3.org/TR/webdriver2/#dfn-success for the success or error wrapper
 data class SessionWrapper(val value: Session)
 @Serializable
 data class Session(@SerialName("sessionId") val id: String, val capabilities: JsonObject)
