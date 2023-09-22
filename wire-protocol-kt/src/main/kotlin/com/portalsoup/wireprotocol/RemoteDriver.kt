@@ -1,6 +1,5 @@
 package com.portalsoup.wireprotocol
 
-import com.portalsoup.wireprotocol.core.ILogging
 import com.portalsoup.wireprotocol.api.*
 import com.portalsoup.wireprotocol.core.HttpRequestBuilder
 import com.portalsoup.wireprotocol.dto.Session
@@ -11,9 +10,11 @@ class RemoteDriver(
     host: String = "127.0.0.1",
     port: Int = 4444,
     capabilities: String? = null
-): AutoCloseable, ILogging {
+): AutoCloseable {
 
-    private val process: Process = ProcessBuilder(path).start()
+    private val process: Process = ProcessBuilder(path).start().also {
+        it.onExit().thenAccept { println("The remote server [${requestBuilder.baseUrl}] has terminated!") }
+    }
 
     val session: Session by lazy { capabilities.takeUnless { it == null }?.let { createSession(it).value } ?: createSession().value }
 

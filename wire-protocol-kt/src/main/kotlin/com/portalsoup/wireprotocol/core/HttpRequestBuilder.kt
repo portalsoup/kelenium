@@ -10,7 +10,7 @@ import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
-class HttpRequestBuilder(val baseUrl: String): ILogging {
+class HttpRequestBuilder(val baseUrl: String) {
 
     fun buildRequest(method: String, url: URL): HttpURLConnection {
         val conn = url.openConnection() as HttpURLConnection
@@ -55,7 +55,7 @@ class HttpRequestBuilder(val baseUrl: String): ILogging {
             ).use { parseReader(it) }
         }
             .getOrElse { throw RemoteDriverClosedException(it) }
-        log().debug(responseStr)
+        println(responseStr)
         return Json.decodeFromString(responseStr)
     }
 
