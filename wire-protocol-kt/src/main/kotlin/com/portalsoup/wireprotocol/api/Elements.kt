@@ -1,9 +1,8 @@
 package com.portalsoup.wireprotocol.api
 
 import com.portalsoup.wireprotocol.RemoteDriver
-import com.portalsoup.wireprotocol.SuccessResponse
 import com.portalsoup.wireprotocol.dto.LocationStrategy
-import kotlinx.serialization.Serializable
+import com.portalsoup.wireprotocol.dto.SuccessResponse
 
 // Locators
 fun RemoteDriver.findElement(using: String, value: String): SuccessResponse<Map<String, String>> = requestBuilder.post(

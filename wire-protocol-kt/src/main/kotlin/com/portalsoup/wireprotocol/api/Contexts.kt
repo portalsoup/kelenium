@@ -1,7 +1,6 @@
 package com.portalsoup.wireprotocol.api
 
 import com.portalsoup.wireprotocol.RemoteDriver
-import com.portalsoup.wireprotocol.SuccessResponse
 import com.portalsoup.wireprotocol.dto.*
 
 fun RemoteDriver.getWindowHandle(): SuccessResponse<String> = requestBuilder.get("/session/${session.id}/window")

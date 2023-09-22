@@ -1,9 +1,8 @@
 package com.portalsoup.wireprotocol.api
 
 import com.portalsoup.wireprotocol.RemoteDriver
-import com.portalsoup.wireprotocol.SuccessResponse
+import com.portalsoup.wireprotocol.dto.SuccessResponse
 import com.portalsoup.wireprotocol.dto.UrlBody
-import kotlinx.serialization.Serializable
 
 
 // https://www.w3.org/TR/webdriver/#navigate-to

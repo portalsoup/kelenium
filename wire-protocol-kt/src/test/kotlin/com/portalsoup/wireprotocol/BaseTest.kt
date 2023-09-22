@@ -9,7 +9,7 @@ open class BaseTest {
 
     fun initializeWebdriver() = RemoteDriver(
         path = webdriverPath,
-        capabilities =
+        capabilitiesJson =
         """
                 {
                     "capabilities": {
