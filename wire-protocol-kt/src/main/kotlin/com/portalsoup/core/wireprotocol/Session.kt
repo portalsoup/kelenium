@@ -1,8 +1,6 @@
 package com.portalsoup.core.wireprotocol
 
-
 import com.portalsoup.core.WebDriver
-import com.portalsoup.core.util.RetryConfig
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
