@@ -5,57 +5,6 @@ import com.portalsoup.core.WebDriver
 
 // TODO this file represents unfinished commands in the wire protocol that have yet to be categorized formally into it's package
 
-/*
- * Contexts *
- */
-
-fun WebDriver.getWindowHandle() = Unit
-fun WebDriver.closeWindow() = Unit
-fun WebDriver.switchToWindow() = Unit
-fun WebDriver.getWindowHandles() = Unit
-fun WebDriver.newWindow() = Unit
-fun WebDriver.switchToFrame() = Unit
-fun WebDriver.switchToParentFrame() = Unit
-
-// resizing sub-bundle
-fun WebDriver.getWindowRect() = Unit
-fun WebDriver.setWindowRect() = Unit // Window rect should be it's own property
-fun WebDriver.maximizeWindow() = Unit
-fun WebDriver.minimizeWindow() = Unit
-fun WebDriver.fullScreenWindow() = Unit
-
-/*
- * Elements
- */
-
-// Locators
-fun WebDriver.findElement() = Unit
-fun WebDriver.findElements() = Unit
-fun WebDriver.findElementFromElement() = Unit
-fun WebDriver.findElementsFromElements() = Unit
-fun WebDriver.findElementFromShadowRoot() = Unit
-fun WebDriver.findElementsFromShadowRoot() = Unit
-fun WebDriver.getActiveElement() = Unit
-fun WebDriver.getElementShadowRoot() = Unit
-
-// state
-
-fun WebDriver.isElementSelected() = Unit
-fun WebDriver.getElementAttribute() = Unit
-fun WebDriver.getElementProperty() = Unit
-fun WebDriver.getElementCssValue() = Unit
-fun WebDriver.getElementText() = Unit
-fun WebDriver.getElementTagName() = Unit
-fun WebDriver.getElementRect() = Unit
-fun WebDriver.isElementEnabled() = Unit
-fun WebDriver.getComputedRole() = Unit
-fun WebDriver.getComputdLabel() = Unit
-
-// interaction
-
-fun WebDriver.elementClick() = Unit
-fun WebDriver.elementClear() = Unit
-fun WebDriver.elementSendKeys() = Unit
 
 /*
  * Document
