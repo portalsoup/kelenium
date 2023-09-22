@@ -23,7 +23,8 @@ val dependenciesList = listOf(
     DepConstraint("implementation", "io.ktor:ktor-serialization-kotlinx-json", PREFER, Versions.ktor),
     DepConstraint("implementation", "org.seleniumhq.selenium:selenium-java", PREFER, Versions.selenium),
 
-    DepConstraint("testImplementation", "org.junit.jupiter:junit-jupiter", PREFER, "5.10.0-M1")
+    DepConstraint("testImplementation", "org.junit.jupiter:junit-jupiter", PREFER, "5.10.0-M1"),
+    DepConstraint("testImplementation", "org.hamcrest:hamcrest", PREFER, "2.2")
 )
 
 // Apply versioning constraints to all java subprojects

@@ -1,6 +1,5 @@
 package com.portalsoup.core.wireprotocol
 
-import com.portalsoup.core.WebDriver
 import com.portalsoup.core.socket.RemoteDriver
 import com.portalsoup.core.socket.SuccessResponse
 import kotlinx.serialization.Serializable

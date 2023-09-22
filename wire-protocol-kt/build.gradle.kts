@@ -16,12 +16,7 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-core:2.20.0")
     implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.20.0")
 
-
-//    implementation("io.ktor:ktor-client-core")
-//    implementation("io.ktor:ktor-client-cio")
-//    implementation("io.ktor:ktor-client-logging")
-//    implementation("io.ktor:ktor-serialization-kotlinx-json")
-//    implementation("io.ktor:ktor-client-content-negotiation")
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.hamcrest:hamcrest")
 }
 

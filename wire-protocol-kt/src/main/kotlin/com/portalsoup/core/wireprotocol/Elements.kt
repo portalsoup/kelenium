@@ -4,24 +4,29 @@ import com.portalsoup.core.socket.RemoteDriver
 import com.portalsoup.core.socket.SuccessResponse
 import kotlinx.serialization.Serializable
 
-fun main() {
-    System.setProperty("webdriver.gecko.driver", "/home/portalsoup/IdeaProjects/kelenium/geckodriver")
-    RemoteDriver().use { driver ->
-        driver.navigateTo("https://duckduckgo.com")
-        val elemMap = driver.findElement("css selector", "a:nth-child(2)")
-        println(elemMap)
+class Elements {
+    fun main() {
+        System.setProperty("webdriver.gecko.driver", "/home/portalsoup/IdeaProjects/kelenium/geckodriver")
+        RemoteDriver().use { driver ->
+            driver.navigateTo("https://duckduckgo.com")
+            val elemMap = driver.findElement("css selector", "a:nth-child(2)")
 
-        val foundElements = elemMap.value.map {
-            Element(it.key, it.value, driver)
+            println(elemMap)
+
+            val foundElements = elemMap.value.map {
+                Element(it.key, it.value)
+            }
+
+            println("found elements: ${foundElements.size}")
+            driver.elementClick(foundElements.first().reference)
+            println(foundElements)
+            Thread.sleep(5000)
         }
-
-        println("found elements: ${foundElements.size}")
-        driver.elementClick(foundElements.first().reference)
-        Thread.sleep(5000)
     }
 }
 
-data class Element(val locationStrategy: String, val reference: String, val remoteDriver: RemoteDriver)
+// simple idea for an element
+data class Element(val locationStrategy: String, val reference: String)
 
 @Serializable
 data class LocationStrategy(val using: String, val value: String)

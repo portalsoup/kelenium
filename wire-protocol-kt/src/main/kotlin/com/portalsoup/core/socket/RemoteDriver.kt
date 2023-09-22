@@ -1,5 +1,6 @@
 package com.portalsoup.core.socket
 
+import com.portalsoup.core.util.ILogging
 import com.portalsoup.core.wireprotocol.*
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -11,15 +12,24 @@ import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
+/**
+ * @param path
+ * @param host
+ * @param port
+ * @param capabilities
+ *
+ * @param C The nested
+ */
 class RemoteDriver(
     path: String = System.getProperty("webdriver.gecko.driver"),
     host: String = "127.0.0.1",
     port: Int = 4444,
-): AutoCloseable {
+    capabilities: String? = null
+): AutoCloseable, ILogging {
 
     private val process: Process = ProcessBuilder(path).start()
 
-    val session by lazy { createSession().value }
+    val session: Session by lazy { capabilities.takeUnless { it == null }?.let { createSession(it).value } ?: createSession().value }
 
     val serverUrl = "http://$host:$port"
 
@@ -59,10 +69,13 @@ class RemoteDriver(
     }
 
     inline infix fun <reified T> decodeResponseBody(connection: HttpURLConnection): T {
-        val responseStr = BufferedReader(
-            InputStreamReader(connection.inputStream, "utf-8")
-        ).use { parseReader(it) }
-        println(responseStr)
+        val responseStr = runCatching {
+            BufferedReader(
+                InputStreamReader(connection.inputStream, "utf-8")
+            ).use { parseReader(it) }
+        }
+            .getOrElse { throw RemoteDriverClosedException(it) }
+        log().debug(responseStr)
         return Json.decodeFromString(responseStr)
     }
 
@@ -95,6 +108,7 @@ class RemoteDriver(
     }
 }
 
+class RemoteDriverClosedException(cause: Throwable): RuntimeException("This RemoteDriver instance has already been closed!", cause)
 
 @Serializable
 data class SuccessResponse<T>(val value: T)

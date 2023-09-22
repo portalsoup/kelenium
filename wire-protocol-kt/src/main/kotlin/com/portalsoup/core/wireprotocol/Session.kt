@@ -12,6 +12,6 @@ data class Session(@SerialName("sessionId") val id: String, val capabilities: Js
 data class Status(val message: String, val ready: Boolean)
 
 // https://www.w3.org/TR/webdriver2/#dfn-new-sessions
-fun RemoteDriver.createSession(): SuccessResponse<Session> = post("/session", "{}")
+fun RemoteDriver.createSession(capabilities: String = "{}"): SuccessResponse<Session> = post("/session", capabilities)
 fun RemoteDriver.deleteSession(): SuccessResponse<Unit?> = delete("/session/${session.id}")
 fun RemoteDriver.status(): SuccessResponse<Status> = get("/status")
