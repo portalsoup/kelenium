@@ -1,5 +1,7 @@
 package com.portalsoup.wireprotocol
 
+import kotlin.math.abs
+
 open class BaseTest {
 
     val webdriverPath = "../geckodriver"
@@ -25,4 +27,6 @@ open class BaseTest {
                 """.trimIndent()
     )
 
+    fun absolutePathOfResource(path: String): String = javaClass.classLoader.getResource(path).path
+    fun resourceAsUrl(path: String): String = absolutePathOfResource(path).let { "file://$it" }
 }

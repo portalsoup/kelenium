@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello World HTML</title>
+</head>
+<body>
+<h1>Hello World</h1>
+<button id="counterButton">Increment</button>
+<div id="message"><span id="count">0</span> clicks!</div>
+</body>
+<footer>
+    <script>
+        document.getElementById("counterButton").addEventListener(
+            'click',
+            function() {
+                let count = document.getElementById("count").textContent
+                document.getElementById("count").textContent = parseInt(count) + 1;
+            }
+        );
+    </script>
+</footer>
+</html>
