@@ -46,7 +46,22 @@ class ElementsTests: BaseTest() {
 
             val parent = it.findElement(CSS, "#parent").value.first()
             val children = it.findElementFromElement(parent, CSS, ".match").value // The target one is technically the second to find globally
-            assertThat(it.getElementText(children).value, equalTo("inner"))
+            assertThat(it.getElementText(children).value, equalTo("Inner 1"))
+
+        }
+    }
+
+    @Test
+    fun findElementFromElementsTest() {
+        val testPage = HtmlPages.NestedElements.asUrl()
+        initializeWebdriver().use {
+            it.navigateTo(testPage)
+
+            val parent = it.findElement(CSS, "#parent").value.first()
+            val children = it.findElementsFromElement(parent, CSS, ".match").value
+            assertThat(children.size, equalTo(2))
+            assertThat(it.getElementText(children[0]).value, equalTo("Inner 1"))
+            assertThat(it.getElementText(children[1]).value, equalTo("Inner 2"))
 
         }
     }
