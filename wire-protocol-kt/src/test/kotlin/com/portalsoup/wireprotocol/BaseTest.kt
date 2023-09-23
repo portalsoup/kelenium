@@ -1,13 +1,10 @@
 package com.portalsoup.wireprotocol
 
-import kotlin.math.abs
+import com.portalsoup.wireprotocol.Executables.Geckodriver
 
 open class BaseTest {
 
-    val webdriverPath = "../geckodriver"
-
-    val example1Url = "https://duckduckgo.com/"
-    val example2Url = "https://www.google.com/"
+    val webdriverPath: String = Geckodriver.absolutePathOf()
 
     fun initializeWebdriver() = RemoteDriver(
         path = webdriverPath,
@@ -26,7 +23,4 @@ open class BaseTest {
                 }
                 """.trimIndent()
     )
-
-    fun absolutePathOfResource(path: String): String = javaClass.classLoader.getResource(path).path
-    fun resourceAsUrl(path: String): String = absolutePathOfResource(path).let { "file://$it" }
 }

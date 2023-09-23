@@ -1,6 +1,7 @@
 package com.portalsoup.wireprotocol.api
 
 import com.portalsoup.wireprotocol.BaseTest
+import com.portalsoup.wireprotocol.HtmlPages
 import com.portalsoup.wireprotocol.core.LocationStrategy.*
 import com.portalsoup.wireprotocol.dto.Element
 import org.hamcrest.MatcherAssert.assertThat
@@ -9,20 +10,21 @@ import org.junit.jupiter.api.Test
 
 class ElementsTests: BaseTest() {
 
-    val duckduckgoLearnMoreButtonXpath = "//a[contains(@class, 'learnMore')]"
 
     @Test
     fun findElementTest() {
+        val testPage = HtmlPages.ElementList.asUrl()
         initializeWebdriver().use {
-            it.navigateTo(example1Url)
-            val element = it.findElement(XPATH, duckduckgoLearnMoreButtonXpath).value
+            it.navigateTo(testPage)
+            val element = it.findElement(CSS, "#first").value
             assertThat(element.size, equalTo(1))
+            assertThat(it.getElementText(element.first()).value, equalTo("One"))
         }
     }
 
     @Test
     fun findElementsTest() {
-        val testPage = resourceAsUrl("ElementList.html")
+        val testPage = HtmlPages.ElementList.asUrl()
 
         initializeWebdriver().use {
             it.navigateTo(testPage)
@@ -38,7 +40,7 @@ class ElementsTests: BaseTest() {
 
     @Test
     fun clickElementTest() {
-        val testPage = resourceAsUrl("ClickTest.html")
+        val testPage = HtmlPages.ClickCounter.asUrl()
 
         initializeWebdriver().use {
             it.navigateTo(testPage)
@@ -58,7 +60,7 @@ class ElementsTests: BaseTest() {
     @Test
     fun getElementTextTest() {
         initializeWebdriver().use {
-            val testPage = resourceAsUrl("ClickTest.html")
+            val testPage = HtmlPages.ClickCounter.asUrl()
             println(testPage)
             it.navigateTo(testPage)
             val element = it.findElement(CSS, "#message").value
