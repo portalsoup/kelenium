@@ -39,6 +39,19 @@ class ElementsTests: BaseTest() {
     }
 
     @Test
+    fun findElementFromElementTest() {
+        val testPage = HtmlPages.NestedElements.asUrl()
+        initializeWebdriver().use {
+            it.navigateTo(testPage)
+
+            val parent = it.findElement(CSS, "#parent").value.first()
+            val children = it.findElementFromElement(parent, CSS, ".match").value // The target one is technically the second to find globally
+            assertThat(it.getElementText(children).value, equalTo("inner"))
+
+        }
+    }
+
+    @Test
     fun clickElementTest() {
         val testPage = HtmlPages.ClickCounter.asUrl()
 

@@ -21,10 +21,18 @@ fun RemoteDriver.findElements(using: LocationStrategy, value: String): SuccessRe
 ).let { rawResponse ->
     rawResponse.value
         .also { println(it) }
-        .flatMap { it.map { Element(it.key, it.value) } }
+        .flatMap { e -> e.map { Element(it.key, it.value) } }
         .let { SuccessResponse(it) }
 }
-fun RemoteDriver.findElementFromElement() = Unit
+fun RemoteDriver.findElementFromElement(parent: Element, using: LocationStrategy, value: String): SuccessResponse<Element> = requestBuilder.post<SuccessResponse<Map<String, String>>, FindElementStrategy>(
+    "/session/${session.id}/element/${parent.reference}/element",
+    FindElementStrategy(using.id, value)
+).let { rawResponse ->
+    rawResponse.value
+        .map { Element(it.key, it.value) }
+        .first()
+        .let { SuccessResponse(it) }
+}
 fun RemoteDriver.findElementsFromElements() = Unit
 fun RemoteDriver.findElementFromShadowRoot() = Unit
 fun RemoteDriver.findElementsFromShadowRoot() = Unit
