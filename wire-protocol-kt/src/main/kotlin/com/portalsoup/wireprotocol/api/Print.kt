@@ -1,5 +1,5 @@
 package com.portalsoup.wireprotocol.api
 
-import com.portalsoup.wireprotocol.RemoteDriver
+import com.portalsoup.wireprotocol.RemoteWireDriver
 
-fun RemoteDriver.printPage() = Unit
+fun RemoteWireDriver.printPage() = Unit

@@ -6,7 +6,7 @@ open class BaseTest {
 
     val webdriverPath: String = Geckodriver.absolutePathOf()
 
-    fun initializeWebdriver() = RemoteDriver(
+    fun initializeWebdriver() = RemoteWireDriver(
         path = webdriverPath,
         capabilitiesJson =
         """

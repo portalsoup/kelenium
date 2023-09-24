@@ -1,9 +1,9 @@
 package com.portalsoup.wireprotocol.api
 
-import com.portalsoup.wireprotocol.RemoteDriver
+import com.portalsoup.wireprotocol.RemoteWireDriver
 
-fun RemoteDriver.getAllCookies() = Unit
-fun RemoteDriver.getNamedCookie() = Unit
-fun RemoteDriver.addCookie() = Unit
-fun RemoteDriver.deleteCookie() = Unit
-fun RemoteDriver.deleteAllCookies() = Unit
+fun RemoteWireDriver.getAllCookies() = Unit
+fun RemoteWireDriver.getNamedCookie() = Unit
+fun RemoteWireDriver.addCookie() = Unit
+fun RemoteWireDriver.deleteCookie() = Unit
+fun RemoteWireDriver.deleteAllCookies() = Unit

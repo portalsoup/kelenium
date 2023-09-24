@@ -1,7 +1,7 @@
 package com.portalsoup.wireprotocol.api
 
-import com.portalsoup.wireprotocol.RemoteDriver
+import com.portalsoup.wireprotocol.RemoteWireDriver
 
-fun RemoteDriver.getPageSource() = Unit
-fun RemoteDriver.executeScript() = Unit
-fun RemoteDriver.executeAsyncScript() = Unit
+fun RemoteWireDriver.getPageSource() = Unit
+fun RemoteWireDriver.executeScript() = Unit
+fun RemoteWireDriver.executeAsyncScript() = Unit

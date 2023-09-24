@@ -1,6 +1,6 @@
 package com.portalsoup.wireprotocol.api
 
-import com.portalsoup.wireprotocol.RemoteDriver
+import com.portalsoup.wireprotocol.RemoteWireDriver
 
-fun RemoteDriver.takeScreenshot() = Unit
-fun RemoteDriver.takeElementScreenshot() = Unit
+fun RemoteWireDriver.takeScreenshot() = Unit
+fun RemoteWireDriver.takeElementScreenshot() = Unit

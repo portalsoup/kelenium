@@ -1,12 +1,12 @@
 package com.portalsoup.wireprotocol.api
 
-import com.portalsoup.wireprotocol.RemoteDriver
+import com.portalsoup.wireprotocol.RemoteWireDriver
 
 
-fun RemoteDriver.nullInputSource() = Unit
-fun RemoteDriver.keyInputSource() = Unit
-fun RemoteDriver.pointerInputSource() = Unit
-fun RemoteDriver.wheelInputSource() = Unit
+fun RemoteWireDriver.nullInputSource() = Unit
+fun RemoteWireDriver.keyInputSource() = Unit
+fun RemoteWireDriver.pointerInputSource() = Unit
+fun RemoteWireDriver.wheelInputSource() = Unit
 
-fun RemoteDriver.performActions() = Unit
-fun RemoteDriver.releaseActions() = Unit
+fun RemoteWireDriver.performActions() = Unit
+fun RemoteWireDriver.releaseActions() = Unit

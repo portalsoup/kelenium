@@ -2,6 +2,7 @@ package com.portalsoup.wireprotocol.api
 
 import com.portalsoup.wireprotocol.BaseTest
 import com.portalsoup.wireprotocol.HtmlPages
+import com.portalsoup.wireprotocol.RemoteWireDriver
 import com.portalsoup.wireprotocol.core.LocationStrategy.*
 import com.portalsoup.wireprotocol.dto.Element
 import org.hamcrest.MatcherAssert.assertThat
@@ -94,6 +95,19 @@ class ElementsTests: BaseTest() {
             val element = it.findElement(CSS, "#message").value
             val text = it.getElementText(element.first()).value
             assertThat(text, equalTo("0 clicks!"))
+        }
+    }
+
+    @Test
+    fun sendKeysTest() {
+        val testPage = HtmlPages.TextField.asUrl()
+        RemoteWireDriver(webdriverPath).use {
+            it.navigateTo(testPage)
+            val field = it.findElement(CSS, "#input").value.first()
+            val label = it.findElement(CSS, "#output").value.first()
+            assertThat(it.getElementText(label).value, equalTo("Default value"))
+            it.elementSendKeys(field, "Test value ") // quirk in the html page, the final character is ignored
+            assertThat(it.getElementText(label).value, equalTo("Test value"))
         }
     }
 }

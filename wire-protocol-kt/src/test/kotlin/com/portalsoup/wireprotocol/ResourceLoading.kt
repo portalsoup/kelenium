@@ -19,6 +19,7 @@ enum class Executables(override val path: String): Resource {
 enum class HtmlPages(override val path: String): Resource {
     ClickCounter("static/ClickCounter.html"),
     ElementList("static/ElementList.html"),
-    NestedElements("static/NestedElements.html")
+    NestedElements("static/NestedElements.html"),
+    TextField("static/TextField.html")
     ;
 }

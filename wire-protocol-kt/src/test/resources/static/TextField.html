@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello World HTML</title>
+</head>
+<body>
+<input id="input">
+<span id="output">Default value</span>
+</body>
+<footer>
+    <script>
+        document.getElementById("input").addEventListener("keypress", function() {
+            let content = document.getElementById("input").value;
+            document.getElementById("output").textContent = content;
+        });
+    </script>
+</footer>
+</html>

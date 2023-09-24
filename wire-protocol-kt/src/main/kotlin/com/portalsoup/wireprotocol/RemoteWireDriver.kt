@@ -4,8 +4,8 @@ import com.portalsoup.wireprotocol.api.*
 import com.portalsoup.wireprotocol.core.HttpRequestBuilder
 import com.portalsoup.wireprotocol.dto.Session
 
-class RemoteDriver(
-    path: String = System.getProperty("webdriver.path"),
+class RemoteWireDriver(
+    path: String,
     host: String = "127.0.0.1",
     port: Int = 4444,
     capabilitiesJson: String? = null
