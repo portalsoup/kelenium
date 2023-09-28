@@ -21,6 +21,7 @@ val dependenciesList = listOf(
     DepConstraint("implementation", "org.apache.logging.log4j:log4j-slf4j-impl", PREFER, Versions.log4j),
 
     DepConstraint("testImplementation", "org.junit.jupiter:junit-jupiter", PREFER, "5.10.0-M1"),
+    DepConstraint("testImplementation", "org.junit.jupiter:junit-jupiter-api", PREFER, "5.10.0-M1"),
     DepConstraint("testImplementation", "org.hamcrest:hamcrest", PREFER, "2.2")
 )
 

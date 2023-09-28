@@ -1,4 +1,0 @@
-rootProject.name = 'kelenium'
-include 'wire-protocol-kt'
-include 'JavaSeleniumExample'
-
