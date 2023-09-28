@@ -6,16 +6,18 @@ import com.portalsoup.wireprotocol.dto.Element
 
 class WebElement(private val connection: RemoteDriverConnection, private val element: Element) {
 
-    fun findChild(expression: String): WebElement {
+    fun <E> find(expression: String, l: (WebElement) -> E): E = l.invoke(find(expression))
+    fun find(expression: String): WebElement {
         return connection.wireProtocol
-            .findElement(connection.session, element.locationStrategy, expression)
+            .findElementFromElement(connection.session, element, expression)
             .value
             .let { WebElement(connection, it) }
     }
 
-    fun findChildren(expression: String): List<WebElement> {
+    fun <E> findMany(expression: String, l: (List<WebElement>) -> E) = l.invoke(findMany(expression))
+    fun findMany(expression: String): List<WebElement> {
         return connection.wireProtocol
-            .findElements(connection.session, element.locationStrategy, expression)
+            .findElementsFromElement(connection.session, element, expression)
             .value
             .map { WebElement(connection, it) }
     }

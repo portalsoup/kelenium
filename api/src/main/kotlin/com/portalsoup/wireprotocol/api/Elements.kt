@@ -8,42 +8,54 @@ import com.portalsoup.wireprotocol.dto.SuccessResponse
 import kotlinx.serialization.Serializable
 
 // Locators
-fun WireProtocol.findElement(session: Session, using: LocationStrategy, value: String): SuccessResponse<Element> = requestBuilder.post<SuccessResponse<Map<String, String>>, FindElementStrategy>(
-    "/session/${session.id}/element",
-    FindElementStrategy(using.id, value)
-).let { rawResponse ->
-    rawResponse.value
-        .onEach { println("DEBUG: $it") }
+fun WireProtocol.findElement(session: Session, using: LocationStrategy, value: String): SuccessResponse<Element> {
+    val result = requestBuilder.post<SuccessResponse<Map<String, String>>, FindElementStrategy>(
+        "/session/${session.id}/element",
+        FindElementStrategy(using.id, value)
+    ).value
+
+    val element = result
         .map { Element(using, it.key, it.value) }
         .first()
-        .let { SuccessResponse(it) }
+
+    return SuccessResponse(element)
+
 }
-fun WireProtocol.findElements(session: Session, using: LocationStrategy, value: String): SuccessResponse<List<Element>> = requestBuilder.post<SuccessResponse<List<Map<String, String>>>, FindElementStrategy>(
-    "/session/${session.id}/elements",
-    FindElementStrategy(using.id, value)
-).let { rawResponse ->
-    rawResponse.value
-        .also { println(it) }
+
+fun WireProtocol.findElements(session: Session, using: LocationStrategy, value: String): SuccessResponse<List<Element>> {
+    val result = requestBuilder.post<SuccessResponse<List<Map<String, String>>>, FindElementStrategy>(
+        "/session/${session.id}/elements",
+        FindElementStrategy(using.id, value)
+    ).value
+
+    val element = result
         .flatMap { e -> e.map { Element(using, it.key, it.value) } }
-        .let { SuccessResponse(it) }
+
+    return SuccessResponse(element)
 }
-fun WireProtocol.findElementFromElement(session: Session, parent: Element, using: LocationStrategy, value: String): SuccessResponse<Element> = requestBuilder.post<SuccessResponse<Map<String, String>>, FindElementStrategy>(
-    "/session/${session.id}/element/${parent.reference}/element",
-    FindElementStrategy(using.id, value)
-).let { rawResponse ->
-    rawResponse.value
-        .map { Element(using, it.key, it.value) }
+
+fun WireProtocol.findElementFromElement(session: Session, parent: Element, value: String): SuccessResponse<Element> {
+    val result = requestBuilder.post<SuccessResponse<Map<String, String>>, FindElementStrategy>(
+        "/session/${session.id}/element/${parent.reference}/element",
+        FindElementStrategy(parent.locationStrategy.id, value)
+    ).value
+
+    val element = result
+        .map { Element(parent.locationStrategy, it.key, it.value) }
         .first()
-        .let { SuccessResponse(it) }
+
+    return SuccessResponse(element)
 }
-fun WireProtocol.findElementsFromElement(session: Session, parent: Element, using: LocationStrategy, value: String): SuccessResponse<List<Element>> = requestBuilder.post<SuccessResponse<List<Map<String, String>>>, FindElementStrategy>(
-    "/session/${session.id}/element/${parent.reference}/elements",
-    FindElementStrategy(using.id, value)
-).let { rawResponse ->
-    rawResponse.value
-        .also { println(it) }
-        .flatMap { e -> e.map { Element(using, it.key, it.value) } }
-        .let { SuccessResponse(it) }
+fun WireProtocol.findElementsFromElement(session: Session, parent: Element, value: String): SuccessResponse<List<Element>> {
+    val result =  requestBuilder.post<SuccessResponse<List<Map<String, String>>>, FindElementStrategy>(
+        "/session/${session.id}/element/${parent.reference}/elements",
+        FindElementStrategy(parent.locationStrategy.id, value)
+    ).value
+
+    val element = result
+        .flatMap { e -> e.map { Element(parent.locationStrategy, it.key, it.value) } }
+
+    return SuccessResponse(element)
 }
 
 fun WireProtocol.findElementFromShadowRoot() = Unit
@@ -70,7 +82,7 @@ fun WireProtocol.elementClick(session: Session, element: Element): SuccessRespon
 fun WireProtocol.elementClear() = Unit
 fun WireProtocol.elementSendKeys(session: Session, element: Element, keys: String): SuccessResponse<Unit?> = requestBuilder.post(
     "/session/${session.id}/element/${element.reference}/value",
-            SendKeys(keys)
+    SendKeys(keys)
 )
 
 @Serializable
