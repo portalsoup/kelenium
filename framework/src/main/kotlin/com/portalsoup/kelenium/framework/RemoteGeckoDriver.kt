@@ -3,7 +3,7 @@ package com.portalsoup.kelenium.framework
 data class GeckoDriverConnectionContext(override val host: String, override val port: Int, override val capabilities: String?, val launchArgs: List<String>): ConnectionContext(host, port, capabilities)
 class RemoteGeckoDriver(path: String): RemoteWebDriver<RemoteGeckoDriver>(path) {
 
-    var connectExisting = false
+    private var connectExisting = false
 
     override val launchArgs: ConnectionContext.() -> List<String> = {
         mutableListOf(

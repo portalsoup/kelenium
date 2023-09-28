@@ -114,4 +114,15 @@ class ElementsTests: BaseTest() {
             assertThat(api.getElementText(it, label).value, equalTo("Test value"))
         }
     }
+
+    @Test
+    fun tagNameTest() {
+        val testPage = HtmlPages.TextField.asUrl()
+        val api = getApi()
+        useSession(api) {
+            api.navigateTo(it, testPage)
+            val label = api.findElement(it, CSS, "#output").value
+            assertThat(api.getElementTagName(it, label).value, equalTo("span"))
+        }
+    }
 }

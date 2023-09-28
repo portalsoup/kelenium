@@ -9,7 +9,7 @@ import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 
-class HttpRequestBuilder(val baseUrl: String) {
+class HttpRequestBuilder(private val baseUrl: String) {
 
     fun buildRequest(method: String, url: URL): HttpURLConnection {
         val contentType = "application/json"

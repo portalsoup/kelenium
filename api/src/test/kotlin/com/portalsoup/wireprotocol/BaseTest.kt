@@ -6,9 +6,7 @@ import com.portalsoup.wireprotocol.api.createSession
 import com.portalsoup.wireprotocol.api.deleteSession
 import com.portalsoup.wireprotocol.core.HttpRequestBuilder
 import com.portalsoup.wireprotocol.dto.Session
-import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 
 

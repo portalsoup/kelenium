@@ -1,68 +1,38 @@
 package com.portalsoup.kelenium.framework
 
+import com.portalsoup.kelenium.framework.actions.ConnectionTimeouts
+import com.portalsoup.kelenium.framework.actions.Document
+import com.portalsoup.kelenium.framework.actions.Navigate
+import com.portalsoup.kelenium.framework.actions.Screenshot
 import com.portalsoup.wireprotocol.api.WireProtocol
 import com.portalsoup.wireprotocol.api.createSession
 import com.portalsoup.wireprotocol.api.deleteSession
-import com.portalsoup.wireprotocol.api.navigateTo
+import com.portalsoup.wireprotocol.api.status
 import com.portalsoup.wireprotocol.core.HttpRequestBuilder
 import com.portalsoup.wireprotocol.dto.Session
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import com.portalsoup.wireprotocol.dto.Status
+import com.portalsoup.wireprotocol.dto.Timeouts
 import java.io.Closeable
-import java.io.File
 
-class RemoteDriverConnection<D: RemoteWebDriver<D>>(
-    val driver: D,
-    val requestBuilder: HttpRequestBuilder,
-    val capabilities: String? = null
+class RemoteDriverConnection(
+    requestBuilder: HttpRequestBuilder,
+    private val capabilities: String? = null
 ): Closeable {
-    private val wireProtocol = WireProtocol(requestBuilder)
-    private val session: Session by lazy { wireProtocol.createSession(capabilities).value }
+    internal val wireProtocol = WireProtocol(requestBuilder)
+    internal val session: Session by lazy { wireProtocol.createSession(capabilities).value }
 
+    val navigate = Navigate(this)
 
+    fun timeouts(l: Timeouts.() -> Unit) { Timeouts().apply(l).also { timeouts(it) } }
+    val timeouts = ConnectionTimeouts(this)
+
+    fun status(): Status = wireProtocol.status().value
+    fun capture(): Screenshot = Screenshot(this)
+
+    fun document(): Document = Document(this)
+    fun <E> document(l: Document.() -> E) = l.invoke(document())
 
     override fun close() {
         wireProtocol.deleteSession(session)
-    }
-
-    fun navigateTo(url: String) {
-        wireProtocol.navigateTo(session, url)
-    }
-}
-
-fun findDriver(path: String): RemoteGeckoDriver {
-    File(path)
-        .apply {
-            takeIf { it.exists() } ?: throw RuntimeException("Found no file at the specified path!")
-            takeIf { it.canExecute() } ?: throw RuntimeException("Could not execute the driver executable!")
-        }
-    return RemoteGeckoDriver(path)
-}
-
- suspend fun main() {
-    val path = System.getProperty("user.home") + "/.webdriver/geckodriver"
-    val driver = findDriver(path).use { driver ->
-        val context = driver.newConnectionContext()
-        val context2 = driver.newConnectionContext()
-
-        println(context)
-        println(context2)
-        // TODO make this test async for POC
-
-        val connection1 = GlobalScope.async {
-            driver.connect(context).use {
-                it.navigateTo("https://duckduckgo.com")
-                Thread.sleep(5000)
-            }}
-        val connection2 = GlobalScope.async {
-            driver.connect(context2).use {
-                it.navigateTo("https://duckduckgo.com")
-                Thread.sleep(5000)
-            }}
-
-
-        connection1.await()
-        connection2.await()
     }
 }

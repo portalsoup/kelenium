@@ -13,7 +13,8 @@ fun WireProtocol.findElement(session: Session, using: LocationStrategy, value: S
     FindElementStrategy(using.id, value)
 ).let { rawResponse ->
     rawResponse.value
-        .map { Element(it.key, it.value) }
+        .onEach { println("DEBUG: $it") }
+        .map { Element(using, it.key, it.value) }
         .first()
         .let { SuccessResponse(it) }
 }
@@ -23,7 +24,7 @@ fun WireProtocol.findElements(session: Session, using: LocationStrategy, value: 
 ).let { rawResponse ->
     rawResponse.value
         .also { println(it) }
-        .flatMap { e -> e.map { Element(it.key, it.value) } }
+        .flatMap { e -> e.map { Element(using, it.key, it.value) } }
         .let { SuccessResponse(it) }
 }
 fun WireProtocol.findElementFromElement(session: Session, parent: Element, using: LocationStrategy, value: String): SuccessResponse<Element> = requestBuilder.post<SuccessResponse<Map<String, String>>, FindElementStrategy>(
@@ -31,7 +32,7 @@ fun WireProtocol.findElementFromElement(session: Session, parent: Element, using
     FindElementStrategy(using.id, value)
 ).let { rawResponse ->
     rawResponse.value
-        .map { Element(it.key, it.value) }
+        .map { Element(using, it.key, it.value) }
         .first()
         .let { SuccessResponse(it) }
 }
@@ -41,7 +42,7 @@ fun WireProtocol.findElementsFromElement(session: Session, parent: Element, usin
 ).let { rawResponse ->
     rawResponse.value
         .also { println(it) }
-        .flatMap { e -> e.map { Element(it.key, it.value) } }
+        .flatMap { e -> e.map { Element(using, it.key, it.value) } }
         .let { SuccessResponse(it) }
 }
 
@@ -57,7 +58,7 @@ fun WireProtocol.getElementAttribute() = Unit
 fun WireProtocol.getElementProperty() = Unit
 fun WireProtocol.getElementCssValue() = Unit
 fun WireProtocol.getElementText(session: Session, element: Element): SuccessResponse<String> = requestBuilder.get("/session/${session.id}/element/${element.reference}/text")
-fun WireProtocol.getElementTagName() = Unit
+fun WireProtocol.getElementTagName(session: Session, element: Element): SuccessResponse<String> = requestBuilder.get("/session/${session.id}/element/${element.reference}/name")
 fun WireProtocol.getElementRect() = Unit
 fun WireProtocol.isElementEnabled() = Unit
 fun WireProtocol.getComputedRole() = Unit

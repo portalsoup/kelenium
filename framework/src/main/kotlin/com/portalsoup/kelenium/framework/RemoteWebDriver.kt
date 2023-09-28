@@ -4,7 +4,6 @@ import com.portalsoup.wireprotocol.core.HttpRequestBuilder
 import java.io.Closeable
 import java.net.Socket
 import java.util.concurrent.atomic.AtomicInteger
-import javax.management.StringValueExp
 
 abstract class ConnectionContext(open val host: String, open val port: Int, open val capabilities: String?)
 
@@ -56,10 +55,10 @@ abstract class RemoteWebDriver<D: RemoteWebDriver<D>>(val path: String): AutoClo
         }
     }
 
-    open fun connect(context: ConnectionContext): RemoteDriverConnection<D> {
+    open fun connect(context: ConnectionContext): RemoteDriverConnection {
         buildProcess(context)
 
-        return RemoteDriverConnection(this as D, HttpRequestBuilder("http://${context.host}:${context.port}"), context.capabilities)
+        return RemoteDriverConnection(HttpRequestBuilder("http://${context.host}:${context.port}"), context.capabilities)
 
     }
 

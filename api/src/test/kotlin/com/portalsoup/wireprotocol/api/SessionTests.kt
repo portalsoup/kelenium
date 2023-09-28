@@ -2,7 +2,6 @@ package com.portalsoup.wireprotocol.api
 
 import com.portalsoup.wireprotocol.BaseTest
 import com.portalsoup.wireprotocol.HtmlPages
-import com.portalsoup.wireprotocol.core.HttpRequestBuilder
 import com.portalsoup.wireprotocol.dto.RemoteDriverClosedException
 import com.portalsoup.wireprotocol.dto.Session
 import org.hamcrest.MatcherAssert.assertThat

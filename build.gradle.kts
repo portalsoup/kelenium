@@ -7,9 +7,9 @@ val ktorVersion = "2.1.3"
 enum class ConstraintType { PREFER, STRICT, REJECT, REQUIRE }
 data class DepConstraint(val scope: String, val notation: String, val type: ConstraintType, val version: String)
 object Versions {
-    val ktor = "2.3.1"
-    val exposed = "0.41.1"
-    val log4j = "2.20.0"
+    const val ktor = "2.3.1"
+    const val exposed = "0.41.1"
+    const val log4j = "2.20.0"
 }
 
 val dependenciesList = listOf(
