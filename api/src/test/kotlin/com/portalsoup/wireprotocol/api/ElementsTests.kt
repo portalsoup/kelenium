@@ -3,7 +3,7 @@ package com.portalsoup.wireprotocol.api
 import com.portalsoup.wireprotocol.BaseTest
 import com.portalsoup.wireprotocol.HtmlPages
 import com.portalsoup.wireprotocol.core.LocationStrategy.*
-import com.portalsoup.wireprotocol.dto.Element
+import com.portalsoup.wireprotocol.dto.ElementRef
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
@@ -76,8 +76,8 @@ class ElementsTests: BaseTest() {
         useSession(api) {
             api.navigateTo(it, testPage)
 
-            val button: Element = api.findElement(it, CSS,  "#counterButton").value
-            val count: Element = api.findElement(it, CSS, "#count").value
+            val button: ElementRef = api.findElement(it, CSS,  "#counterButton").value
+            val count: ElementRef = api.findElement(it, CSS, "#count").value
 
             val originalCount = api.getElementText(it, count).value.toInt()
             assertThat(originalCount, equalTo(0))

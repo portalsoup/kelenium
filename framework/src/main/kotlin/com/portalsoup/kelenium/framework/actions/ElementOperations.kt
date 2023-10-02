@@ -1,7 +1,7 @@
 package com.portalsoup.kelenium.framework.actions
 
 import com.portalsoup.kelenium.framework.RemoteDriverConnection
-import com.portalsoup.kelenium.framework.dto.WebElement
+import com.portalsoup.kelenium.framework.element.WebElement
 import com.portalsoup.wireprotocol.api.findElement
 import com.portalsoup.wireprotocol.api.findElements
 import com.portalsoup.wireprotocol.core.LocationStrategy
