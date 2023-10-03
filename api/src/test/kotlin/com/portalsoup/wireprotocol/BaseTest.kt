@@ -6,8 +6,10 @@ import com.portalsoup.wireprotocol.api.createSession
 import com.portalsoup.wireprotocol.api.deleteSession
 import com.portalsoup.wireprotocol.core.HttpRequestBuilder
 import com.portalsoup.wireprotocol.dto.Session
+import com.portalsoup.wireprotocol.serialization.dto.success.SessionCreated
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
+import java.lang.AssertionError
 
 
 open class BaseTest {
@@ -29,8 +31,9 @@ open class BaseTest {
             driver.waitFor()
         }.onFailure { driver.destroyForcibly() }
     }
+
     val headlessCapabilities =
-                """
+        """
                 {
                     "capabilities": {
                         "alwaysMatch": {
@@ -45,9 +48,11 @@ open class BaseTest {
                 """.trimIndent()
 
     fun getApi() = WireProtocol(HttpRequestBuilder("http://127.0.0.1:4444"))
-    fun useSession(api: WireProtocol, l: (Session) -> Unit) =
-        api.createSession(headlessCapabilities)
-            .value
-            .apply(l)
-            .let { api.deleteSession(it) }
+    fun useSession(api: WireProtocol, l: (SessionCreated) -> Unit) {
+        val response = api.createSession(headlessCapabilities).value
+        when (response) {
+            is SessionCreated -> response.apply(l).let { api.deleteSession(it) }
+            else -> throw AssertionError("Failed to create sesssion: $response")
+        }
+    }
 }

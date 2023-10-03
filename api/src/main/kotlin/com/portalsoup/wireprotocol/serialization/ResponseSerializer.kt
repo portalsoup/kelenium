@@ -9,10 +9,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.json.JsonDecoder
-import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.*
 
 //@Serializer(forClass = Response::class)
 object ResponseSerializer : KSerializer<Response> {
@@ -22,6 +19,7 @@ object ResponseSerializer : KSerializer<Response> {
         val rootElement = jsonDecoder.decodeJsonElement()
         val value = rootElement.jsonObject["value"] ?: throw SerializationException("All responses should contain a root value property")
 
+        if (value is JsonNull) return Response(Unit)
         if (value is JsonPrimitive) return Response(value.jsonPrimitive.content)
 
         val maybeError = value.jsonObject["error"]?.jsonPrimitive?.content

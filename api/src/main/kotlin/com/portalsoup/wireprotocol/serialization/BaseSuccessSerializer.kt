@@ -2,6 +2,7 @@ package com.portalsoup.wireprotocol.serialization
 
 import com.portalsoup.wireprotocol.serialization.dto.success.BaseSuccess
 import com.portalsoup.wireprotocol.serialization.dto.success.SessionCreated
+import com.portalsoup.wireprotocol.serialization.dto.success.Status
 import com.portalsoup.wireprotocol.serialization.dto.success.Timeouts
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
@@ -24,6 +25,7 @@ object BaseSuccessSerializer : KSerializer<BaseSuccess> {
         return when {
             SessionCreated.isType(jsonElement) -> responseJson.decodeFromJsonElement<SessionCreated>(jsonElement)
             Timeouts.isType(jsonElement) -> responseJson.decodeFromJsonElement<Timeouts>(jsonElement)
+            Status.isType(jsonElement) -> responseJson.decodeFromJsonElement<Status>(jsonElement)
             else -> throw SerializationException("Couldn't identify successful response: $jsonElement")
         }
     }
