@@ -11,7 +11,6 @@ import com.portalsoup.wireprotocol.api.status
 import com.portalsoup.wireprotocol.core.HttpRequestBuilder
 import com.portalsoup.wireprotocol.dto.Session
 import com.portalsoup.wireprotocol.dto.Status
-import com.portalsoup.wireprotocol.dto.Timeouts
 import java.io.Closeable
 
 class RemoteDriverConnection(
