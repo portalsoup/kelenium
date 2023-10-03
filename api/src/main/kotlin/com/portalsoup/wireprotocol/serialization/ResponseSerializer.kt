@@ -11,7 +11,23 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.*
 
-//@Serializer(forClass = Response::class)
+/**
+ * The custom serializer used by the root Response type.
+ *
+ * This serializer first determines whether the payload "value" is a nested object or primitive value before
+ * boxing it Response.
+ *
+ * If the payload is a nested object, then it is determined to be an error state or not, and is then delegated to the
+ * custom serializers used by either BaseSuccess or BaseFailure
+ *
+ * @see Response
+ *
+ * @see BaseFailure
+ * @see BaseFailureSerializer
+ *
+ * @see BaseSuccess
+ * @see BaseSuccessSerializer
+ */
 object ResponseSerializer : KSerializer<Response> {
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Response")
     override fun deserialize(decoder: Decoder): Response {

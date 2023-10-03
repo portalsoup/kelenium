@@ -1,7 +1,9 @@
 package com.portalsoup.wireprotocol.serialization
 
+import com.portalsoup.wireprotocol.serialization.dto.Response
 import com.portalsoup.wireprotocol.serialization.dto.failure.BaseFailure
 import com.portalsoup.wireprotocol.serialization.dto.failure.SessionNotCreated
+import com.portalsoup.wireprotocol.serialization.dto.success.BaseSuccess
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -11,7 +13,6 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.jsonObject
-
 
 object BaseFailureSerializer : KSerializer<BaseFailure> {
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("BaseFailure")
