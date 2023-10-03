@@ -46,7 +46,7 @@ class ElementsTests: BaseTest() {
             api.navigateTo(it, testPage)
 
             val parent = api.findElement(it, CSS, "#parent").value
-            val children = api.findElementFromElement(it, parent, CSS, ".match").value // The target one is technically the second to find globally
+            val children = api.findElementFromElement(it, parent, ".match").value // The target one is technically the second to find globally
             assertThat(api.getElementText(it, children).value, equalTo("Inner 1"))
 
         }
@@ -60,7 +60,7 @@ class ElementsTests: BaseTest() {
             api.navigateTo(it, testPage)
 
             val parent = api.findElement(it, CSS, "#parent").value
-            val children = api.findElementsFromElement(it, parent, CSS, ".match").value
+            val children = api.findElementsFromElement(it, parent, ".match").value
             assertThat(children.size, equalTo(2))
             assertThat(api.getElementText(it, children[0]).value, equalTo("Inner 1"))
             assertThat(api.getElementText(it, children[1]).value, equalTo("Inner 2"))
