@@ -5,6 +5,7 @@ import com.portalsoup.kelenium.framework.element.WebElement
 import com.portalsoup.wireprotocol.api.findElement
 import com.portalsoup.wireprotocol.api.findElements
 import com.portalsoup.wireprotocol.core.LocationStrategy
+import com.portalsoup.wireprotocol.serialization.dto.success.ElementRef
 
 class Document(override val connection: RemoteDriverConnection) : RemoteWebdriverOperation {
     class Find(override val connection: RemoteDriverConnection): RemoteWebdriverOperation {
@@ -12,6 +13,10 @@ class Document(override val connection: RemoteDriverConnection) : RemoteWebdrive
             connection.wireProtocol
                 .findElement(connection.session, strategy, expression)
                 .value
+                .let { when (it) {
+                    is ElementRef -> it
+                    else -> throw RuntimeException("Failed to find an element $it")
+                } }
                 .let { WebElement(connection, it) }
 
         fun elements(strategy: LocationStrategy, expression: String): List<WebElement> =

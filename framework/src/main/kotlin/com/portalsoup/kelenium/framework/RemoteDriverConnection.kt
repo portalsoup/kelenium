@@ -11,6 +11,8 @@ import com.portalsoup.wireprotocol.api.status
 import com.portalsoup.wireprotocol.core.HttpRequestBuilder
 import com.portalsoup.wireprotocol.dto.Session
 import com.portalsoup.wireprotocol.dto.Status
+import com.portalsoup.wireprotocol.serialization.dto.success.SessionCreated
+import com.portalsoup.wireprotocol.serialization.dto.success.Timeouts
 import java.io.Closeable
 
 class RemoteDriverConnection(
@@ -18,14 +20,22 @@ class RemoteDriverConnection(
     private val capabilities: String? = null
 ): Closeable {
     internal val wireProtocol = WireProtocol(requestBuilder)
-    internal val session: Session by lazy { wireProtocol.createSession(capabilities).value }
+    internal val session: SessionCreated by lazy {
+        when (val obj = wireProtocol.createSession(capabilities).value) {
+            is SessionCreated -> obj
+            else -> throw RuntimeException("Failed to create a new session")
+        }
+    }
 
     val navigate = Navigate(this)
 
     fun timeouts(l: Timeouts.() -> Unit) { Timeouts().apply(l).also { timeouts(it) } }
     val timeouts = ConnectionTimeouts(this)
 
-    fun status(): Status = wireProtocol.status().value
+    fun status(): Status = when (val obj = wireProtocol.status().value) {
+        is Status -> obj
+        else -> throw RuntimeException("Failed to read status: $obj")
+    }
     fun capture(): Screenshot = Screenshot(this)
 
     fun document(): Document = Document(this)

@@ -1,9 +1,10 @@
-package com.portalsoup.wireprotocol.serialization
+package com.portalsoup.wireprotocol.serialization.serializers
 
 import com.portalsoup.wireprotocol.serialization.dto.success.BaseSuccess
 import com.portalsoup.wireprotocol.serialization.dto.success.SessionCreated
 import com.portalsoup.wireprotocol.serialization.dto.success.Status
 import com.portalsoup.wireprotocol.serialization.dto.success.Timeouts
+import com.portalsoup.wireprotocol.serialization.responseJson
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.SerialDescriptor

@@ -2,41 +2,42 @@ package com.portalsoup.wireprotocol.api
 
 import com.portalsoup.wireprotocol.BaseTest
 import com.portalsoup.wireprotocol.HtmlPages
-import com.portalsoup.wireprotocol.core.LocationStrategy.*
-import com.portalsoup.wireprotocol.dto.ElementRef
+import com.portalsoup.wireprotocol.core.LocationStrategy
+import com.portalsoup.wireprotocol.serialization.dto.success.ElementRef
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
 
 class ElementsTests: BaseTest() {
 
-//
-//    @Test
-//    fun findElementTest() {
-//        val testPage = HtmlPages.ElementList.asUrl()
-//        val api = getApi()
-//        useSession(api) {
-//            api.navigateTo(it, testPage)
-//            val element = api.findElement(it, CSS, "#first").value
-//            assertThat(api.getElementText(it, element).value, equalTo("One"))
-//        }
-//    }
-//
-//    @Test
-//    fun findElementsTest() {
-//        val testPage = HtmlPages.ElementList.asUrl()
-//        val api = getApi()
-//        useSession(api) {
-//            api.navigateTo(it, testPage)
-//
-//            val listItems = api.findElements(it, TAG, "li").value
-//
-//            assertThat(listItems.size, equalTo(3))
-//            assertThat(api.getElementText(it, listItems[0]).value, equalTo("One"))
-//            assertThat(api.getElementText(it, listItems[1]).value, equalTo("Two"))
-//            assertThat(api.getElementText(it, listItems[2]).value, equalTo("Three"))
-//        }
-//    }
+
+    @Test
+    fun findElementTest() {
+        val testPage = HtmlPages.ElementList.asUrl()
+        val api = getApi()
+        useSession(api) {
+            api.navigateTo(it, testPage)
+            val element = api.findElement(it, LocationStrategy.CSS, "#first").value as Array<ElementRef>
+            val text = api.getElementText(it, element.first()).value as String
+            assertThat(text, equalTo("One"))
+        }
+    }
+
+    @Test
+    fun findElementsTest() {
+        val testPage = HtmlPages.ElementList.asUrl()
+        val api = getApi()
+        useSession(api) {
+            api.navigateTo(it, testPage)
+
+            val listItems = api.findElements(it, LocationStrategy.TAG, "li").value
+
+            assertThat(listItems.size, equalTo(3))
+            assertThat(api.getElementText(it, listItems[0]).value, equalTo("One"))
+            assertThat(api.getElementText(it, listItems[1]).value, equalTo("Two"))
+            assertThat(api.getElementText(it, listItems[2]).value, equalTo("Three"))
+        }
+    }
 //
 //    @Test
 //    fun findElementFromElementTest() {
