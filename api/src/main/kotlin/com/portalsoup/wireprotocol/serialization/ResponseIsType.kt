@@ -9,3 +9,4 @@ import kotlinx.serialization.json.JsonElement
 interface ResponseIsType<J: JsonElement> {
     fun isType(element: J): Boolean
 }
+

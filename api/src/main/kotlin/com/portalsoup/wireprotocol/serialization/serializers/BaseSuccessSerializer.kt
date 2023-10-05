@@ -14,19 +14,21 @@ import kotlinx.serialization.json.*
 object BaseSuccessSerializer : KSerializer<BaseSuccess> {
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("BaseSuccess")
 
+    private inline fun <reified T: BaseSuccess> decode(jsonElement: JsonElement) = responseJson.decodeFromJsonElement<T>(jsonElement)
+
     override fun deserialize(decoder: Decoder): BaseSuccess {
         val jsonDecoder = decoder as? JsonDecoder
             ?: throw SerializationException("This serializer can only be used with Json")
 
         val jsonElement = jsonDecoder.decodeJsonElement().jsonObject
-
+        
         return when {
-            SessionCreated.isType(jsonElement) -> responseJson.decodeFromJsonElement<SessionCreated>(jsonElement)
-            Timeouts.isType(jsonElement) -> responseJson.decodeFromJsonElement<Timeouts>(jsonElement)
-            Status.isType(jsonElement) -> responseJson.decodeFromJsonElement<Status>(jsonElement)
-            ElementRef.isType(jsonElement) -> responseJson.decodeFromJsonElement<ElementRef>(jsonElement)
-            WindowRect.isType(jsonElement) -> responseJson.decodeFromJsonElement<WindowRect>(jsonElement)
-            NewWindow.isType(jsonElement) -> responseJson.decodeFromJsonElement<NewWindow>(jsonElement)
+            SessionCreated.isType(jsonElement) -> decode<SessionCreated>(jsonElement)
+            Timeouts.isType(jsonElement) -> decode<Timeouts>(jsonElement)
+            Status.isType(jsonElement) -> decode<Status>(jsonElement)
+            ElementRef.isType(jsonElement) -> decode<ElementRef>(jsonElement)
+            WindowRect.isType(jsonElement) -> decode<WindowRect>(jsonElement)
+            NewWindow.isType(jsonElement) -> decode<NewWindow>(jsonElement)
             else -> throw SerializationException("Couldn't identify successful response: $jsonElement")
         }
     }
