@@ -14,19 +14,11 @@ fun WireProtocol.findElement(session: SessionCreated, using: LocationStrategy, v
     return requestBuilder.post("/session/${session.id}/element", FindElementStrategy(using.id, value))
 }
 
-fun WireProtocol.findElements(session: SessionCreated, using: LocationStrategy, value: String): SuccessResponse<List<ElementRef>> {
-    val result = requestBuilder.post<SuccessResponse<List<Map<String, String>>>, FindElementStrategy>(
-        "/session/${session.id}/elements",
-        FindElementStrategy(using.id, value)
-    ).value
-
-    val element = result
-        .flatMap { e -> e.map { ElementRef(it.key, it.value) } }
-
-    return SuccessResponse(element)
+fun WireProtocol.findElements(session: SessionCreated, using: LocationStrategy, value: String): Response {
+     return requestBuilder.post("/session/${session.id}/elements", FindElementStrategy(using.id, value))
 }
 
-fun WireProtocol.findElementFromElement(session: Session, parent: ElementRef, value: String): SuccessResponse<ElementRef> = TODO()
+fun WireProtocol.findElementFromElement(session: SessionCreated, parent: ElementRef, value: String): Response = TODO()
 fun WireProtocol.findElementsFromElement(session: SessionCreated, locationStrategy: LocationStrategy, parent: ElementRef, value: String): Response = TODO()
 
 fun WireProtocol.findElementFromShadowRoot() = Unit
@@ -49,9 +41,9 @@ fun WireProtocol.getComputdLabel() = Unit
 
 // interaction
 
-fun WireProtocol.elementClick(session: Session, element: ElementRef): SuccessResponse<Unit?> = requestBuilder.post("/session/${session.id}/element/${element.reference}/click", "{}")
+fun WireProtocol.elementClick(session: SessionCreated, element: ElementRef): SuccessResponse<Unit?> = requestBuilder.post("/session/${session.id}/element/${element.reference}/click", "{}")
 fun WireProtocol.elementClear() = Unit
-fun WireProtocol.elementSendKeys(session: Session, element: ElementRef, keys: String): SuccessResponse<Unit?> = requestBuilder.post(
+fun WireProtocol.elementSendKeys(session: SessionCreated, element: ElementRef, keys: String): SuccessResponse<Unit?> = requestBuilder.post(
     "/session/${session.id}/element/${element.reference}/value",
     SendKeys(keys)
 )

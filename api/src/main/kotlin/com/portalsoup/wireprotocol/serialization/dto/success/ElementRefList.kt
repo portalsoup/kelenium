@@ -1,5 +1,6 @@
 package com.portalsoup.wireprotocol.serialization.dto.success
 
-import java.util.LinkedList
+import kotlinx.serialization.Serializable
 
-class ElementRefList: LinkedList<ElementRef>()
+@Serializable
+class ElementRefList: ArrayList<ElementRef>()

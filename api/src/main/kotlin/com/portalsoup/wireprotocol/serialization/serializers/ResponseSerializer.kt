@@ -3,7 +3,6 @@ package com.portalsoup.wireprotocol.serialization.serializers
 import com.portalsoup.wireprotocol.serialization.dto.Response
 import com.portalsoup.wireprotocol.serialization.dto.failure.BaseFailure
 import com.portalsoup.wireprotocol.serialization.dto.success.BaseSuccess
-import com.portalsoup.wireprotocol.serialization.dto.success.ElementRef
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -39,15 +38,8 @@ object ResponseSerializer : KSerializer<Response> {
         return when (value) {
             is JsonPrimitive -> jsonPrimitive(value)
             is JsonNull -> jsonNull()
-            is JsonObject -> when (value.containsKey("error")) {
-                false -> when (value.all { it.key.startsWith("element-") }) {
-                        true -> jsonDecoder.json.decodeFromJsonElement(ElementSerializer, value).let { Response(it) }
-                        false -> jsonDecoder.json.decodeFromJsonElement(BaseSuccess.serializer(), value).let { Response(it) }
-                    }
-                true -> jsonDecoder.json.decodeFromJsonElement(BaseFailure.serializer(), value).let { Response(it) }
-            }
-
-            is JsonArray -> throw SerializationException("JsonArray not yet supported")
+            is JsonObject -> jsonObject(jsonDecoder, value)
+            is JsonArray -> jsonArray(decoder, value)
         }
     }
 
@@ -58,7 +50,16 @@ object ResponseSerializer : KSerializer<Response> {
 
     private fun jsonPrimitive(value: JsonPrimitive) = Response(value.content)
     private fun jsonNull() = Response(Unit)
-    private fun jsonObject(value: JsonObject) {
+    private fun jsonObject(decoder: JsonDecoder, value: JsonObject): Response =
+         when (value.containsKey("error")) {
+            true -> decoder.json.decodeFromJsonElement(BaseFailure.serializer(), value).let { Response(it) }
+            false -> when (value.all { it.key.startsWith("element-") }) {
+                true -> decoder.json.decodeFromJsonElement(ElementSerializer, value).let { Response(it) }
+                false -> decoder.json.decodeFromJsonElement(BaseSuccess.serializer(), value).let { Response(it) }
+            }
+        }
 
-    }
+    private fun jsonArray(decoder: JsonDecoder, value: JsonArray) = decoder.json
+        .decodeFromJsonElement(ElementListSerializer, value)
+        .let { Response(it) }
 }
