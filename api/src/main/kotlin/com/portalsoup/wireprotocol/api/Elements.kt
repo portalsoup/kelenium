@@ -3,7 +3,6 @@ package com.portalsoup.wireprotocol.api
 import com.portalsoup.wireprotocol.core.LocationStrategy
 import com.portalsoup.wireprotocol.serialization.dto.success.ElementRef
 import com.portalsoup.wireprotocol.dto.FindElementStrategy
-import com.portalsoup.wireprotocol.dto.SuccessResponse
 import com.portalsoup.wireprotocol.serialization.dto.Response
 import com.portalsoup.wireprotocol.serialization.dto.success.SessionCreated
 import kotlinx.serialization.Serializable
@@ -40,9 +39,9 @@ fun WireProtocol.getComputdLabel() = Unit
 
 // interaction
 
-fun WireProtocol.elementClick(session: SessionCreated, element: ElementRef): SuccessResponse<Unit?> = requestBuilder.post("/session/${session.id}/element/${element.reference}/click", "{}")
+fun WireProtocol.elementClick(session: SessionCreated, element: ElementRef): Response = requestBuilder.post("/session/${session.id}/element/${element.reference}/click", "{}")
 fun WireProtocol.elementClear() = Unit
-fun WireProtocol.elementSendKeys(session: SessionCreated, element: ElementRef, keys: String): SuccessResponse<Unit?> = requestBuilder.post(
+fun WireProtocol.elementSendKeys(session: SessionCreated, element: ElementRef, keys: String): Response = requestBuilder.post(
     "/session/${session.id}/element/${element.reference}/value",
     SendKeys(keys)
 )
