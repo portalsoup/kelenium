@@ -8,7 +8,12 @@ class Navigate internal constructor(override val connection: RemoteDriverConnect
         connection.wireProtocol.navigateTo(connection.session, url)
     }
 
-    fun current(): String = connection.wireProtocol.currentUrl(connection.session).value
+    fun current(): String = connection.wireProtocol.currentUrl(connection.session).value.let {
+        when (it) {
+            is String -> it
+            else -> throw RuntimeException("Malformed result was not a String")
+        }
+    }
 
     fun back() {
         connection.wireProtocol.back(connection.session)
@@ -18,5 +23,10 @@ class Navigate internal constructor(override val connection: RemoteDriverConnect
         connection.wireProtocol.refresh(connection.session)
     }
 
-    fun title(): String = connection.wireProtocol.getTitle(connection.session).value
+    fun title(): String = connection.wireProtocol.getTitle(connection.session).value.let {
+        when (it) {
+            is String -> it
+            else -> throw RuntimeException("Malformed result was not a String")
+        }
+    }
 }

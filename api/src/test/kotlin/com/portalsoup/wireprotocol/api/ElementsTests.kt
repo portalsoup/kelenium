@@ -109,8 +109,8 @@ class ElementsTests: BaseTest() {
         val api = getApi()
         useSession(api) {
             api.navigateTo(it, testPage)
-            val field = api.findElement(it, CSS, "#input").value as ElementRefList
-            val label = api.findElement(it, CSS, "#output").value as ElementRefList
+            val field = api.findElement(it, CSS, "#input").value as ElementRef
+            val label = api.findElement(it, CSS, "#output").value as ElementRef
             assertThat(api.getElementText(it, label.first()).value, equalTo("Default value"))
             api.elementSendKeys(it, field.first(), "Test value ") // quirk in the html page, the final character is ignored
             assertThat(api.getElementText(it, label.first()).value, equalTo("Test value"))
@@ -123,7 +123,7 @@ class ElementsTests: BaseTest() {
         val api = getApi()
         useSession(api) {
             api.navigateTo(it, testPage)
-            val label = api.findElement(it, CSS, "#output").value as ElementRefList
+            val label = api.findElement(it, CSS, "#output").value as ElementRef
             assertThat(api.getElementTagName(it, label.first()).value, equalTo("span"))
         }
     }

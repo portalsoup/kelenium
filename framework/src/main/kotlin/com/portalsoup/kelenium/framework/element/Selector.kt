@@ -8,14 +8,14 @@ class Selector(override val connection: RemoteDriverConnection, val locationStra
     fun getElement(): WebElement = connection.document().find().element(locationStrategy, expression)
     fun getElements(): List<WebElement> = connection.document().find().elements(locationStrategy, expression)
     
-    fun <E> findChild(expression: String, l: WebElement.() -> E): E = l.invoke(findChild(expression))
-    override fun findChild(expression: String): WebElement = getElement().findChild(expression)
+    fun <E> findChild(locationStrategy: LocationStrategy, expression: String, l: WebElement.() -> E): E = l.invoke(findChild(locationStrategy, expression))
+    override fun findChild(locationStrategy: LocationStrategy, expression: String): WebElement = getElement().findChild(locationStrategy, expression)
 
-    fun <E> findChildren(expression: String, l: List<WebElement>.() -> E): E = l.invoke(findChildren(expression))
-    override fun findChildren(expression: String): List<WebElement> = getElement().findChildren(expression)
+    fun <E> findChildren(locationStrategy: LocationStrategy, expression: String, l: List<WebElement>.() -> E): E = l.invoke(findChildren(locationStrategy, expression))
+    override fun findChildren(locationStrategy: LocationStrategy, expression: String): List<WebElement> = getElement().findChildren(locationStrategy, expression)
 
-    fun filterChildren(expression: String, predicate: (WebElement) -> Boolean) = findChildren(expression).filter(predicate)
-    fun <E> map(expression: String, map: (WebElement) -> E) = findChildren(expression).map(map)
+    fun filterChildren(expression: String, predicate: (WebElement) -> Boolean) = findChildren(locationStrategy, expression).filter(predicate)
+    fun <E> map(expression: String, map: (WebElement) -> E) = findChildren(locationStrategy, expression).map(map)
 
     override fun text(): String = getElement().text()
 

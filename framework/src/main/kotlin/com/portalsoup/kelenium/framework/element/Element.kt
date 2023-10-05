@@ -1,12 +1,13 @@
 package com.portalsoup.kelenium.framework.element
 
 import com.portalsoup.kelenium.framework.RemoteDriverConnection
+import com.portalsoup.wireprotocol.core.LocationStrategy
 
 interface Element {
      val connection: RemoteDriverConnection
 
-     fun findChild(expression: String): Element
-     fun findChildren(expression: String): List<Element>
+     fun findChild(locationStrategy: LocationStrategy, expression: String): Element
+     fun findChildren(locationStrategy: LocationStrategy, expression: String): List<Element>
      fun text(): String
      fun property(name: String): String
      fun cssValue(css: String): String

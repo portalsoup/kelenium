@@ -6,6 +6,7 @@ import com.portalsoup.wireprotocol.api.findElement
 import com.portalsoup.wireprotocol.api.findElements
 import com.portalsoup.wireprotocol.core.LocationStrategy
 import com.portalsoup.wireprotocol.serialization.dto.success.ElementRef
+import com.portalsoup.wireprotocol.serialization.dto.success.ElementRefList
 
 class Document(override val connection: RemoteDriverConnection) : RemoteWebdriverOperation {
     class Find(override val connection: RemoteDriverConnection): RemoteWebdriverOperation {
@@ -23,6 +24,12 @@ class Document(override val connection: RemoteDriverConnection) : RemoteWebdrive
             connection.wireProtocol
                 .findElements(connection.session, strategy, expression)
                 .value
+                .let {
+                    when (it) {
+                        is ElementRefList -> it
+                        else -> throw RuntimeException("Malformed elements list in response")
+                    }
+                }
                 .map { WebElement(connection, it) }
     }
 

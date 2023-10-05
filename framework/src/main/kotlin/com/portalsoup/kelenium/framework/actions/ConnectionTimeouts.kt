@@ -3,12 +3,18 @@ package com.portalsoup.kelenium.framework.actions
 import com.portalsoup.kelenium.framework.RemoteDriverConnection
 import com.portalsoup.wireprotocol.api.getTimeouts
 import com.portalsoup.wireprotocol.api.setTimeouts
+import com.portalsoup.wireprotocol.serialization.dto.success.Timeouts
 
 class ConnectionTimeouts internal constructor(override val connection: RemoteDriverConnection): RemoteWebdriverOperation {
     operator fun invoke(timeouts: Timeouts) = set(timeouts)
     operator fun invoke(): Timeouts = get()
 
-    fun get(): Timeouts = connection.wireProtocol.getTimeouts(connection.session).value
+    fun get(): Timeouts = connection.wireProtocol.getTimeouts(connection.session).let {
+        when (val timeouts = it.value) {
+            is Timeouts -> timeouts
+            else -> throw RuntimeException("Malformed timeouts response.")
+        }
+    }
 
     fun set(timeouts: Timeouts) {
         connection.wireProtocol.setTimeouts(connection.session, timeouts)

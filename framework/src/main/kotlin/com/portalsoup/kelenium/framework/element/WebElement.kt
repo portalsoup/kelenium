@@ -2,28 +2,45 @@ package com.portalsoup.kelenium.framework.element
 
 import com.portalsoup.kelenium.framework.RemoteDriverConnection
 import com.portalsoup.wireprotocol.api.*
+import com.portalsoup.wireprotocol.core.LocationStrategy
 import com.portalsoup.wireprotocol.serialization.dto.success.ElementRef
+import com.portalsoup.wireprotocol.serialization.dto.success.ElementRefList
 
 class WebElement(override val connection: RemoteDriverConnection, val elementRef: ElementRef): Element {
 
-    fun <E> find(expression: String, l: (WebElement) -> E): E = l.invoke(findChild(expression))
-    fun <E> findMany(expression: String, l: (List<WebElement>) -> E) = l.invoke(findChildren(expression))
+    fun <E> findChild(locationStrategy: LocationStrategy, expression: String, l: (WebElement) -> E): E =
+        l.invoke(findChild(locationStrategy, expression))
+    fun <E> findMany(locationStrategy: LocationStrategy, expression: String, l: (List<WebElement>) -> E) =
+        l.invoke(findChildren(locationStrategy, expression))
 
-    override fun findChild(expression: String): WebElement {
+    override fun findChild(locationStrategy: LocationStrategy, expression: String): WebElement {
         return connection.wireProtocol
             .findElementFromElement(connection.session, elementRef, expression)
             .value
+            .let { when (it) {
+                is ElementRef -> it
+                else -> throw RuntimeException("Invalid element ref in response")
+            } }
             .let { WebElement(connection, it) }
     }
 
-    override fun findChildren(expression: String): List<WebElement> {
+    override fun findChildren(locationStrategy: LocationStrategy, expression: String): List<WebElement> {
         return connection.wireProtocol
-            .findElementsFromElement(connection.session, elementRef, expression)
+            .findElementsFromElement(connection.session, locationStrategy, elementRef, expression)
             .value
+            .let { when (it) {
+                is ElementRefList -> it
+                else -> throw RuntimeException("Invalid element ref list in response")
+            } }
             .map { WebElement(connection, it) }
     }
 
-    override fun text(): String = connection.wireProtocol.getElementText(connection.session, elementRef).value
+    override fun text(): String = connection.wireProtocol.getElementText(connection.session, elementRef).value.let {
+        when (it) {
+            is String -> it
+            else -> throw RuntimeException("Invalid text response is not a string")
+        }
+    }
 
     override fun property(name: String): String = TODO()
     override fun cssValue(css: String): String = TODO()
