@@ -10,9 +10,9 @@ import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRef
 
 class Document(override val connection: RemoteDriverConnection) : RemoteWebdriverOperation {
     class Find(override val connection: RemoteDriverConnection): RemoteWebdriverOperation {
-        fun element(strategy: LocationStrategy, expression: String): WebElement =
+        fun element(strategy: LocationStrategy): WebElement =
             connection.wireProtocol
-                .findElement(connection.session, strategy, expression)
+                .findElement(connection.session, strategy)
                 .value
                 .let { when (it) {
                     is ElementRef -> it
@@ -20,9 +20,9 @@ class Document(override val connection: RemoteDriverConnection) : RemoteWebdrive
                 } }
                 .let { WebElement(connection, it) }
 
-        fun elements(strategy: LocationStrategy, expression: String): List<WebElement> =
+        fun elements(strategy: LocationStrategy): List<WebElement> =
             connection.wireProtocol
-                .findElements(connection.session, strategy, expression)
+                .findElements(connection.session, strategy)
                 .value
                 .let {
                     when (it) {

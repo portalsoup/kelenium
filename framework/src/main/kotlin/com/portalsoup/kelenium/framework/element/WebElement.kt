@@ -3,19 +3,20 @@ package com.portalsoup.kelenium.framework.element
 import com.portalsoup.kelenium.framework.RemoteDriverConnection
 import com.portalsoup.wireprotocol.api.*
 import com.portalsoup.wireprotocol.core.LocationStrategy
+import com.portalsoup.wireprotocol.serialization.dto.request.SendKeys
 import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRef
 import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRefList
 
 class WebElement(override val connection: RemoteDriverConnection, val elementRef: ElementRef): Element {
 
-    fun <E> findChild(locationStrategy: LocationStrategy, expression: String, l: (WebElement) -> E): E =
-        l.invoke(findChild(locationStrategy, expression))
-    fun <E> findMany(locationStrategy: LocationStrategy, expression: String, l: (List<WebElement>) -> E) =
-        l.invoke(findChildren(locationStrategy, expression))
+    fun <E> findChild(locationStrategy: LocationStrategy, l: (WebElement) -> E): E =
+        l.invoke(findChild(locationStrategy))
+    fun <E> findMany(locationStrategy: LocationStrategy, l: (List<WebElement>) -> E) =
+        l.invoke(findChildren(locationStrategy))
 
-    override fun findChild(locationStrategy: LocationStrategy, expression: String): WebElement {
+    override fun findChild(locationStrategy: LocationStrategy): WebElement {
         return connection.wireProtocol
-            .findElementFromElement(connection.session, elementRef, expression)
+            .findElementFromElement(connection.session, locationStrategy, elementRef)
             .value
             .let { when (it) {
                 is ElementRef -> it
@@ -24,9 +25,9 @@ class WebElement(override val connection: RemoteDriverConnection, val elementRef
             .let { WebElement(connection, it) }
     }
 
-    override fun findChildren(locationStrategy: LocationStrategy, expression: String): List<WebElement> {
+    override fun findChildren(locationStrategy: LocationStrategy): List<WebElement> {
         return connection.wireProtocol
-            .findElementsFromElement(connection.session, locationStrategy, elementRef, expression)
+            .findElementsFromElement(connection.session, locationStrategy, elementRef)
             .value
             .let { when (it) {
                 is ElementRefList -> it
@@ -60,7 +61,7 @@ class WebElement(override val connection: RemoteDriverConnection, val elementRef
     override fun clear(): Unit = TODO()
 
     override fun sendKeys(text: String) {
-        connection.wireProtocol.elementSendKeys(connection.session, elementRef, text)
+        connection.wireProtocol.elementSendKeys(connection.session, elementRef, SendKeys(text))
     }
 
 }

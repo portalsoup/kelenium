@@ -50,7 +50,7 @@ class ElementsTests: BaseTest() {
             api.navigateTo(it, testPage)
 
             val parent = api.findElement(it, CSS("#parent")).value as ElementRef
-            val children = api.findElementFromElement(it, parent, ".match").value as ElementRef// The target one is technically the second to find globally
+            val children = api.findElementFromElement(it, CSS(".match"), parent).value as ElementRef// The target one is technically the second to find globally
             assertThat(api.getElementText(it, children).value, equalTo("Inner 1"))
 
         }

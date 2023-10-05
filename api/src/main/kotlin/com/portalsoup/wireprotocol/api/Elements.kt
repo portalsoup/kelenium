@@ -10,13 +10,13 @@ import com.portalsoup.wireprotocol.serialization.dto.response.success.SessionCre
 
 // Locators
 fun WireProtocol.findElement(session: SessionCreated, using: LocationStrategy): Response =
-    requestBuilder.post("/session/${session.id}/element", FindElementStrategy(using.id, using.expression))
+    requestBuilder.post("/session/${session.id}/element", FindElementStrategy(using.id.code, using.expression))
 
 fun WireProtocol.findElements(session: SessionCreated, using: LocationStrategy): Response =
-    requestBuilder.post("/session/${session.id}/elements", FindElementStrategy(using.id, using.expression))
+    requestBuilder.post("/session/${session.id}/elements", FindElementStrategy(using.id.code, using.expression))
 
-fun WireProtocol.findElementFromElement(session: SessionCreated, parent: ElementRef, value: String): Response =
-    requestBuilder.post("/session/${session.id}/element/${parent.reference}/element", value)
+fun WireProtocol.findElementFromElement(session: SessionCreated, locationStrategy: LocationStrategy, parent: ElementRef): Response =
+    requestBuilder.post("/session/${session.id}/element/${parent.reference}/element", locationStrategy.expression)
 
 fun WireProtocol.findElementsFromElement(session: SessionCreated, locationStrategy: LocationStrategy, parent: ElementRef): Response =
     requestBuilder.post("/session/${session.id}/element/${parent.reference}/elements", locationStrategy.expression)

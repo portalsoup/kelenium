@@ -6,8 +6,8 @@ import com.portalsoup.wireprotocol.core.LocationStrategy
 interface Element {
      val connection: RemoteDriverConnection
 
-     fun findChild(locationStrategy: LocationStrategy, expression: String): Element
-     fun findChildren(locationStrategy: LocationStrategy, expression: String): List<Element>
+     fun findChild(locationStrategy: LocationStrategy): Element
+     fun findChildren(locationStrategy: LocationStrategy): List<Element>
      fun text(): String
      fun property(name: String): String
      fun cssValue(css: String): String
