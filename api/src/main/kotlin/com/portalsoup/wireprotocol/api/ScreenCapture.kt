@@ -1,5 +1,6 @@
 package com.portalsoup.wireprotocol.api
 
+import com.portalsoup.wireprotocol.core.WireProtocol
 import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRef
 import com.portalsoup.wireprotocol.serialization.dto.response.Response
 import com.portalsoup.wireprotocol.serialization.dto.response.success.SessionCreated

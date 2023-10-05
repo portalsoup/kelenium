@@ -1,5 +1,6 @@
 package com.portalsoup.wireprotocol.api
 
+import com.portalsoup.wireprotocol.core.WireProtocol
 import com.portalsoup.wireprotocol.serialization.dto.request.context.HandleArgument
 import com.portalsoup.wireprotocol.serialization.dto.request.context.IdArgument
 import com.portalsoup.wireprotocol.serialization.dto.request.context.TypeArgument

@@ -1,7 +1,7 @@
 package com.portalsoup.wireprotocol
 
 import com.portalsoup.wireprotocol.Executables.Geckodriver
-import com.portalsoup.wireprotocol.api.WireProtocol
+import com.portalsoup.wireprotocol.core.WireProtocol
 import com.portalsoup.wireprotocol.api.createSession
 import com.portalsoup.wireprotocol.api.deleteSession
 import com.portalsoup.wireprotocol.core.HttpRequestBuilder

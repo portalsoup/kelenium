@@ -1,6 +1,7 @@
 package com.portalsoup.wireprotocol.api
 
 import com.portalsoup.wireprotocol.core.LocationStrategy
+import com.portalsoup.wireprotocol.core.WireProtocol
 import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRef
 import com.portalsoup.wireprotocol.serialization.dto.request.FindElementStrategy
 import com.portalsoup.wireprotocol.serialization.dto.request.SendKeys

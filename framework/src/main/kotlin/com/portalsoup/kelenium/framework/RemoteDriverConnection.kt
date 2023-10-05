@@ -4,7 +4,7 @@ import com.portalsoup.kelenium.framework.actions.ConnectionTimeouts
 import com.portalsoup.kelenium.framework.actions.Document
 import com.portalsoup.kelenium.framework.actions.Navigate
 import com.portalsoup.kelenium.framework.actions.Screenshot
-import com.portalsoup.wireprotocol.api.WireProtocol
+import com.portalsoup.wireprotocol.core.WireProtocol
 import com.portalsoup.wireprotocol.api.createSession
 import com.portalsoup.wireprotocol.api.deleteSession
 import com.portalsoup.wireprotocol.api.status
