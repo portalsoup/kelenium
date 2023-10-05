@@ -9,8 +9,8 @@ import com.portalsoup.wireprotocol.api.createSession
 import com.portalsoup.wireprotocol.api.deleteSession
 import com.portalsoup.wireprotocol.api.status
 import com.portalsoup.wireprotocol.core.HttpRequestBuilder
-import com.portalsoup.wireprotocol.dto.Status
 import com.portalsoup.wireprotocol.serialization.dto.response.success.SessionCreated
+import com.portalsoup.wireprotocol.serialization.dto.response.success.Status
 import com.portalsoup.wireprotocol.serialization.dto.response.success.Timeouts
 import java.io.Closeable
 
