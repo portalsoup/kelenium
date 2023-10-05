@@ -1,7 +1,7 @@
 package com.portalsoup.wireprotocol.api
 
-import com.portalsoup.wireprotocol.serialization.dto.Response
-import com.portalsoup.wireprotocol.serialization.dto.success.SessionCreated
+import com.portalsoup.wireprotocol.serialization.dto.response.Response
+import com.portalsoup.wireprotocol.serialization.dto.response.success.SessionCreated
 
 // https://www.w3.org/TR/webdriver2/#dfn-new-sessions
 fun WireProtocol.createSession(capabilities: String? = null): Response = requestBuilder.post("/session", capabilities ?: "{}")

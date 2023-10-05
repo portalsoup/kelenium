@@ -1,4 +1,4 @@
-package com.portalsoup.wireprotocol.serialization.dto.success
+package com.portalsoup.wireprotocol.serialization.dto.response.success
 
 enum class ContextType(val type: String) {
     WINDOW("window"),

@@ -1,9 +1,9 @@
 package com.portalsoup.wireprotocol.api
 
 import com.portalsoup.wireprotocol.BaseTest
-import com.portalsoup.wireprotocol.serialization.dto.success.ContextType
-import com.portalsoup.wireprotocol.serialization.dto.success.NewWindow
-import com.portalsoup.wireprotocol.serialization.dto.success.WindowRect
+import com.portalsoup.wireprotocol.serialization.dto.response.success.ContextType
+import com.portalsoup.wireprotocol.serialization.dto.response.success.NewWindow
+import com.portalsoup.wireprotocol.serialization.dto.response.success.WindowRect
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.notNullValue

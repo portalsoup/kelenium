@@ -1,6 +1,6 @@
 package com.portalsoup.wireprotocol.serialization.serializers
 
-import com.portalsoup.wireprotocol.serialization.dto.success.*
+import com.portalsoup.wireprotocol.serialization.dto.response.success.*
 import com.portalsoup.wireprotocol.serialization.responseJson
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException

@@ -1,14 +1,13 @@
-package com.portalsoup.wireprotocol.serialization.dto.failure
+package com.portalsoup.wireprotocol.serialization.dto.response.failure
 
 import com.portalsoup.wireprotocol.serialization.ResponseIsType
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
-
+import kotlinx.serialization.json.jsonPrimitive
 
 @Serializable
-class InvalidElement(
+class SessionNotCreated(
     override val error: String,
     override val message: String,
     override val stacktrace: String,
@@ -16,12 +15,10 @@ class InvalidElement(
 ) : BaseFailure() {
     companion object : ResponseIsType<JsonObject> {
         override fun isType(element: JsonObject): Boolean {
-            return element.jsonObject
-                .takeIf { it.containsKey("script") }
-                ?.takeIf { it.containsKey("pageLoad") }
-                ?.takeIf { it.containsKey("implicit") }
-                ?.let { true }
-                ?: false
+            val content = element.jsonObject["error"]?.jsonPrimitive?.content
+
+            println(content)
+            return (content ?: "") == "session not created"
         }
     }
 }

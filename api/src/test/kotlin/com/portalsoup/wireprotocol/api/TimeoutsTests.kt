@@ -1,7 +1,7 @@
 package com.portalsoup.wireprotocol.api
 
 import com.portalsoup.wireprotocol.BaseTest
-import com.portalsoup.wireprotocol.serialization.dto.success.Timeouts
+import com.portalsoup.wireprotocol.serialization.dto.response.success.Timeouts
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Test

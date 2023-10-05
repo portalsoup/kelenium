@@ -1,4 +1,4 @@
-package com.portalsoup.wireprotocol.serialization.dto.success
+package com.portalsoup.wireprotocol.serialization.dto.response.success
 
 import com.portalsoup.wireprotocol.serialization.ResponseIsType
 import kotlinx.serialization.Serializable

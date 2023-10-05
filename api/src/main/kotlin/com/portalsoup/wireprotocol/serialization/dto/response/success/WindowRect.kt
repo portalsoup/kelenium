@@ -1,20 +1,20 @@
-package com.portalsoup.wireprotocol.serialization.dto.success
+package com.portalsoup.wireprotocol.serialization.dto.response.success
 
 import com.portalsoup.wireprotocol.serialization.ResponseIsType
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 
-// simple idea for an element
 @Serializable
-data class ElementRef(val identifier: String, val reference: String): BaseSuccess() {
+data class WindowRect(val x: Int, val y: Int, val width: Int, val height: Int): BaseSuccess() {
     companion object : ResponseIsType<JsonObject> {
         override fun isType(element: JsonObject): Boolean {
-            println(element::class.simpleName)
             return element.jsonObject
-                .takeIf { it.isNotEmpty() }
-                ?.keys
-                ?.all { it.startsWith("element-") }
+                .takeIf { it.containsKey("x") }
+                ?.takeIf { it.containsKey("y") }
+                ?.takeIf { it.containsKey("width") }
+                ?.takeIf { it.containsKey("height") }
+                ?.let { true }
                 ?: false
         }
     }

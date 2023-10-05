@@ -1,10 +1,10 @@
-package com.portalsoup.wireprotocol.serialization.dto
+package com.portalsoup.wireprotocol.serialization.dto.response
 
 import com.portalsoup.wireprotocol.serialization.serializers.ResponseSerializer
-import com.portalsoup.wireprotocol.serialization.dto.failure.BaseFailure
-import com.portalsoup.wireprotocol.serialization.dto.failure.SessionNotCreated
-import com.portalsoup.wireprotocol.serialization.dto.success.ElementRefList
-import com.portalsoup.wireprotocol.serialization.dto.success.SessionCreated
+import com.portalsoup.wireprotocol.serialization.dto.response.failure.BaseFailure
+import com.portalsoup.wireprotocol.serialization.dto.response.failure.SessionNotCreated
+import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRefList
+import com.portalsoup.wireprotocol.serialization.dto.response.success.SessionCreated
 import com.portalsoup.wireprotocol.serialization.responseJson
 import kotlinx.serialization.Serializable
 

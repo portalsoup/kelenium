@@ -1,4 +1,4 @@
-package com.portalsoup.wireprotocol.serialization.dto
+package com.portalsoup.wireprotocol.serialization.dto.response
 
 import kotlinx.serialization.Serializable
 

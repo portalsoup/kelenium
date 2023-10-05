@@ -1,7 +1,7 @@
 package com.portalsoup.wireprotocol.serialization.serializers
 
-import com.portalsoup.wireprotocol.serialization.dto.failure.BaseFailure
-import com.portalsoup.wireprotocol.serialization.dto.failure.SessionNotCreated
+import com.portalsoup.wireprotocol.serialization.dto.response.failure.BaseFailure
+import com.portalsoup.wireprotocol.serialization.dto.response.failure.SessionNotCreated
 import com.portalsoup.wireprotocol.serialization.responseJson
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException

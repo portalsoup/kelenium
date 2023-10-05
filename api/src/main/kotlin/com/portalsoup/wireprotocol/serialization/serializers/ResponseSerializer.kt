@@ -1,8 +1,8 @@
 package com.portalsoup.wireprotocol.serialization.serializers
 
-import com.portalsoup.wireprotocol.serialization.dto.Response
-import com.portalsoup.wireprotocol.serialization.dto.failure.BaseFailure
-import com.portalsoup.wireprotocol.serialization.dto.success.BaseSuccess
+import com.portalsoup.wireprotocol.serialization.dto.response.Response
+import com.portalsoup.wireprotocol.serialization.dto.response.failure.BaseFailure
+import com.portalsoup.wireprotocol.serialization.dto.response.success.BaseSuccess
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.SerialDescriptor

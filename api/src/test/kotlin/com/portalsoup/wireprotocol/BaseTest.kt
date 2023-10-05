@@ -5,7 +5,7 @@ import com.portalsoup.wireprotocol.api.WireProtocol
 import com.portalsoup.wireprotocol.api.createSession
 import com.portalsoup.wireprotocol.api.deleteSession
 import com.portalsoup.wireprotocol.core.HttpRequestBuilder
-import com.portalsoup.wireprotocol.serialization.dto.success.SessionCreated
+import com.portalsoup.wireprotocol.serialization.dto.response.success.SessionCreated
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import java.lang.AssertionError

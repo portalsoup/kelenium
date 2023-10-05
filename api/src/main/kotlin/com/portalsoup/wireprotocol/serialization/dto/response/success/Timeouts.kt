@@ -1,8 +1,7 @@
-package com.portalsoup.wireprotocol.serialization.dto.success
+package com.portalsoup.wireprotocol.serialization.dto.response.success
 
 import com.portalsoup.wireprotocol.serialization.ResponseIsType
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 

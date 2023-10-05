@@ -3,8 +3,8 @@ package com.portalsoup.wireprotocol.api
 import com.portalsoup.wireprotocol.BaseTest
 import com.portalsoup.wireprotocol.HtmlPages
 import com.portalsoup.wireprotocol.core.LocationStrategy.*
-import com.portalsoup.wireprotocol.serialization.dto.success.ElementRef
-import com.portalsoup.wireprotocol.serialization.dto.success.ElementRefList
+import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRef
+import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRefList
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
