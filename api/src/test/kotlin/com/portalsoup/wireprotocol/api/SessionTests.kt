@@ -1,16 +1,12 @@
 package com.portalsoup.wireprotocol.api
 
 import com.portalsoup.wireprotocol.BaseTest
-import com.portalsoup.wireprotocol.HtmlPages
-import com.portalsoup.wireprotocol.dto.RemoteDriverClosedException
-import com.portalsoup.wireprotocol.dto.Session
 import com.portalsoup.wireprotocol.serialization.dto.success.SessionCreated
 import com.portalsoup.wireprotocol.serialization.dto.success.Status
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.instanceOf
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class SessionTests: BaseTest() {
     @Test
