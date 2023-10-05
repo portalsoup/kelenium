@@ -8,7 +8,7 @@ import kotlinx.serialization.json.jsonObject
 
 @Serializable
 data class Timeouts(var script: Int = 30000, var pageLoad: Int = 300000, var implicit: Int = 0) : BaseSuccess() {
-    companion object : ResponseIsType {
+    companion object : ResponseIsType<JsonObject> {
         override fun isType(element: JsonObject): Boolean {
             return element.jsonObject
                 .takeIf { it.containsKey("script") }

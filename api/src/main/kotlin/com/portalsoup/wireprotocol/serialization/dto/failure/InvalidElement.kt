@@ -14,7 +14,7 @@ class InvalidElement(
     override val stacktrace: String,
     override val data: JsonObject
 ) : BaseFailure() {
-    companion object : ResponseIsType {
+    companion object : ResponseIsType<JsonObject> {
         override fun isType(element: JsonObject): Boolean {
             return element.jsonObject
                 .takeIf { it.containsKey("script") }

@@ -59,7 +59,16 @@ object ResponseSerializer : KSerializer<Response> {
             }
         }
 
-    private fun jsonArray(decoder: JsonDecoder, value: JsonArray) = decoder.json
-        .decodeFromJsonElement(ElementListSerializer, value)
-        .let { Response(it) }
+    private fun jsonArray(decoder: JsonDecoder, value: JsonArray): Response = decoder.json.let { json ->
+        val isElementList = value.all { each -> each.takeIf { it is JsonObject }?.jsonObject?.keys?.all { it.startsWith("element-") } ?: false }
+        val isPrimitiveList = value.all { each -> each.takeIf { it is JsonPrimitive }?.let { true } ?: false }
+
+        return if (isElementList) {
+            Response(decoder.json.decodeFromJsonElement(ElementListSerializer, value))
+        } else if (isPrimitiveList) {
+            Response(decoder.json.decodeFromJsonElement<List<String>>(value))
+        } else {
+            throw SerializationException("Couldn't find an appropriate serializer for JsonArray payload.\n\t$value")
+        }
+    }
 }
