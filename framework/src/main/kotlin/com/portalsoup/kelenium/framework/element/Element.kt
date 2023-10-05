@@ -14,10 +14,10 @@ interface Element {
      fun isSelected(): Boolean
      fun isEnabled(): Boolean
      fun tagName(): String
-     fun rect(): Unit
+     fun rect()
      fun role(): String
      fun label(): String
-     fun click(): Unit
-     fun clear(): Unit
-     fun sendKeys(text: String): Unit
+     fun click()
+     fun clear()
+     fun sendKeys(text: String)
 }

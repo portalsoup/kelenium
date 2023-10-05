@@ -1,11 +1,8 @@
 package com.portalsoup.wireprotocol.serialization.dto.response.failure
 
 import com.portalsoup.wireprotocol.serialization.ResponseIsErrorType
-import com.portalsoup.wireprotocol.serialization.ResponseIsType
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
 
 @Serializable
 class SessionNotCreated(
