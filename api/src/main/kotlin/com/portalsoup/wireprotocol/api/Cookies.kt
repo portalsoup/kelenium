@@ -1,8 +1,12 @@
 package com.portalsoup.wireprotocol.api
 
+import com.portalsoup.wireprotocol.serialization.dto.response.Response
+import com.portalsoup.wireprotocol.serialization.dto.response.success.SessionCreated
+import kotlinx.serialization.json.JsonElement
 
-fun WireProtocol.getAllCookies() = Unit
-fun WireProtocol.getNamedCookie() = Unit
-fun WireProtocol.addCookie() = Unit
-fun WireProtocol.deleteCookie() = Unit
-fun WireProtocol.deleteAllCookies() = Unit
+
+fun WireProtocol.getAllCookies(session: SessionCreated): Response = requestBuilder.get("/session/${session.id}/cookie")
+fun WireProtocol.getNamedCookie(session: SessionCreated, name: String): Response = requestBuilder.get("/session/${session.id}/cookie/$name")
+fun WireProtocol.addCookie(session: SessionCreated, cookie: JsonElement): Response = requestBuilder.post("/session/${session.id}/cookie", cookie)
+fun WireProtocol.deleteCookie(session: SessionCreated, name: String): Response = requestBuilder.delete("/session/${session.id}/$name")
+fun WireProtocol.deleteAllCookies(session: SessionCreated): Response = requestBuilder.delete("/session/${session.id}/cookie")
