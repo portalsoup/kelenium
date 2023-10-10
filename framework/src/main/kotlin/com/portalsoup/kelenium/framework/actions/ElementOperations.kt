@@ -2,11 +2,11 @@ package com.portalsoup.kelenium.framework.actions
 
 import com.portalsoup.kelenium.framework.RemoteDriverConnection
 import com.portalsoup.kelenium.framework.element.WebElement
-import com.portalsoup.wireprotocol.api.findElement
-import com.portalsoup.wireprotocol.api.findElements
+import com.portalsoup.wireprotocol.element.api.findElement
+import com.portalsoup.wireprotocol.element.api.findElements
 import com.portalsoup.wireprotocol.core.LocationStrategy
-import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRef
-import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRefList
+import com.portalsoup.wireprotocol.serialization.dto.element.ElementRef
+import com.portalsoup.wireprotocol.serialization.dto.element.ElementRefList
 
 class Document(override val connection: RemoteDriverConnection) : RemoteWebdriverOperation {
     class Find(override val connection: RemoteDriverConnection): RemoteWebdriverOperation {

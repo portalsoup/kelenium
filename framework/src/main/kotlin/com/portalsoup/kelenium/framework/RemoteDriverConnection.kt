@@ -5,13 +5,13 @@ import com.portalsoup.kelenium.framework.actions.Document
 import com.portalsoup.kelenium.framework.actions.Navigate
 import com.portalsoup.kelenium.framework.actions.Screenshot
 import com.portalsoup.wireprotocol.core.WireProtocol
-import com.portalsoup.wireprotocol.api.createSession
-import com.portalsoup.wireprotocol.api.deleteSession
-import com.portalsoup.wireprotocol.api.status
+import com.portalsoup.wireprotocol.session.api.createSession
+import com.portalsoup.wireprotocol.session.api.deleteSession
+import com.portalsoup.wireprotocol.session.api.status
 import com.portalsoup.wireprotocol.core.HttpRequestBuilder
-import com.portalsoup.wireprotocol.serialization.dto.response.success.SessionCreated
-import com.portalsoup.wireprotocol.serialization.dto.response.success.Status
-import com.portalsoup.wireprotocol.serialization.dto.response.success.Timeouts
+import com.portalsoup.wireprotocol.serialization.dto.session.SessionCreated
+import com.portalsoup.wireprotocol.serialization.dto.session.Status
+import com.portalsoup.wireprotocol.serialization.dto.timeout.Timeouts
 import java.io.Closeable
 
 class RemoteDriverConnection(

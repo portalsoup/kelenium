@@ -2,10 +2,10 @@ package com.portalsoup.wireprotocol.serialization.serializers
 
 import com.portalsoup.wireprotocol.serialization.dto.response.Response
 import com.portalsoup.wireprotocol.serialization.dto.response.ResponsePayload
-import com.portalsoup.wireprotocol.serialization.dto.response.failure.BaseFailure
-import com.portalsoup.wireprotocol.serialization.dto.response.success.BaseSuccess
-import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRef
-import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRefList
+import com.portalsoup.wireprotocol.serialization.dto.response.BaseFailure
+import com.portalsoup.wireprotocol.serialization.dto.response.BaseSuccess
+import com.portalsoup.wireprotocol.serialization.dto.element.ElementRef
+import com.portalsoup.wireprotocol.serialization.dto.element.ElementRefList
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.SerialDescriptor

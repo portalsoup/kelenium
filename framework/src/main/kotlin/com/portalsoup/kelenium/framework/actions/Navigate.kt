@@ -2,6 +2,8 @@ package com.portalsoup.kelenium.framework.actions
 
 import com.portalsoup.kelenium.framework.RemoteDriverConnection
 import com.portalsoup.wireprotocol.api.*
+import com.portalsoup.wireprotocol.navigation.*
+import com.portalsoup.wireprotocol.navigation.api.*
 
 class Navigate internal constructor(override val connection: RemoteDriverConnection): RemoteWebdriverOperation {
     fun to(url: String) {
