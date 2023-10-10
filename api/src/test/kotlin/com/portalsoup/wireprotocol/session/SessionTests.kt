@@ -1,9 +1,9 @@
 package com.portalsoup.wireprotocol.session
 
 import com.portalsoup.wireprotocol.BaseTest
-import com.portalsoup.wireprotocol.serialization.dto.session.SessionCreated
-import com.portalsoup.wireprotocol.serialization.dto.session.Status
 import com.portalsoup.wireprotocol.session.api.status
+import com.portalsoup.wireprotocol.session.dto.SessionCreated
+import com.portalsoup.wireprotocol.session.dto.Status
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.instanceOf
