@@ -3,7 +3,7 @@ package com.portalsoup.kelenium.framework.actions
 import com.portalsoup.kelenium.framework.RemoteDriverConnection
 import com.portalsoup.wireprotocol.timeout.api.getTimeouts
 import com.portalsoup.wireprotocol.timeout.api.setTimeouts
-import com.portalsoup.wireprotocol.serialization.dto.timeout.Timeouts
+import com.portalsoup.wireprotocol.timeout.dto.Timeouts
 
 class ConnectionTimeouts internal constructor(override val connection: RemoteDriverConnection): RemoteWebdriverOperation {
     operator fun invoke(timeouts: Timeouts) = set(timeouts)

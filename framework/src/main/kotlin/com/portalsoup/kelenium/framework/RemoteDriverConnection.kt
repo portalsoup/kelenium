@@ -9,9 +9,9 @@ import com.portalsoup.wireprotocol.session.api.createSession
 import com.portalsoup.wireprotocol.session.api.deleteSession
 import com.portalsoup.wireprotocol.session.api.status
 import com.portalsoup.wireprotocol.core.HttpRequestBuilder
-import com.portalsoup.wireprotocol.serialization.dto.session.SessionCreated
-import com.portalsoup.wireprotocol.serialization.dto.session.Status
-import com.portalsoup.wireprotocol.serialization.dto.timeout.Timeouts
+import com.portalsoup.wireprotocol.session.dto.SessionCreated
+import com.portalsoup.wireprotocol.session.dto.Status
+import com.portalsoup.wireprotocol.timeout.dto.Timeouts
 import java.io.Closeable
 
 class RemoteDriverConnection(

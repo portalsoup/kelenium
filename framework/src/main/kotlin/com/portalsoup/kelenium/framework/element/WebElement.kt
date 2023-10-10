@@ -1,11 +1,10 @@
 package com.portalsoup.kelenium.framework.element
 
 import com.portalsoup.kelenium.framework.RemoteDriverConnection
-import com.portalsoup.wireprotocol.api.*
 import com.portalsoup.wireprotocol.core.LocationStrategy
 import com.portalsoup.wireprotocol.element.api.*
-import com.portalsoup.wireprotocol.serialization.dto.element.SendKeys
-import com.portalsoup.wireprotocol.serialization.dto.element.ElementRef
+import com.portalsoup.wireprotocol.element.dto.ElementRef
+import com.portalsoup.wireprotocol.element.dto.SendKeys
 
 class WebElement(override val connection: RemoteDriverConnection, val elementRef: ElementRef): Element {
 

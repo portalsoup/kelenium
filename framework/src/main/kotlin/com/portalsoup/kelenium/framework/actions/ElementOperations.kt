@@ -5,8 +5,8 @@ import com.portalsoup.kelenium.framework.element.WebElement
 import com.portalsoup.wireprotocol.element.api.findElement
 import com.portalsoup.wireprotocol.element.api.findElements
 import com.portalsoup.wireprotocol.core.LocationStrategy
-import com.portalsoup.wireprotocol.serialization.dto.element.ElementRef
-import com.portalsoup.wireprotocol.serialization.dto.element.ElementRefList
+import com.portalsoup.wireprotocol.element.dto.ElementRef
+import com.portalsoup.wireprotocol.element.dto.ElementRefList
 
 class Document(override val connection: RemoteDriverConnection) : RemoteWebdriverOperation {
     class Find(override val connection: RemoteDriverConnection): RemoteWebdriverOperation {
