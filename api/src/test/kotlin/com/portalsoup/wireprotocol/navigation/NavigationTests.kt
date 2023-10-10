@@ -1,6 +1,6 @@
 package com.portalsoup.wireprotocol.navigation
 
-import com.portalsoup.wireprotocol.BaseTest
+import com.portalsoup.wireprotocol.BaseApiTest
 import com.portalsoup.wireprotocol.HtmlPages
 import com.portalsoup.wireprotocol.navigation.api.back
 import com.portalsoup.wireprotocol.navigation.api.currentUrl
@@ -10,7 +10,7 @@ import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
 
-class NavigationTests: BaseTest() {
+class NavigationTests: BaseApiTest() {
 
     @Test
     fun basicNavigationTest() {

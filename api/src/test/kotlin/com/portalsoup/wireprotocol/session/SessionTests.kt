@@ -1,6 +1,6 @@
 package com.portalsoup.wireprotocol.session
 
-import com.portalsoup.wireprotocol.BaseTest
+import com.portalsoup.wireprotocol.BaseApiTest
 import com.portalsoup.wireprotocol.session.api.status
 import com.portalsoup.wireprotocol.session.dto.SessionCreated
 import com.portalsoup.wireprotocol.session.dto.Status
@@ -9,7 +9,7 @@ import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.instanceOf
 import org.junit.jupiter.api.Test
 
-class SessionTests: BaseTest() {
+class SessionTests: BaseApiTest() {
     @Test
     fun remoteDriverOpenCloseLifecycleTest() {
         val api = getApi()

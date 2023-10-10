@@ -1,12 +1,12 @@
 package com.portalsoup.wireprotocol.screencapture
 
-import com.portalsoup.wireprotocol.BaseTest
+import com.portalsoup.wireprotocol.BaseApiTest
 
 /*
     These tests require human intervention to verify that the jpgs that are created in your home folder are indeed there and
     appear correct.
  */
-class ScreenCaptureTests: BaseTest() {
+class ScreenCaptureTests: BaseApiTest() {
 //
 //    @Test
 //    fun takeScreenshotTest() {

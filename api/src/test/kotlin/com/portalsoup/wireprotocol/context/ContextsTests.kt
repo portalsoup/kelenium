@@ -1,6 +1,6 @@
 package com.portalsoup.wireprotocol.context
 
-import com.portalsoup.wireprotocol.BaseTest
+import com.portalsoup.wireprotocol.BaseApiTest
 import com.portalsoup.wireprotocol.context.api.*
 import com.portalsoup.wireprotocol.context.dto.ContextType
 import com.portalsoup.wireprotocol.context.dto.NewWindow
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import java.lang.AssertionError
 import java.util.*
 
-class ContextsTests: BaseTest() {
+class ContextsTests: BaseApiTest() {
 
     @Test
     fun getWindowHandleTest() {

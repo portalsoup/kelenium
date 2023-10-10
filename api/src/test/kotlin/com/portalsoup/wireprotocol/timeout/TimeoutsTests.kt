@@ -1,6 +1,6 @@
 package com.portalsoup.wireprotocol.timeout
 
-import com.portalsoup.wireprotocol.BaseTest
+import com.portalsoup.wireprotocol.BaseApiTest
 import com.portalsoup.wireprotocol.timeout.api.getTimeouts
 import com.portalsoup.wireprotocol.timeout.api.setTimeouts
 import com.portalsoup.wireprotocol.timeout.dto.Timeouts
@@ -8,7 +8,7 @@ import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.jupiter.api.Test
 
-class TimeoutsTests: BaseTest() {
+class TimeoutsTests: BaseApiTest() {
 
     @Test
     fun readTimeouts() {

@@ -1,6 +1,6 @@
 package com.portalsoup.wireprotocol.element
 
-import com.portalsoup.wireprotocol.BaseTest
+import com.portalsoup.wireprotocol.BaseApiTest
 import com.portalsoup.wireprotocol.HtmlPages
 import com.portalsoup.wireprotocol.core.LocationStrategy.*
 import com.portalsoup.wireprotocol.element.api.*
@@ -10,7 +10,7 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
 
-class ElementsTests: BaseTest() {
+class ElementsTests: BaseApiTest() {
 
 
     @Test
