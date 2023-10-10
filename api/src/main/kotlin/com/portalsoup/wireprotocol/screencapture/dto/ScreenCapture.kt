@@ -1,9 +1,9 @@
 package com.portalsoup.wireprotocol.screencapture.dto
 
 import com.portalsoup.wireprotocol.core.WireProtocol
-import com.portalsoup.wireprotocol.serialization.dto.element.ElementRef
-import com.portalsoup.wireprotocol.serialization.dto.response.Response
-import com.portalsoup.wireprotocol.serialization.dto.session.SessionCreated
+import com.portalsoup.wireprotocol.element.dto.ElementRef
+import com.portalsoup.wireprotocol.response.Response
+import com.portalsoup.wireprotocol.session.dto.SessionCreated
 
 
 fun WireProtocol.takeScreenshot(session: SessionCreated): Response = requestBuilder.get("/session/${session.id}/screenshot")

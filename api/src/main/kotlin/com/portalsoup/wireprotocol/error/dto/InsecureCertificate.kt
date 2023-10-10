@@ -1,7 +1,7 @@
 package com.portalsoup.wireprotocol.error.dto
 
+import com.portalsoup.wireprotocol.response.BaseFailure
 import com.portalsoup.wireprotocol.serialization.ResponseIsErrorType
-import com.portalsoup.wireprotocol.serialization.dto.response.BaseFailure
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
 

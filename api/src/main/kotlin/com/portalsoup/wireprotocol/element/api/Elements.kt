@@ -2,11 +2,11 @@ package com.portalsoup.wireprotocol.element.api
 
 import com.portalsoup.wireprotocol.core.LocationStrategy
 import com.portalsoup.wireprotocol.core.WireProtocol
-import com.portalsoup.wireprotocol.serialization.dto.element.ElementRef
-import com.portalsoup.wireprotocol.serialization.dto.element.FindElementStrategy
-import com.portalsoup.wireprotocol.serialization.dto.element.SendKeys
-import com.portalsoup.wireprotocol.serialization.dto.response.Response
-import com.portalsoup.wireprotocol.serialization.dto.session.SessionCreated
+import com.portalsoup.wireprotocol.element.dto.ElementRef
+import com.portalsoup.wireprotocol.element.dto.FindElementStrategy
+import com.portalsoup.wireprotocol.element.dto.SendKeys
+import com.portalsoup.wireprotocol.response.Response
+import com.portalsoup.wireprotocol.session.dto.SessionCreated
 
 // Locators
 fun WireProtocol.findElement(session: SessionCreated, using: LocationStrategy): Response =

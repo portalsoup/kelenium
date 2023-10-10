@@ -1,13 +1,9 @@
 package com.portalsoup.wireprotocol.context.api
 
+import com.portalsoup.wireprotocol.context.dto.*
 import com.portalsoup.wireprotocol.core.WireProtocol
-import com.portalsoup.wireprotocol.serialization.dto.context.context.HandleArgument
-import com.portalsoup.wireprotocol.serialization.dto.context.context.IdArgument
-import com.portalsoup.wireprotocol.serialization.dto.context.context.TypeArgument
-import com.portalsoup.wireprotocol.serialization.dto.response.Response
-import com.portalsoup.wireprotocol.context.dto.ContextType
-import com.portalsoup.wireprotocol.serialization.dto.session.SessionCreated
-import com.portalsoup.wireprotocol.serialization.dto.context.WindowRect
+import com.portalsoup.wireprotocol.response.Response
+import com.portalsoup.wireprotocol.session.dto.SessionCreated
 
 fun WireProtocol.getWindowHandle(session: SessionCreated): Response =
     requestBuilder.get("/session/${session.id}/window")

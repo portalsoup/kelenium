@@ -1,8 +1,8 @@
 package com.portalsoup.wireprotocol.cookie.api
 
 import com.portalsoup.wireprotocol.core.WireProtocol
-import com.portalsoup.wireprotocol.serialization.dto.response.Response
-import com.portalsoup.wireprotocol.serialization.dto.session.SessionCreated
+import com.portalsoup.wireprotocol.response.Response
+import com.portalsoup.wireprotocol.session.dto.SessionCreated
 import kotlinx.serialization.json.JsonElement
 
 

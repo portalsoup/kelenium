@@ -20,7 +20,7 @@ class ElementsTests: BaseTest() {
         val testPage = HtmlPages.ElementList.asUrl()
         val api = getApi()
         useSession(api) {
-            api.navigateTo(it, testPage)
+            api.navigateTo<Any>(it, testPage)
             val element = api.findElement(it, CSS("#first")).value as ElementRef
             val text = api.getElementText(it, element).value as String
             assertThat(text, equalTo("One"))
@@ -32,7 +32,7 @@ class ElementsTests: BaseTest() {
         val testPage = HtmlPages.ElementList.asUrl()
         val api = getApi()
         useSession(api) {
-            api.navigateTo(it, testPage)
+            api.navigateTo<Any>(it, testPage)
 
             val listItems = api.findElements(it, TagName("li")).value as ElementRefList
 
@@ -48,7 +48,7 @@ class ElementsTests: BaseTest() {
         val testPage = HtmlPages.NestedElements.asUrl()
         val api = getApi()
         useSession(api) {
-            api.navigateTo(it, testPage)
+            api.navigateTo<Any>(it, testPage)
 
             val parent = api.findElement(it, CSS("#parent")).value as ElementRef
             val children = api.findElementFromElement(it, CSS(".match"), parent).value as ElementRef// The target one is technically the second to find globally
@@ -62,7 +62,7 @@ class ElementsTests: BaseTest() {
         val testPage = HtmlPages.NestedElements.asUrl()
         val api = getApi()
         useSession(api) {
-            api.navigateTo(it, testPage)
+            api.navigateTo<Any>(it, testPage)
 
             val parent = api.findElement(it, CSS("#parent")).value as ElementRef
             val children = api.findElementsFromElement(it, CSS(".match"), parent).value as List<ElementRef>
@@ -79,7 +79,7 @@ class ElementsTests: BaseTest() {
 
         val api = getApi()
         useSession(api) {
-            api.navigateTo(it, testPage)
+            api.navigateTo<Any>(it, testPage)
 
             val button = api.findElement(it, CSS("#counterButton")).value as ElementRef
             val count = api.findElement(it, CSS("#count")).value as ElementRef
@@ -99,7 +99,7 @@ class ElementsTests: BaseTest() {
         useSession(api) {
             val testPage = HtmlPages.ClickCounter.asUrl()
             println(testPage)
-            api.navigateTo(it, testPage)
+            api.navigateTo<Any>(it, testPage)
             val element = api.findElement(it, CSS("#message")).value as ElementRef
             val text = api.getElementText(it, element).value
             assertThat(text, equalTo("0 clicks!"))
@@ -111,7 +111,7 @@ class ElementsTests: BaseTest() {
         val testPage = HtmlPages.TextField.asUrl()
         val api = getApi()
         useSession(api) {
-            api.navigateTo(it, testPage)
+            api.navigateTo<Any>(it, testPage)
             val field = api.findElement(it, CSS("#input")).value as ElementRef
             val label = api.findElement(it, CSS("#output")).value as ElementRef
             assertThat(api.getElementText(it, label).value, equalTo("Default value"))
@@ -125,7 +125,7 @@ class ElementsTests: BaseTest() {
         val testPage = HtmlPages.TextField.asUrl()
         val api = getApi()
         useSession(api) {
-            api.navigateTo(it, testPage)
+            api.navigateTo<Any>(it, testPage)
             val label = api.findElement(it, CSS("#output")).value as ElementRef
             assertThat(api.getElementTagName(it, label).value, equalTo("span"))
         }

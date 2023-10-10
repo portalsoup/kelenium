@@ -1,13 +1,13 @@
 package com.portalsoup.wireprotocol.serialization.serializers
 
-import com.portalsoup.wireprotocol.serialization.dto.response.BaseSuccess
 import com.portalsoup.wireprotocol.context.dto.NewWindow
-import com.portalsoup.wireprotocol.serialization.dto.context.WindowRect
-import com.portalsoup.wireprotocol.serialization.dto.element.ElementRef
-import com.portalsoup.wireprotocol.serialization.dto.session.SessionCreated
-import com.portalsoup.wireprotocol.serialization.dto.session.Status
-import com.portalsoup.wireprotocol.serialization.dto.timeout.Timeouts
+import com.portalsoup.wireprotocol.context.dto.WindowRect
+import com.portalsoup.wireprotocol.element.dto.ElementRef
+import com.portalsoup.wireprotocol.response.BaseSuccess
 import com.portalsoup.wireprotocol.serialization.responseJson
+import com.portalsoup.wireprotocol.session.dto.SessionCreated
+import com.portalsoup.wireprotocol.session.dto.Status
+import com.portalsoup.wireprotocol.timeout.dto.Timeouts
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.SerialDescriptor

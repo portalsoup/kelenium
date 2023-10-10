@@ -18,7 +18,7 @@ class NavigationTests: BaseTest() {
 
         val api = getApi()
         useSession(api) {
-            api.navigateTo(it, testPage)
+            api.navigateTo<Any>(it, testPage)
             MatcherAssert.assertThat(api.currentUrl(it).value, Matchers.equalTo(testPage))
         }
     }
@@ -30,9 +30,9 @@ class NavigationTests: BaseTest() {
 
         val api = getApi()
         useSession(api) { session ->
-            api.navigateTo(session, testPage1)
+            api.navigateTo<Any>(session, testPage1)
             MatcherAssert.assertThat(api.currentUrl(session).value, Matchers.equalTo(testPage1))
-            api.navigateTo(session, testPage2)
+            api.navigateTo<Any>(session, testPage2)
             MatcherAssert.assertThat(api.currentUrl(session).value, Matchers.equalTo(testPage2))
             api.back(session)
             MatcherAssert.assertThat(api.currentUrl(session).value, Matchers.equalTo(testPage1))
@@ -46,9 +46,9 @@ class NavigationTests: BaseTest() {
 
         val api = getApi()
         useSession(api) { session ->
-            api.navigateTo(session, testPage1)
+            api.navigateTo<Any>(session, testPage1)
             MatcherAssert.assertThat(api.currentUrl(session).value, Matchers.equalTo(testPage1))
-            api.navigateTo(session, testPage2)
+            api.navigateTo<Any>(session, testPage2)
             MatcherAssert.assertThat(api.currentUrl(session).value, Matchers.equalTo(testPage2))
             api.back(session)
             MatcherAssert.assertThat(api.currentUrl(session).value, Matchers.equalTo(testPage1))

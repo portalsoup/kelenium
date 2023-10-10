@@ -7,7 +7,7 @@ import com.portalsoup.wireprotocol.navigation.api.*
 
 class Navigate internal constructor(override val connection: RemoteDriverConnection): RemoteWebdriverOperation {
     fun to(url: String) {
-        connection.wireProtocol.navigateTo(connection.session, url)
+        connection.wireProtocol.navigateTo<Any>(connection.session, url)
     }
 
     fun current(): String = connection.wireProtocol.currentUrl(connection.session).value.let {
