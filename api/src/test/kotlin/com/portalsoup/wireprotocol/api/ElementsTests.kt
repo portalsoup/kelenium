@@ -63,7 +63,7 @@ class ElementsTests: BaseTest() {
             api.navigateTo(it, testPage)
 
             val parent = api.findElement(it, CSS("#parent")).value as ElementRef
-            val children = api.findElementsFromElement(it, CSS(".match"), parent).value as ElementRefList
+            val children = api.findElementsFromElement(it, CSS(".match"), parent).value as List<ElementRef>
             assertThat(children.size, equalTo(2))
             assertThat(api.getElementText(it, children[0]).value, equalTo("Inner 1"))
             assertThat(api.getElementText(it, children[1]).value, equalTo("Inner 2"))

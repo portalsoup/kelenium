@@ -6,8 +6,8 @@ import com.portalsoup.wireprotocol.serialization.dto.request.context.IdArgument
 import com.portalsoup.wireprotocol.serialization.dto.request.context.TypeArgument
 import com.portalsoup.wireprotocol.serialization.dto.response.Response
 import com.portalsoup.wireprotocol.serialization.dto.response.success.ContextType
-import com.portalsoup.wireprotocol.serialization.dto.request.Rect
 import com.portalsoup.wireprotocol.serialization.dto.response.success.SessionCreated
+import com.portalsoup.wireprotocol.serialization.dto.response.success.WindowRect
 
 fun WireProtocol.getWindowHandle(session: SessionCreated): Response =
     requestBuilder.get("/session/${session.id}/window")
@@ -21,7 +21,7 @@ fun WireProtocol.newWindow(session: SessionCreated, type: ContextType): Response
     requestBuilder.post("/session/${session.id}/window/new", TypeArgument(type.type))
 fun WireProtocol.getWindowRect(session: SessionCreated): Response =
     requestBuilder.get("/session/${session.id}/window/rect")
-fun WireProtocol.setWindowRect(session: SessionCreated, rect: Rect): Response =
+fun WireProtocol.setWindowRect(session: SessionCreated, rect: WindowRect): Response =
     requestBuilder.post("/session/${session.id}/window/rect", rect)
 fun WireProtocol.maximizeWindow(session: SessionCreated): Response =
     requestBuilder.post("/session/${session.id}/window/maximize", "{}")

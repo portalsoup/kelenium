@@ -1,8 +1,11 @@
 package com.portalsoup.wireprotocol.serialization.serializers
 
 import com.portalsoup.wireprotocol.serialization.dto.response.Response
+import com.portalsoup.wireprotocol.serialization.dto.response.ResponsePayload
 import com.portalsoup.wireprotocol.serialization.dto.response.failure.BaseFailure
 import com.portalsoup.wireprotocol.serialization.dto.response.success.BaseSuccess
+import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRef
+import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRefList
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -30,17 +33,18 @@ import kotlinx.serialization.json.*
  */
 object ResponseSerializer : KSerializer<Response> {
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Response")
+    @Suppress("IMPLICIT_CAST_TO_ANY") // rip maybe one day I'll find a way around this
     override fun deserialize(decoder: Decoder): Response {
         val jsonDecoder = decoder as? JsonDecoder ?: throw SerializationException("Couldn't get json decoder")
         val rootElement = jsonDecoder.decodeJsonElement()
-        val value = rootElement.jsonObject["value"] ?: throw SerializationException("All responses should contain a root value property")
+        val value: JsonElement = rootElement.jsonObject["value"] ?: throw SerializationException("All responses should contain a root value property")
 
         return when (value) {
             is JsonPrimitive -> jsonPrimitive(value)
             is JsonNull -> jsonNull()
             is JsonObject -> jsonObject(jsonDecoder, value)
             is JsonArray -> jsonArray(decoder, value)
-        }
+        }.let { Response(it) }
     }
 
     override fun serialize(encoder: Encoder, value: Response) {
@@ -48,27 +52,33 @@ object ResponseSerializer : KSerializer<Response> {
 
     }
 
-    private fun jsonPrimitive(value: JsonPrimitive) = Response(value.content)
-    private fun jsonNull() = Response(Unit)
-    private fun jsonObject(decoder: JsonDecoder, value: JsonObject): Response =
+    private fun jsonPrimitive(value: JsonPrimitive): String = value.content
+    private fun jsonNull() = Unit
+    private fun jsonObject(decoder: JsonDecoder, value: JsonObject): ResponsePayload =
          when (value.containsKey("error")) {
-            true -> decoder.json.decodeFromJsonElement(BaseFailure.serializer(), value).let { Response(it) }
+            true -> decoder.json.decodeFromJsonElement(BaseFailure.serializer(), value)
             false -> when (value.all { it.key.startsWith("element-") }) {
-                true -> decoder.json.decodeFromJsonElement(ElementSerializer, value).let { Response(it) }
-                false -> decoder.json.decodeFromJsonElement(BaseSuccess.serializer(), value).let { Response(it) }
+                true -> decoder.json.decodeFromJsonElement(ElementSerializer, value)
+                false -> decoder.json.decodeFromJsonElement(BaseSuccess.serializer(), value)
             }
         }
+    private fun jsonArray(decoder: JsonDecoder, value: JsonArray): List<*> = decoder.json.let { json ->
 
-    private fun jsonArray(decoder: JsonDecoder, value: JsonArray): Response = decoder.json.let { json ->
-        val isElementList = value.all { each -> each.takeIf { it is JsonObject }?.jsonObject?.keys?.all { it.startsWith("element-") } ?: false }
-        val isPrimitiveList = value.all { each -> each.takeIf { it is JsonPrimitive }?.let { true } ?: false }
-
-        return if (isElementList) {
-            Response(decoder.json.decodeFromJsonElement(ElementListSerializer, value))
-        } else if (isPrimitiveList) {
-            Response(decoder.json.decodeFromJsonElement<List<String>>(value))
+        // First decode the contents to some type
+        val payload = if (value.all { it is JsonObject }) {
+            value.map { jsonObject(decoder, it as JsonObject) }
+        } else if (value.all { it is JsonPrimitive }) {
+            value.map { jsonPrimitive(it as JsonPrimitive) }
         } else {
-            throw SerializationException("Couldn't find an appropriate serializer for JsonArray payload.\n\t$value")
+            throw RuntimeException("")
+        }
+
+        // If the containing type matters to the list implementation, it can be chosen here
+        if (payload.all { it is ElementRef }) {
+            val refs = payload.map { it as ElementRef }
+            return ElementRefList(refs)
+        } else {
+            return payload
         }
     }
 }

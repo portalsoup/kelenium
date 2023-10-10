@@ -5,7 +5,6 @@ import com.portalsoup.wireprotocol.api.*
 import com.portalsoup.wireprotocol.core.LocationStrategy
 import com.portalsoup.wireprotocol.serialization.dto.request.SendKeys
 import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRef
-import com.portalsoup.wireprotocol.serialization.dto.response.success.ElementRefList
 
 class WebElement(override val connection: RemoteDriverConnection, val elementRef: ElementRef): Element {
 
@@ -30,10 +29,10 @@ class WebElement(override val connection: RemoteDriverConnection, val elementRef
             .findElementsFromElement(connection.session, locationStrategy, elementRef)
             .value
             .let { when (it) {
-                is ElementRefList -> it
+                is List<*> -> it
                 else -> throw RuntimeException("Invalid element ref list in response")
             } }
-            .map { WebElement(connection, it) }
+            .map { WebElement(connection, it as ElementRef) }
     }
 
     override fun text(): String = connection.wireProtocol.getElementText(connection.session, elementRef).value.let {
