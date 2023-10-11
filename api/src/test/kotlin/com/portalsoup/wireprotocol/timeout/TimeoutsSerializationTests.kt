@@ -1,9 +1,7 @@
 package com.portalsoup.wireprotocol.timeout
 
 import com.portalsoup.wireprotocol.BaseTest
-import com.portalsoup.wireprotocol.session.dto.SessionCreated
 import com.portalsoup.wireprotocol.timeout.dto.Timeouts
-import kotlinx.serialization.json.JsonObject
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test

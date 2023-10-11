@@ -1,2 +1,2 @@
 rootProject.name = "kelenium"
-include("api", "framework")
+include("api")
