@@ -1,5 +1,7 @@
 package com.portalsoup.wireprotocol.error.dto
 
+import com.portalsoup.wireprotocol.core.ErrorCodes
+import com.portalsoup.wireprotocol.core.ErrorCodes.TIMEOUT
 import com.portalsoup.wireprotocol.response.BaseFailure
 import com.portalsoup.wireprotocol.serialization.ResponseIsErrorType
 import kotlinx.serialization.Serializable
@@ -12,7 +14,7 @@ class Timeout(
     override val stacktrace: String,
     override val data: JsonObject
 ) : BaseFailure() {
-    companion object : ResponseIsErrorType<JsonObject>("timeout") {
+    companion object : ResponseIsErrorType<JsonObject>(TIMEOUT) {
         override fun isType(element: JsonObject): Boolean {
             return isCode(element)
         }

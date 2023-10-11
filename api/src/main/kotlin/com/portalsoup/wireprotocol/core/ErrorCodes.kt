@@ -1,0 +1,32 @@
+package com.portalsoup.wireprotocol.core
+
+enum class ErrorCodes(val code: String) {
+    DETACHED_SHADOW_ROOT("detached shadow root"),
+    ELEMENT_CLICK_INTERCEPTED("element click intercepted"),
+    ELEMENT_NOT_INTERACTABLE("element not interactable"),
+    INSECURE_CERTIFICATE("insecure certificate"),
+    INVALID_ARGUMENT("invalid argument"),
+    INVALID_COOKIE_DOMAIN("invalid cookie domain"),
+    INVALID_ELEMENT_STATE("invalid element state"),
+    INVALID_SELECTOR("invalid selector"),
+    INVALID_SESSION_ID("invalid session id"),
+    JAVASCRIPT_ERROR("javascript error"),
+    MOVE_TARGET_OUT_OF_BOUNDS("move target out of bounds"),
+    NO_SUCH_ALERT("no such alert"),
+    NO_SUCH_COOKIE("no such cookie"),
+    NO_SUCH_ELEMENT("no such element"),
+    NO_SUCH_FRAME("no such frame"),
+    NO_SUCH_SHADOW_ROOT("no such shadow root"),
+    NO_SUCH_WINDOW("no such window"),
+    SCRIPT_TIMEOUT("script timeout"),
+    SESSION_NOT_CREATED("session not created"),
+    STALE_ELEMENT_REFERENCE("stale element reference"),
+    TIMEOUT("timeout"),
+    UNABLE_TO_CAPTURE_SCREEN("unable to capture screen"),
+    UNABLE_TO_SET_COOKIE("unable to set cookie"),
+    UNEXPECTED_ALERT_OPEN("unexpected alert open"),
+    UNKNOWN_COMMAND("unknown command"),
+    UNKNOWN_ERROR("unknown error"),
+    UNKNOWN_METHOD("unknown method"),
+    UNSUPPORTED_OPERATION("unsupported operation")
+}

@@ -1,5 +1,7 @@
 package com.portalsoup.wireprotocol.error.dto
 
+import com.portalsoup.wireprotocol.core.ErrorCodes
+import com.portalsoup.wireprotocol.core.ErrorCodes.UNABLE_TO_SET_COOKIE
 import com.portalsoup.wireprotocol.response.BaseFailure
 import com.portalsoup.wireprotocol.serialization.ResponseIsErrorType
 import kotlinx.serialization.Serializable
@@ -12,7 +14,7 @@ class UnableToSetCookie(
     override val stacktrace: String,
     override val data: JsonObject
 ) : BaseFailure() {
-    companion object : ResponseIsErrorType<JsonObject>("unable to set cookie") {
+    companion object : ResponseIsErrorType<JsonObject>(UNABLE_TO_SET_COOKIE) {
         override fun isType(element: JsonObject): Boolean {
             return isCode(element)
         }

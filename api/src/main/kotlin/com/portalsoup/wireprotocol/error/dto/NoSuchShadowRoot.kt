@@ -1,5 +1,7 @@
 package com.portalsoup.wireprotocol.error.dto
 
+import com.portalsoup.wireprotocol.core.ErrorCodes
+import com.portalsoup.wireprotocol.core.ErrorCodes.NO_SUCH_SHADOW_ROOT
 import com.portalsoup.wireprotocol.response.BaseFailure
 import com.portalsoup.wireprotocol.serialization.ResponseIsErrorType
 import kotlinx.serialization.Serializable
@@ -12,7 +14,7 @@ class NoSuchShadowRoot(
     override val stacktrace: String,
     override val data: JsonObject
 ) : BaseFailure() {
-    companion object : ResponseIsErrorType<JsonObject>("no such shadow root") {
+    companion object : ResponseIsErrorType<JsonObject>(NO_SUCH_SHADOW_ROOT) {
         override fun isType(element: JsonObject): Boolean {
             return isCode(element)
         }

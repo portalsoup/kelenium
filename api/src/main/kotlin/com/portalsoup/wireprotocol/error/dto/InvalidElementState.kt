@@ -1,5 +1,6 @@
 package com.portalsoup.wireprotocol.error.dto
 
+import com.portalsoup.wireprotocol.core.ErrorCodes.INVALID_ELEMENT_STATE
 import com.portalsoup.wireprotocol.response.BaseFailure
 import com.portalsoup.wireprotocol.serialization.ResponseIsErrorType
 import kotlinx.serialization.Serializable
@@ -12,7 +13,7 @@ class InvalidElementState(
     override val stacktrace: String,
     override val data: JsonObject
 ) : BaseFailure() {
-    companion object : ResponseIsErrorType<JsonObject>("invalid element state") {
+    companion object : ResponseIsErrorType<JsonObject>(INVALID_ELEMENT_STATE) {
         override fun isType(element: JsonObject): Boolean {
             return isCode(element)
         }
