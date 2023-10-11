@@ -5,7 +5,7 @@ import com.portalsoup.wireprotocol.serialization.serializers.ResponseSerializer
 import kotlinx.serialization.json.Json
 
 abstract class BaseTest {
-    fun generateExampleApiRespones(payload: String): Response {
+    fun generateExampleApiResponse(payload: String): Response {
         val raw = "{\"value\": $payload}"
         val parsed = Json.parseToJsonElement(raw)
         return Json.decodeFromJsonElement(ResponseSerializer, parsed)

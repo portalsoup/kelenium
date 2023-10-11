@@ -50,9 +50,14 @@ class HttpRequestBuilder(private val baseUrl: String) {
 
     internal inline fun <reified T> decodeResponseBody(connection: HttpURLConnection): T {
         val responseStr = runCatching {
-            BufferedReader(
-                InputStreamReader(connection.inputStream, "utf-8")
-            ).use { parseReader(it) }
+            val stdIn = connection.inputStream
+            val stdErr = connection.errorStream
+            val code = connection.responseCode
+            val reader = when (code) {
+                in 200..299 -> InputStreamReader(stdIn)
+                else -> InputStreamReader(stdErr)
+            }
+            reader.let { BufferedReader(it) }.use { parseReader(it) }
         }
             .getOrElse { throw RemoteDriverClosedException(it) }
         println(responseStr)
