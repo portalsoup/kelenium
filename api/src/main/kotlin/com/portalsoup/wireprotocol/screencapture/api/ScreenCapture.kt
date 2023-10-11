@@ -1,4 +1,4 @@
-package com.portalsoup.wireprotocol.screencapture.dto
+package com.portalsoup.wireprotocol.screencapture.api
 
 import com.portalsoup.wireprotocol.core.WireProtocol
 import com.portalsoup.wireprotocol.element.dto.ElementRef

@@ -2,8 +2,8 @@ package com.portalsoup.kelenium.framework.actions
 
 import com.portalsoup.kelenium.framework.RemoteDriverConnection
 import com.portalsoup.wireprotocol.element.dto.ElementRef
-import com.portalsoup.wireprotocol.screencapture.dto.takeElementScreenshot
-import com.portalsoup.wireprotocol.screencapture.dto.takeScreenshot
+import com.portalsoup.wireprotocol.screencapture.api.takeElementScreenshot
+import com.portalsoup.wireprotocol.screencapture.api.takeScreenshot
 
 class Screenshot(override val connection: RemoteDriverConnection) : RemoteWebdriverOperation {
     fun screen(): String = connection.wireProtocol.takeScreenshot(connection.session).value.let {
