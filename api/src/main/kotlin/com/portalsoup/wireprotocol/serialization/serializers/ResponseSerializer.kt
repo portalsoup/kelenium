@@ -37,7 +37,12 @@ object ResponseSerializer : KSerializer<Response> {
     override fun deserialize(decoder: Decoder): Response {
         val jsonDecoder = decoder as? JsonDecoder ?: throw SerializationException("Couldn't get json decoder")
         val rootElement = jsonDecoder.decodeJsonElement()
-        val value: JsonElement = rootElement.jsonObject["value"] ?: throw SerializationException("All responses should contain a root value property")
+        val value = if (rootElement is JsonObject) {
+            rootElement.jsonObject["value"]
+                ?: throw SerializationException("All responses should contain a root value property")
+        } else {
+            throw SerializationException("The response wasn't an object ${decoder.json.encodeToString(JsonElement.serializer(), rootElement)}")
+        }
 
         return when (value) {
             is JsonPrimitive -> jsonPrimitive(value)

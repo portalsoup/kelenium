@@ -5,4 +5,4 @@ import com.portalsoup.wireprotocol.print.dto.PrintPage
 import com.portalsoup.wireprotocol.response.Response
 import com.portalsoup.wireprotocol.session.dto.SessionCreated
 
-fun WireProtocol.printPage(session: SessionCreated, printSettings: PrintPage): Response = requestBuilder.post("/session/${session.id}/print", printSettings)
+fun WireProtocol.printPage(session: SessionCreated, printSettings: PrintPage): Response = post("/session/${session.id}/print", printSettings)

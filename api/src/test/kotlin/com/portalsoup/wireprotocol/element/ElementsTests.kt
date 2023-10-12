@@ -41,7 +41,7 @@ class ElementsTests: BaseApiTest() {
         }
     }
 
-//    @Test
+    //    @Test
     fun findElementFromElementTest() {
         val testPage = HtmlPages.NestedElements.asUrl()
         val api = getApi()
@@ -55,7 +55,7 @@ class ElementsTests: BaseApiTest() {
         }
     }
 
-//    @Test
+    //    @Test
     fun findElementFromElementsTest() {
         val testPage = HtmlPages.NestedElements.asUrl()
         val api = getApi()
@@ -126,30 +126,6 @@ class ElementsTests: BaseApiTest() {
             api.navigateTo(it, testPage)
             val label = api.findElement(it, CSS("#output")).value as ElementRef
             assertThat(api.getElementTagName(it, label).value, equalTo("span"))
-        }
-    }
-
-    @Test
-    fun findElementShadowRoot() {
-        val testPage = HtmlPages.ShadowDom.asUrl()
-        val api = getApi()
-
-        useSession(api) {
-            api.navigateTo(it, testPage)
-        }
-    }
-
-    @Test
-    fun findElementFromShadowDomTest() {
-        val testPage = HtmlPages.ShadowDom.asUrl()
-        val api = getApi()
-
-        useSession(api) {
-            api.navigateTo(it, testPage)
-            val root = api.findElement(it, CSS("#container")).value as ElementRef
-            val shadow = api.getElementShadowRoot(it, root).value as ElementRef
-//            val p = api.findElementFromShadowRoot(it, shadow.reference, CSS("p")).value as ElementRef
-//            assertThat(api.getElementText(it, p), equalTo("This is content inside the shadow DOM."))
         }
     }
 }

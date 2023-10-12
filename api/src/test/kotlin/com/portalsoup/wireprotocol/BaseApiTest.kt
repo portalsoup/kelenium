@@ -4,7 +4,6 @@ import com.portalsoup.wireprotocol.Executables.Geckodriver
 import com.portalsoup.wireprotocol.core.WireProtocol
 import com.portalsoup.wireprotocol.session.api.createSession
 import com.portalsoup.wireprotocol.session.api.deleteSession
-import com.portalsoup.wireprotocol.core.HttpRequestBuilder
 import com.portalsoup.wireprotocol.session.dto.SessionCreated
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -46,9 +45,9 @@ open class BaseApiTest: BaseTest() {
                 }
                 """.trimIndent()
 
-    fun getApi() = WireProtocol(HttpRequestBuilder("http://127.0.0.1:4444"))
+    fun getApi() = WireProtocol("127.0.0.1", 4444)
     fun useSession(api: WireProtocol, l: (SessionCreated) -> Unit) {
-        val response = api.createSession(headlessCapabilities).value
+        val response = api.createSession().value
         when (response) {
             is SessionCreated -> response.apply(l).let { api.deleteSession(it) }
             else -> throw AssertionError("Failed to create sesssion: $response")
