@@ -7,11 +7,11 @@ import com.portalsoup.wireprotocol.session.dto.SessionCreated
 
 
 fun WireProtocol.dismissAlert(session: SessionCreated): Response =
-    requestBuilder.post("/session/${session.id}/alert/dismiss", "{}")
+    post("/session/${session.id}/alert/dismiss", "{}")
 fun WireProtocol.acceptAlert(session: SessionCreated): Response =
-    requestBuilder.post("/session/${session.id}/alert/accept", "{}")
+    post("/session/${session.id}/alert/accept", "{}")
 fun WireProtocol.getAlertText(session: SessionCreated): Response =
-    requestBuilder.get("/session/${session.id}/alert/text")
+    get("/session/${session.id}/alert/text")
 fun WireProtocol.sendAlertText(session: SessionCreated, text: AlertText): Response =
-    requestBuilder.post("/session/${session.id}/alert/text", text)
+    post("/session/${session.id}/alert/text", text)
 

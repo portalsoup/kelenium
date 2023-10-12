@@ -6,5 +6,5 @@ import com.portalsoup.wireprotocol.response.Response
 import com.portalsoup.wireprotocol.session.dto.SessionCreated
 
 
-fun WireProtocol.takeScreenshot(session: SessionCreated): Response = requestBuilder.get("/session/${session.id}/screenshot")
-fun WireProtocol.takeElementScreenshot(session: SessionCreated, element: ElementRef): Response = requestBuilder.get("/session/${session.id}/element/${element.reference}/screenshot")
+fun WireProtocol.takeScreenshot(session: SessionCreated): Response = get("/session/${session.id}/screenshot")
+fun WireProtocol.takeElementScreenshot(session: SessionCreated, element: ElementRef): Response = get("/session/${session.id}/element/${element.reference}/screenshot")
