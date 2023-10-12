@@ -12,7 +12,7 @@ class MoveTargetOutOfBounds(
     override val error: String,
     override val message: String,
     override val stacktrace: String,
-    override val data: JsonObject
+    override val data: JsonObject? = null
 ) : BaseFailure() {
     companion object : ResponseIsErrorType<JsonObject>(MOVE_TARGET_OUT_OF_BOUNDS) {
         override fun isType(element: JsonObject): Boolean {

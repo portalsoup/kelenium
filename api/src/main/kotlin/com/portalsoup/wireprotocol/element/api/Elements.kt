@@ -21,11 +21,11 @@ fun WireProtocol.findElementFromElement(session: SessionCreated, locationStrateg
 fun WireProtocol.findElementsFromElement(session: SessionCreated, locationStrategy: LocationStrategy, parent: ElementRef): Response =
     requestBuilder.post("/session/${session.id}/element/${parent.reference}/elements", locationStrategy.expression)
 
-fun WireProtocol.findElementFromShadowRoot(session: SessionCreated, strategy: FindElementStrategy, shadowId: String): Response =
-    requestBuilder.post("/session/${session.id}/shadow/${shadowId}/element", strategy)
+fun WireProtocol.findElementFromShadowRoot(session: SessionCreated, rootReference: String, using: LocationStrategy): Response =
+    requestBuilder.post("/session/${session.id}/shadow/${rootReference}/element", FindElementStrategy(using.id.code, using.expression))
 
-fun WireProtocol.findElementsFromShadowRoot(session: SessionCreated, strategy: FindElementStrategy, shadowId: String): Response =
-    requestBuilder.post("/session/${session.id}/shadow/${shadowId}/elements", strategy)
+fun WireProtocol.findElementsFromShadowRoot(session: SessionCreated, using: LocationStrategy, shadowId: String): Response =
+    requestBuilder.post("/session/${session.id}/shadow/${shadowId}/elements", FindElementStrategy(using.id.code, using.expression))
 
 fun WireProtocol.getActiveElement(session: SessionCreated): Response =
     requestBuilder.get("/session/${session.id}/element/active")

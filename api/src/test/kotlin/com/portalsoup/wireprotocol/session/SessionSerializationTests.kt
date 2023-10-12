@@ -3,7 +3,6 @@ package com.portalsoup.wireprotocol.session
 import com.portalsoup.wireprotocol.BaseTest
 import com.portalsoup.wireprotocol.session.dto.SessionCreated
 import com.portalsoup.wireprotocol.session.dto.Status
-import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
@@ -13,7 +12,7 @@ class SessionSerializationTests: BaseTest() {
     @Test
     fun serializeSessionCreatedTest() {
         val id = "test id"
-        val response = generateExampleApiRespones(
+        val response = generateExampleApiResponse(
             """
             {
                 "sessionId": "$id",
@@ -29,7 +28,7 @@ class SessionSerializationTests: BaseTest() {
     fun serializeStatusTest() {
         val message = "test message"
         val ready = true
-        val response = generateExampleApiRespones(
+        val response = generateExampleApiResponse(
             """
             {
                 "message": "$message",

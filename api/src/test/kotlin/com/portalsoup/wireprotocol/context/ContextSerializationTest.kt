@@ -12,7 +12,7 @@ class ContextSerializationTest: BaseTest() {
     fun serializeNewWindowTest() {
         val handle = "test handle"
         val type = "test type"
-        val response = generateExampleApiRespones("""
+        val response = generateExampleApiResponse("""
             {
                 "handle": "$handle",
                 "type": "$type"
@@ -29,7 +29,7 @@ class ContextSerializationTest: BaseTest() {
         val y = 1
         val width = 1
         val height = 1
-        val response = generateExampleApiRespones("""
+        val response = generateExampleApiResponse("""
             {
                 "x": "$x",
                 "y": "$y",

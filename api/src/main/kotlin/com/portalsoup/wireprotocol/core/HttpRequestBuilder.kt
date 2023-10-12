@@ -49,13 +49,17 @@ class HttpRequestBuilder(private val baseUrl: String) {
     }
 
     internal inline fun <reified T> decodeResponseBody(connection: HttpURLConnection): T {
+        println("Got a response: ${connection.responseMessage} ${connection.responseCode}")
         val responseStr = runCatching {
-            BufferedReader(
-                InputStreamReader(connection.inputStream, "utf-8")
-            ).use { parseReader(it) }
+            val code = connection.responseCode
+            val reader = when (code) {
+                in 100..399 -> { println("Found a stdin"); InputStreamReader(connection.inputStream) }
+                else -> { println("found a stderr"); InputStreamReader(connection.errorStream) }
+            }
+            reader.let { BufferedReader(it) }.use { parseReader(it) }
         }
-            .getOrElse { throw RemoteDriverClosedException(it) }
-        println(responseStr)
+            .getOrElse { println("Handling an api error"); "{}" }
+        println("Debug: Got a response: $responseStr")
         return Json.decodeFromString(responseStr)
     }
 

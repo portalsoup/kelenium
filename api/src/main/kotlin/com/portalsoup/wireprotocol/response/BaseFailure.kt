@@ -9,5 +9,5 @@ abstract class BaseFailure : ResponsePayload() {
     abstract val error: String
     abstract val message: String
     abstract val stacktrace: String
-    abstract val data: JsonObject
+    abstract val data: JsonObject?
 }

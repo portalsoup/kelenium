@@ -11,7 +11,6 @@ import kotlinx.serialization.json.jsonObject
 data class ElementRef(val identifier: String, val reference: String): BaseSuccess() {
     companion object : ResponseIsType<JsonObject> {
         override fun isType(element: JsonObject): Boolean {
-            println(element::class.simpleName)
             return element.jsonObject
                 .takeIf { it.isNotEmpty() }
                 ?.keys

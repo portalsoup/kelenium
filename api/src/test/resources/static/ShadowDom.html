@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shadow DOM Example</title>
+</head>
+<body>
+<h1>Regular DOM Content</h1>
+
+<div id="container">
+    <!-- This is where the shadow DOM will be attached -->
+</div>
+
+<script>
+    // Select the container element
+    const container = document.getElementById('container');
+
+    // Create a shadow root for the container
+    const shadowRoot = container.attachShadow({ mode: 'open' });
+
+    // Create elements within the shadow root
+    const paragraph = document.createElement('p');
+    paragraph.textContent = 'This is content inside the shadow DOM.';
+    shadowRoot.appendChild(paragraph);
+</script>
+</body>
+</html>

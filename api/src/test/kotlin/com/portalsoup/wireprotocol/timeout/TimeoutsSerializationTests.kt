@@ -12,7 +12,7 @@ class TimeoutsSerializationTests: BaseTest() {
         val script = 5
         val pageLoad = 5
         val implicit = 5
-        val response = generateExampleApiRespones(
+        val response = generateExampleApiResponse(
             """
             {
                 "script": "$script",
