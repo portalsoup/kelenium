@@ -4,13 +4,16 @@ import com.portalsoup.wireprotocol.HtmlPages
 import com.portalsoup.wireprotocol.core.ErrorCodes
 import com.portalsoup.wireprotocol.core.LocationStrategy
 import com.portalsoup.wireprotocol.element.api.findElement
+import com.portalsoup.wireprotocol.element.api.findElements
 import com.portalsoup.wireprotocol.element.api.getElementText
 import com.portalsoup.wireprotocol.element.dto.ElementRef
+import com.portalsoup.wireprotocol.element.dto.ElementRefList
 import com.portalsoup.wireprotocol.navigation.api.navigateTo
 import org.hamcrest.MatcherAssert
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers
 import org.hamcrest.Matchers.equalTo
+import org.hamcrest.Matchers.instanceOf
 import org.hamcrest.core.IsInstanceOf
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
@@ -19,7 +22,7 @@ class NoSuchElementTest: BaseErrorResponseTest() {
     @Test
     fun serializeNoSuchElementTest() {
         val response = generateAndSerializeExampleFailureResponse(ErrorCodes.NO_SUCH_ELEMENT.code)
-        MatcherAssert.assertThat(response.value, IsInstanceOf.instanceOf(NoSuchElement::class.java))
+        assertThat(response.value, IsInstanceOf.instanceOf(NoSuchElement::class.java))
     }
 
     @Test
@@ -29,7 +32,7 @@ class NoSuchElementTest: BaseErrorResponseTest() {
         useSession(api) {
             api.navigateTo(it, testPage)
             val response = api.findElement(it, LocationStrategy.CSS("#doesnotexist")).value
-            assertThat(response, equalTo(NoSuchElement::class.java))
+            assertThat(response, instanceOf(NoSuchElement::class.java))
 
         }
     }

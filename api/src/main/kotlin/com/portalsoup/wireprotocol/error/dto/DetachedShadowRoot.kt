@@ -11,7 +11,7 @@ class DetachedShadowRoot(
     override val error: String,
     override val message: String,
     override val stacktrace: String,
-    override val data: JsonObject
+    override val data: JsonObject? = null
 ) : BaseFailure() {
     companion object : ResponseIsErrorType<JsonObject>(DETACHED_SHADOW_ROOT) {
         override fun isType(element: JsonObject): Boolean {

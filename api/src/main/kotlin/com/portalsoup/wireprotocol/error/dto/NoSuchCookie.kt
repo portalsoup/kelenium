@@ -12,7 +12,7 @@ class NoSuchCookie(
     override val error: String,
     override val message: String,
     override val stacktrace: String,
-    override val data: JsonObject
+    override val data: JsonObject? = null
 ) : BaseFailure() {
     companion object : ResponseIsErrorType<JsonObject>(NO_SUCH_COOKIE) {
         override fun isType(element: JsonObject): Boolean {
