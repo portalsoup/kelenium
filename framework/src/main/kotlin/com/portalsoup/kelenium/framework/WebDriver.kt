@@ -6,21 +6,75 @@ import com.portalsoup.wireprotocol.element.api.findElement
 import com.portalsoup.wireprotocol.element.dto.ElementRef
 import com.portalsoup.wireprotocol.error.exceptions.ElementNotFoundException
 import com.portalsoup.wireprotocol.error.exceptions.SessionNotCreatedException
-import com.portalsoup.wireprotocol.navigation.api.navigateTo
+import com.portalsoup.wireprotocol.navigation.api.*
 import com.portalsoup.wireprotocol.session.api.createSession
 import com.portalsoup.wireprotocol.session.api.deleteSession
 import com.portalsoup.wireprotocol.session.dto.SessionCreated
+import com.portalsoup.wireprotocol.timeout.api.setTimeouts
+import com.portalsoup.wireprotocol.timeout.dto.Timeouts
 import java.io.Closeable
+import kotlin.reflect.KProperty
 
 data class TimeoutConfigurator(
-    var implicit: Long = 0,
-    var pageLoad: Long = 5000,
-    var script: Long = 5000
+    var implicit: Int = 0,
+    var pageLoad: Int = 5000,
+    var script: Int = 5000
 )
 
-data class WebDriverConfigurator(private var timeoutConfigurator: TimeoutConfigurator = TimeoutConfigurator()) {
+data class WebDriverConfigurator(internal var timeoutConfigurator: TimeoutConfigurator = TimeoutConfigurator()) {
+    fun deepCopy(): WebDriverConfigurator = copy(
+        timeoutConfigurator = TimeoutConfigurator().copy()
+    )
     fun timeouts(f: TimeoutConfigurator.() -> Unit) {
         timeoutConfigurator.apply(f)
+    }
+}
+
+class ConfigReactor(private val driver: WebDriver) {
+    private var propValue = WebDriverConfigurator()
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): WebDriverConfigurator {
+        return propValue
+    }
+    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: WebDriverConfigurator) {
+        val oldValue = propValue
+        propValue = value
+        onChange(value, oldValue)
+    }
+
+    private fun onChange(old: WebDriverConfigurator, new: WebDriverConfigurator) {
+        if (old.timeoutConfigurator != new.timeoutConfigurator) {
+            driver.wireProtocol.setTimeouts(driver.session, Timeouts(
+                script = new.timeoutConfigurator.script,
+                pageLoad = new.timeoutConfigurator.pageLoad,
+                implicit = new.timeoutConfigurator.implicit
+            ))
+        }
+    }
+}
+
+class Navigator(val driver: WebDriver) {
+    fun to(url: String) {
+        driver.wireProtocol.navigateTo(driver.session, url)
+    }
+
+    fun current() {
+        driver.wireProtocol.currentUrl(driver.session)
+    }
+
+    fun back() {
+        driver.wireProtocol.back(driver.session)
+    }
+
+    fun forward() {
+        driver.wireProtocol.forward(driver.session)
+    }
+
+    fun refresh() {
+        driver.wireProtocol.refresh(driver.session)
+    }
+
+    fun title() {
+        driver.wireProtocol.getTitle(driver.session)
     }
 }
 
@@ -28,7 +82,7 @@ class WebDriver: Closeable {
 
     val wireProtocol: WireProtocol
 
-    internal var configuration: WebDriverConfigurator by Reactive(WebDriverConfigurator(), ::onConfigurationChange)
+    internal var configuration by ConfigReactor(this)
 
     internal lateinit var session: SessionCreated
     private lateinit var server: Process
@@ -40,11 +94,8 @@ class WebDriver: Closeable {
     }
 
     fun configure(f: WebDriverConfigurator.() -> Unit) {
-        configuration = configuration.copy().apply(f)
-    }
-
-    private fun onConfigurationChange(old: WebDriverConfigurator, new: WebDriverConfigurator) {
-        println("Configuration changed: $old -> $new")
+        val newConfig = configuration.deepCopy().apply(f)
+        configuration = newConfig
     }
 
     private fun startServer(driverPath: String) {
@@ -72,6 +123,10 @@ class WebDriver: Closeable {
             is SessionCreated -> session = rawSession
             else -> throw SessionNotCreatedException()
         }
+    }
+
+    fun navigate(f: Navigator.() -> Unit) {
+        Navigator(this).apply(f)
     }
 
     fun navigateTo(url: String) {
