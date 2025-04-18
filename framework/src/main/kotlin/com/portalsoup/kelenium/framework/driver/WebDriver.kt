@@ -1,6 +1,6 @@
-package com.portalsoup.kelenium.framework
+package com.portalsoup.kelenium.framework.driver
 
-import com.portalsoup.kelenium.wireprotocol.core.Reactive
+import com.portalsoup.kelenium.framework.element.WebElement
 import com.portalsoup.wireprotocol.core.WireProtocol
 import com.portalsoup.wireprotocol.element.api.findElement
 import com.portalsoup.wireprotocol.element.dto.ElementRef
@@ -21,7 +21,12 @@ data class TimeoutConfigurator(
     var script: Int = 5000
 )
 
-data class WebDriverConfigurator(internal var timeoutConfigurator: TimeoutConfigurator = TimeoutConfigurator()) {
+data class ActiveWait(
+    var pollingIntervalMs: Int = 500,
+    var timeoutMs: Int = 30 * 1000,
+)
+
+data class WebDriverConfigurator(internal var timeoutConfigurator: TimeoutConfigurator = TimeoutConfigurator(), internal var activeWait: ActiveWait = ActiveWait()) {
     fun deepCopy(): WebDriverConfigurator = copy(
         timeoutConfigurator = TimeoutConfigurator().copy()
     )
@@ -128,6 +133,8 @@ class WebDriver: Closeable {
     fun navigate(f: Navigator.() -> Unit) {
         Navigator(this).apply(f)
     }
+
+    fun navigate(): Navigator = Navigator(this)
 
     fun navigateTo(url: String) {
         wireProtocol.navigateTo(session, url)
