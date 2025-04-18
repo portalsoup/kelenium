@@ -5,7 +5,6 @@ import com.portalsoup.wireprotocol.element.dto.ElementRef
 import com.portalsoup.wireprotocol.element.dto.FindElementStrategy
 import com.portalsoup.wireprotocol.element.dto.SendKeys
 import com.portalsoup.wireprotocol.response.Response
-import com.portalsoup.wireprotocol.response.TextResponse
 import com.portalsoup.wireprotocol.session.dto.SessionCreated
 
 // Locators
@@ -47,7 +46,7 @@ fun WireProtocol.getElementProperty(session: SessionCreated, element: ElementRef
 fun WireProtocol.getElementCssValue(session: SessionCreated, element: ElementRef, name: String): Response =
     get("/session/${session.id}/element/${element.reference}/css/$name")
 
-fun WireProtocol.getElementText(session: SessionCreated, element: ElementRef): TextResponse =
+fun WireProtocol.getElementText(session: SessionCreated, element: ElementRef): Response =
     get("/session/${session.id}/element/${element.reference}/text")
 
 fun WireProtocol.getElementTagName(session: SessionCreated, element: ElementRef): Response =

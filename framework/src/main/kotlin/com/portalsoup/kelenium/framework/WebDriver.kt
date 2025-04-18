@@ -1,5 +1,6 @@
 package com.portalsoup.kelenium.framework
 
+import com.portalsoup.kelenium.wireprotocol.core.Reactive
 import com.portalsoup.wireprotocol.core.WireProtocol
 import com.portalsoup.wireprotocol.element.api.findElement
 import com.portalsoup.wireprotocol.element.dto.ElementRef
@@ -11,15 +12,13 @@ import com.portalsoup.wireprotocol.session.api.deleteSession
 import com.portalsoup.wireprotocol.session.dto.SessionCreated
 import java.io.Closeable
 
-class TimeoutConfigurator {
-    var implicit: Long = 0
-    var pageLoad: Long = 5000
+data class TimeoutConfigurator(
+    var implicit: Long = 0,
+    var pageLoad: Long = 5000,
     var script: Long = 5000
-}
+)
 
-class WebDriverConfigurator {
-    private var timeoutConfigurator: TimeoutConfigurator = TimeoutConfigurator()
-
+data class WebDriverConfigurator(private var timeoutConfigurator: TimeoutConfigurator = TimeoutConfigurator()) {
     fun timeouts(f: TimeoutConfigurator.() -> Unit) {
         timeoutConfigurator.apply(f)
     }
@@ -29,7 +28,7 @@ class WebDriver: Closeable {
 
     val wireProtocol: WireProtocol
 
-    internal var configuration: WebDriverConfigurator = WebDriverConfigurator()
+    internal var configuration: WebDriverConfigurator by Reactive(WebDriverConfigurator(), ::onConfigurationChange)
 
     internal lateinit var session: SessionCreated
     private lateinit var server: Process
@@ -41,7 +40,11 @@ class WebDriver: Closeable {
     }
 
     fun configure(f: WebDriverConfigurator.() -> Unit) {
-        configuration.apply(f)
+        configuration = configuration.copy().apply(f)
+    }
+
+    private fun onConfigurationChange(old: WebDriverConfigurator, new: WebDriverConfigurator) {
+        println("Configuration changed: $old -> $new")
     }
 
     private fun startServer(driverPath: String) {

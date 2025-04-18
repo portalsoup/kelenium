@@ -19,8 +19,11 @@ class WebElement {
         webDriver.wireProtocol.elementSendKeys(webDriver.session, ref, SendKeys(keys))
     }
 
-    fun getText(): String {
-        return webDriver.wireProtocol.getElementText(webDriver.session, ref).value.toString().also { println("it? $it") }
+    fun getText(): String? {
+        return webDriver.wireProtocol.getElementText(webDriver.session, ref).value
+            .takeIf { it is String }
+            ?.let { it as String }
+            ?.also { println("Got text: $it") }
     }
 
     fun click() {

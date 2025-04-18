@@ -10,20 +10,22 @@ import java.io.OutputStream
 import java.net.Socket
 
 open class WireProtocol(val host: String, val port: Int) {
-    fun <R: Response> get(endpoint: String): R {
+    fun get(endpoint: String): Response {
         return performHttpRequest("GET", endpoint)
-            .let { Json.decodeFromString<R>(ResponseSerializer, it) }
+            .let { Json.decodeFromString(ResponseSerializer, it) }
     }
 
-    inline fun <reified T, R: Response> post(endpoint: String, payload: T): R {
-        return performHttpRequest("POST", endpoint, jsonToString(payload))
-            .let { Json.decodeFromString<R>(ResponseSerializer, it) }
+    inline fun <reified T> post(endpoint: String, payload: T): Response {
+        val strPayload = jsonToString(payload)
+        return performHttpRequest("POST", endpoint, strPayload)
+            .also { println("$endpoint => $strPayload") }
+            .let { Json.decodeFromString(ResponseSerializer, it) }
     }
 
-    fun <R: Response> delete(endpoint: String): R {
+    fun delete(endpoint: String): Response {
         return performHttpRequest("DELETE", endpoint)
             .also { println(it) }
-            .let { Json.decodeFromString<R>(ResponseSerializer, it) }
+            .let { Json.decodeFromString(ResponseSerializer, it) }
     }
 
     private fun prepareHttpRequest(method: String, endpoint: String, payload: String?): String {
@@ -92,6 +94,6 @@ open class WireProtocol(val host: String, val port: Int) {
         return when (obj) {
             is String -> obj
             else -> Json.encodeToString(obj)
-        }.also { println("Encoded a payload: $it") }
+        }
     }
 }

@@ -13,6 +13,8 @@ fun main() {
         }
 
         performGoogleSearch(driver)
+
+        Thread.sleep(30000)
     }
 }
 
@@ -23,10 +25,12 @@ fun performGoogleSearch(driver: WebDriver) {
     val searchButtonSelector = CSS("[value='Google Search'][type=submit]")
 
     val searchBar = driver.findElement(searchBarSelector)
-    val searchButton = driver.findElement(searchButtonSelector)
 
     val searchQuery = "reddit"
     searchBar.sendKeys(searchQuery)
+
+    // a new instance of the button appears in a dropdown that covers the original
+    val searchButton = driver.findElement(searchButtonSelector)
 
     println("Validated search query: ${searchBar.getText()}")
 
