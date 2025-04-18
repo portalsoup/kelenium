@@ -10,20 +10,20 @@ import java.io.OutputStream
 import java.net.Socket
 
 open class WireProtocol(val host: String, val port: Int) {
-    fun get(endpoint: String): Response {
+    fun <R: Response> get(endpoint: String): R {
         return performHttpRequest("GET", endpoint)
-            .let { Json.decodeFromString(ResponseSerializer, it) }
+            .let { Json.decodeFromString<R>(ResponseSerializer, it) }
     }
 
-    inline fun <reified T> post(endpoint: String, payload: T): Response {
+    inline fun <reified T, R: Response> post(endpoint: String, payload: T): R {
         return performHttpRequest("POST", endpoint, jsonToString(payload))
-            .let { Json.decodeFromString(ResponseSerializer, it) }
+            .let { Json.decodeFromString<R>(ResponseSerializer, it) }
     }
 
-    fun delete(endpoint: String): Response {
+    fun <R: Response> delete(endpoint: String): R {
         return performHttpRequest("DELETE", endpoint)
             .also { println(it) }
-            .let { Json.decodeFromString(ResponseSerializer, it) }
+            .let { Json.decodeFromString<R>(ResponseSerializer, it) }
     }
 
     private fun prepareHttpRequest(method: String, endpoint: String, payload: String?): String {
@@ -85,8 +85,6 @@ open class WireProtocol(val host: String, val port: Int) {
         }
 
         val responseStr = response.toString()
-        println("Got a response on the new shit: $responseStr")
-
         return responseStr
     }
 

@@ -13,7 +13,7 @@ interface Resource {
     fun asUrl(): String = absolutePathOf().let { "file://$it" }
 }
 
-enum class Executables(override val path: String): Resource {
+enum class DriverServer(override val path: String): Resource {
     Geckodriver("geckodriver")
 }
 enum class HtmlPages(override val path: String): Resource {

@@ -1,6 +1,6 @@
 package com.portalsoup.wireprotocol
 
-import com.portalsoup.wireprotocol.Executables.Geckodriver
+import com.portalsoup.wireprotocol.DriverServer.Geckodriver
 import com.portalsoup.wireprotocol.core.WireProtocol
 import com.portalsoup.wireprotocol.session.api.createSession
 import com.portalsoup.wireprotocol.session.api.deleteSession
@@ -46,9 +46,9 @@ open class BaseApiTest: BaseTest() {
                 """.trimIndent()
 
     fun getApi() = WireProtocol("127.0.0.1", 4444)
+
     fun useSession(api: WireProtocol, l: (SessionCreated) -> Unit) {
-        val response = api.createSession().value
-        when (response) {
+        when (val response = api.createSession().value) {
             is SessionCreated -> response.apply(l).let { api.deleteSession(it) }
             else -> throw AssertionError("Failed to create sesssion: $response")
         }

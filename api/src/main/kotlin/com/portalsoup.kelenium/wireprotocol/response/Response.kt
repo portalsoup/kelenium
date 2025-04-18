@@ -4,4 +4,7 @@ import com.portalsoup.wireprotocol.serialization.serializers.ResponseSerializer
 import kotlinx.serialization.Serializable
 
 @Serializable(with = ResponseSerializer::class)
-data class Response(val value: Any?)
+sealed class Response
+
+data class ValueResponse(val value: Any?): Response()
+data class TextResponse(val text: String): Response()

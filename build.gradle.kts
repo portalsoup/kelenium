@@ -32,9 +32,9 @@ allprojects {
             maven {
                 url = uri("https://m2.dv8tion.net/releases")
             }
-            maven {
-                url = uri("https://josm.openstreetmap.de/nexus/content/groups/public")
-            }
+//            maven {
+//                url = uri("https://josm.openstreetmap.de/nexus/content/groups/public")
+//            }
         }
 
         tasks {

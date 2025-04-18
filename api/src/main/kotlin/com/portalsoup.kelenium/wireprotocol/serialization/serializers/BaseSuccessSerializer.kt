@@ -3,7 +3,6 @@ package com.portalsoup.wireprotocol.serialization.serializers
 import com.portalsoup.wireprotocol.context.dto.NewWindow
 import com.portalsoup.wireprotocol.context.dto.WindowRect
 import com.portalsoup.wireprotocol.element.dto.ElementRef
-import com.portalsoup.wireprotocol.element.dto.ShadowRootRef
 import com.portalsoup.wireprotocol.response.BaseSuccess
 import com.portalsoup.wireprotocol.serialization.responseJson
 import com.portalsoup.wireprotocol.session.dto.SessionCreated
@@ -34,7 +33,7 @@ object BaseSuccessSerializer : KSerializer<BaseSuccess> {
             Timeouts.isType(jsonElement) -> decode<Timeouts>(jsonElement)
             Status.isType(jsonElement) -> decode<Status>(jsonElement)
             ElementRef.isType(jsonElement) -> decode<ElementRef>(jsonElement)
-            ShadowRootRef.isType(jsonElement) -> decode<ShadowRootRef>(jsonElement)
+//            ShadowRootRef.isType(jsonElement) -> decode<ShadowRootRef>(jsonElement)
             WindowRect.isType(jsonElement) -> decode<WindowRect>(jsonElement)
             NewWindow.isType(jsonElement) -> decode<NewWindow>(jsonElement)
             else -> throw SerializationException("Couldn't identify successful response: $jsonElement")

@@ -1,4 +1,4 @@
-package com.portalsoup.wireprotocol.core
+package com.portalsoup.kelenium.framework
 
 import kotlinx.serialization.Serializable
 
