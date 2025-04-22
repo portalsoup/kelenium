@@ -1,4 +1,4 @@
-package com.portalsoup.kelenium.framework
+package com.portalsoup.kelenium.framework.driver
 
 import kotlinx.serialization.Serializable
 

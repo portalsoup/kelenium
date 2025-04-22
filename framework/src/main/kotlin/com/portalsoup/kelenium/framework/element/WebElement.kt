@@ -1,4 +1,4 @@
-package com.portalsoup.kelenium.framework
+package com.portalsoup.kelenium.framework.element
 
 import com.portalsoup.kelenium.framework.driver.WebDriver
 import com.portalsoup.wireprotocol.element.api.elementClick
@@ -6,6 +6,7 @@ import com.portalsoup.wireprotocol.element.api.elementSendKeys
 import com.portalsoup.wireprotocol.element.api.getElementText
 import com.portalsoup.wireprotocol.element.dto.ElementRef
 import com.portalsoup.wireprotocol.element.dto.SendKeys
+import kotlin.time.TimeSource
 
 class WebElement {
     private val webDriver: WebDriver
@@ -31,5 +32,16 @@ class WebElement {
         webDriver.wireProtocol.elementClick(webDriver.session, ref)
     }
 
+    fun <R> wait(predicate: WebElement.() -> R) {
+        val waitConfig = webDriver.configuration.activeWait
+        val startTime = TimeSource.Monotonic.markNow()
 
+        while (startTime.elapsedNow().inWholeMilliseconds < waitConfig.timeoutMs) {
+            when (val result = predicate()) {
+                is Boolean -> if (result == true) return
+                else -> if (result != null) return
+            }
+        }
+        throw RuntimeException("wait timed out after ${TimeSource.Monotonic.markNow()}")
+    }
 }

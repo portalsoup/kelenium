@@ -8,6 +8,11 @@ import com.portalsoup.wireprotocol.element.dto.ElementRef
 import com.portalsoup.wireprotocol.error.exceptions.ElementNotFoundException
 import com.portalsoup.wireprotocol.navigation.api.navigateTo
 
+data class ActiveWait(
+    var pollingIntervalMs: Int = 500,
+    var timeoutMs: Int = 30 * 1000,
+)
+
 open class WebDriver(driver: DriverServer, host: String, port: Int, capabililities: String? = null) : AbstractWebDriver(driver.absolutePath(), host, port, capabililities) {
 
     fun navigateTo(url: String) {
