@@ -1,6 +1,6 @@
 import com.portalsoup.kelenium.framework.DriverServer.Geckodriver
 import com.portalsoup.kelenium.framework.LocationStrategy.CSS
-import com.portalsoup.kelenium.framework.WebDriver
+import com.portalsoup.kelenium.framework.driver.WebDriver
 
 fun main() {
     WebDriver(Geckodriver, "127.0.0.1", 4444).use { driver ->
@@ -13,8 +13,6 @@ fun main() {
         }
 
         performGoogleSearch(driver)
-
-        Thread.sleep(30000)
     }
 }
 
@@ -34,5 +32,6 @@ fun performGoogleSearch(driver: WebDriver) {
 
     println("Validated search query: ${searchBar.getText()}")
 
+    Thread.sleep(100)
     searchButton.click()
 }

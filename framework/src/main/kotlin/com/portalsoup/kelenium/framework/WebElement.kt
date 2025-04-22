@@ -1,5 +1,6 @@
 package com.portalsoup.kelenium.framework
 
+import com.portalsoup.kelenium.framework.driver.WebDriver
 import com.portalsoup.wireprotocol.element.api.elementClick
 import com.portalsoup.wireprotocol.element.api.elementSendKeys
 import com.portalsoup.wireprotocol.element.api.getElementText
