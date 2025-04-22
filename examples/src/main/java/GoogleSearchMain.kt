@@ -19,7 +19,7 @@ fun main() {
 }
 
 fun performGoogleSearch(driver: WebDriver) {
-    driver.navigateTo("https://google.com")
+    driver.navigate.to("https://google.com")
 
     val searchBarSelector = CSS("[title=Search]")
     val searchButtonSelector = CSS("[value='Google Search'][type=submit]")
@@ -34,8 +34,8 @@ fun performGoogleSearch(driver: WebDriver) {
 
     println("Validated search query: ${searchBar.getText()}")
 
-    Thread.sleep(100)
+    Thread.sleep(500)
     searchButton.click()
-
-    Thread.sleep(1000)
+    Thread.sleep(500)
+    driver.navigate.back()
 }

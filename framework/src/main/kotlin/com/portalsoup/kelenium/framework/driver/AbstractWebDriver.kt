@@ -12,30 +12,18 @@ import com.portalsoup.wireprotocol.timeout.dto.Timeouts
 import java.io.Closeable
 
 abstract class AbstractWebDriver(driverPath: String, host: String, port: Int, capabilities: String? = null): Closeable {
-    val wireProtocol: WireProtocol
-
-    val configDelegate = PropertyObserver(WebDriverConfigurator()).apply {
-        addObserver { old, new -> println("Configuration changed from\n$old\nto\n$new") }
-        addObserver(::onTimeoutsChanged)
+    private val configDelegate = PropertyObserver(WebDriverConfigurator()).apply {
+        addObserver(::updateTimeoutsIfChanged)
     }
 
+    val wireProtocol: WireProtocol = WireProtocol(host, port)
     var configuration: WebDriverConfigurator by configDelegate
     internal lateinit var session: SessionCreated
     private lateinit var server: Process
 
     init {
-        wireProtocol = WireProtocol(host, port)
         startServer(driverPath)
         startSession(capabilities)
-    }
-
-
-    override fun close() {
-        wireProtocol.deleteSession(session)
-        configDelegate.close()
-        if (server.isAlive) {
-            stopServer()
-        }
     }
 
     private fun startServer(driverPath: String) {
@@ -57,20 +45,14 @@ abstract class AbstractWebDriver(driverPath: String, host: String, port: Int, ca
             .onFailure { println("Encountered an error while stopping the remote driver: $it") }
     }
 
-    fun startSession(capabilities: String?) {
-        val rawSession = wireProtocol.createSession(capabilities).value
-        when (rawSession) {
+    private fun startSession(capabilities: String?) {
+        when (val rawSession = wireProtocol.createSession(capabilities).value) {
             is SessionCreated -> session = rawSession
             else -> throw SessionNotCreatedException()
         }
     }
 
-
-    fun configure(f: WebDriverConfigurator.() -> Unit) {
-        configuration = configuration.apply(f)
-    }
-
-    private fun onTimeoutsChanged(old: WebDriverConfigurator, new: WebDriverConfigurator) {
+    private fun updateTimeoutsIfChanged(old: WebDriverConfigurator, new: WebDriverConfigurator) {
         if (old.timeoutConfigurator != new.timeoutConfigurator) {
             wireProtocol.setTimeouts(session, Timeouts(
                 script = new.timeoutConfigurator.script,
@@ -81,4 +63,15 @@ abstract class AbstractWebDriver(driverPath: String, host: String, port: Int, ca
         }
     }
 
+    fun configure(f: WebDriverConfigurator.() -> Unit) {
+        configuration = configuration.apply(f)
+    }
+
+    override fun close() {
+        wireProtocol.deleteSession(session)
+        configDelegate.close()
+        if (server.isAlive) {
+            stopServer()
+        }
+    }
 }
